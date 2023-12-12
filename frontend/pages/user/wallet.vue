@@ -129,6 +129,7 @@
 
 <script>
 export default {
+    middleware: "auth",
     head: {
         title: 'Wallet',
     },

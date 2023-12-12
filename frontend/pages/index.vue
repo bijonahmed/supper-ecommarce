@@ -4,15 +4,17 @@
     <MainSlider />
     <SellingFastSlider />
     <Banner />
-    <ExploreCampain/>
-    <SoldOut/>
-    <Winner/>
+    <ExploreCampain />
+    <SoldOut />
+    <Winner />
     <Footer />
-    <div class="cart_link" @click="cartLink">
+
+  
+    <!-- <div class="cart_link" @click="cartLink">
         <nuxt-link to="/cart">
             <p>Shopping Cart</p> <i class="fa-solid fa-cart-shopping"></i>
         </nuxt-link>
-    </div>
+    </div> -->
     <div class="spinner">
         <div class="dot1"></div>
         <div class="dot2"></div>
@@ -42,8 +44,6 @@
             </div>
         </div>
     </div>
-
-     
 
 </div>
 </template>

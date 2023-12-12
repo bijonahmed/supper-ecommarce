@@ -13,6 +13,7 @@ You can directly use them in pages and other components without the need to impo
 - `<LeftsidebarMobile>` | `<leftsidebar-mobile>` (components/LeftsidebarMobile.vue)
 - `<Loader>` | `<loader>` (components/Loader.vue)
 - `<MainSlider>` | `<main-slider>` (components/MainSlider.vue)
+- `<MobileMenu>` | `<mobile-menu>` (components/MobileMenu.vue)
 - `<Navbar>` | `<navbar>` (components/Navbar.vue)
 - `<SellingFastSlider>` | `<selling-fast-slider>` (components/SellingFastSlider.vue)
 - `<SoldOut>` | `<sold-out>` (components/SoldOut.vue)

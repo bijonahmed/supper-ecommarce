@@ -5,6 +5,7 @@ export { default as LeftsidebarDesktop } from '../..\\components\\LeftsidebarDes
 export { default as LeftsidebarMobile } from '../..\\components\\LeftsidebarMobile.vue'
 export { default as Loader } from '../..\\components\\Loader.vue'
 export { default as MainSlider } from '../..\\components\\MainSlider.vue'
+export { default as MobileMenu } from '../..\\components\\MobileMenu.vue'
 export { default as Navbar } from '../..\\components\\Navbar.vue'
 export { default as SellingFastSlider } from '../..\\components\\SellingFastSlider.vue'
 export { default as SoldOut } from '../..\\components\\SoldOut.vue'

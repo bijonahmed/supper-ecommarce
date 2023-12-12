@@ -4,25 +4,26 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _46f59540 = () => interopDefault(import('..\\pages\\about.vue' /* webpackChunkName: "pages/about" */))
-const _23641086 = () => interopDefault(import('..\\pages\\agreement.vue' /* webpackChunkName: "pages/agreement" */))
-const _15b4b0bd = () => interopDefault(import('..\\pages\\cart.vue' /* webpackChunkName: "pages/cart" */))
-const _62621993 = () => interopDefault(import('..\\pages\\contact.vue' /* webpackChunkName: "pages/contact" */))
-const _1c6489ee = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChunkName: "pages/faq" */))
-const _3055131c = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
-const _0052fa18 = () => interopDefault(import('..\\pages\\privacy-policy.vue' /* webpackChunkName: "pages/privacy-policy" */))
-const _7cb7c52e = () => interopDefault(import('..\\pages\\ticket.vue' /* webpackChunkName: "pages/ticket" */))
-const _2a116ed3 = () => interopDefault(import('..\\pages\\user\\notification.vue' /* webpackChunkName: "pages/user/notification" */))
-const _0539e824 = () => interopDefault(import('..\\pages\\user\\offer.vue' /* webpackChunkName: "pages/user/offer" */))
-const _6b3c8ece = () => interopDefault(import('..\\pages\\user\\payment.vue' /* webpackChunkName: "pages/user/payment" */))
-const _3a5d449d = () => interopDefault(import('..\\pages\\user\\personal-details.vue' /* webpackChunkName: "pages/user/personal-details" */))
-const _5cb7461e = () => interopDefault(import('..\\pages\\user\\profile.vue' /* webpackChunkName: "pages/user/profile" */))
-const _3c6e2e0b = () => interopDefault(import('..\\pages\\user\\settings.vue' /* webpackChunkName: "pages/user/settings" */))
-const _e9ac7446 = () => interopDefault(import('..\\pages\\user\\thankyou.vue' /* webpackChunkName: "pages/user/thankyou" */))
-const _178c3474 = () => interopDefault(import('..\\pages\\user\\ticket.vue' /* webpackChunkName: "pages/user/ticket" */))
-const _2e15dee1 = () => interopDefault(import('..\\pages\\user\\wallet.vue' /* webpackChunkName: "pages/user/wallet" */))
-const _0af586ad = () => interopDefault(import('..\\pages\\user\\wishlist.vue' /* webpackChunkName: "pages/user/wishlist" */))
-const _66ad7005 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _d0344366 = () => interopDefault(import('..\\pages\\about.vue' /* webpackChunkName: "pages/about" */))
+const _4ca8f24a = () => interopDefault(import('..\\pages\\agreement.vue' /* webpackChunkName: "pages/agreement" */))
+const _537edbe0 = () => interopDefault(import('..\\pages\\cart.vue' /* webpackChunkName: "pages/cart" */))
+const _38645360 = () => interopDefault(import('..\\pages\\contact.vue' /* webpackChunkName: "pages/contact" */))
+const _f7323954 = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChunkName: "pages/faq" */))
+const _fd7547ae = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
+const _5ba6d59c = () => interopDefault(import('..\\pages\\offer.vue' /* webpackChunkName: "pages/offer" */))
+const _15e31887 = () => interopDefault(import('..\\pages\\privacy-policy.vue' /* webpackChunkName: "pages/privacy-policy" */))
+const _e2861408 = () => interopDefault(import('..\\pages\\ticket.vue' /* webpackChunkName: "pages/ticket" */))
+const _d439fa34 = () => interopDefault(import('..\\pages\\user\\notification.vue' /* webpackChunkName: "pages/user/notification" */))
+const _38c07371 = () => interopDefault(import('..\\pages\\user\\offer.vue' /* webpackChunkName: "pages/user/offer" */))
+const _51650a4a = () => interopDefault(import('..\\pages\\user\\payment.vue' /* webpackChunkName: "pages/user/payment" */))
+const _7c509730 = () => interopDefault(import('..\\pages\\user\\personal-details.vue' /* webpackChunkName: "pages/user/personal-details" */))
+const _3db548fe = () => interopDefault(import('..\\pages\\user\\profile.vue' /* webpackChunkName: "pages/user/profile" */))
+const _527ac39e = () => interopDefault(import('..\\pages\\user\\settings.vue' /* webpackChunkName: "pages/user/settings" */))
+const _bd934920 = () => interopDefault(import('..\\pages\\user\\thankyou.vue' /* webpackChunkName: "pages/user/thankyou" */))
+const _54d712c7 = () => interopDefault(import('..\\pages\\user\\ticket.vue' /* webpackChunkName: "pages/user/ticket" */))
+const _6b60bd34 = () => interopDefault(import('..\\pages\\user\\wallet.vue' /* webpackChunkName: "pages/user/wallet" */))
+const _21021c40 = () => interopDefault(import('..\\pages\\user\\wishlist.vue' /* webpackChunkName: "pages/user/wishlist" */))
+const _90c48ddc = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
 
@@ -37,79 +38,83 @@ export const routerOptions = {
 
   routes: [{
     path: "/about",
-    component: _46f59540,
+    component: _d0344366,
     name: "about"
   }, {
     path: "/agreement",
-    component: _23641086,
+    component: _4ca8f24a,
     name: "agreement"
   }, {
     path: "/cart",
-    component: _15b4b0bd,
+    component: _537edbe0,
     name: "cart"
   }, {
     path: "/contact",
-    component: _62621993,
+    component: _38645360,
     name: "contact"
   }, {
     path: "/faq",
-    component: _1c6489ee,
+    component: _f7323954,
     name: "faq"
   }, {
     path: "/login",
-    component: _3055131c,
+    component: _fd7547ae,
     name: "login"
   }, {
+    path: "/offer",
+    component: _5ba6d59c,
+    name: "offer"
+  }, {
     path: "/privacy-policy",
-    component: _0052fa18,
+    component: _15e31887,
     name: "privacy-policy"
   }, {
     path: "/ticket",
-    component: _7cb7c52e,
+    component: _e2861408,
     name: "ticket"
   }, {
     path: "/user/notification",
-    component: _2a116ed3,
+    component: _d439fa34,
     name: "user-notification"
   }, {
     path: "/user/offer",
-    component: _0539e824,
+    component: _38c07371,
     name: "user-offer"
   }, {
     path: "/user/payment",
-    component: _6b3c8ece,
+    component: _51650a4a,
     name: "user-payment"
   }, {
     path: "/user/personal-details",
-    component: _3a5d449d,
+    component: _7c509730,
     name: "user-personal-details"
   }, {
     path: "/user/profile",
-    component: _5cb7461e,
+    component: _3db548fe,
     name: "user-profile"
   }, {
     path: "/user/settings",
-    component: _3c6e2e0b,
+    component: _527ac39e,
     name: "user-settings"
   }, {
     path: "/user/thankyou",
-    component: _e9ac7446,
+    component: _bd934920,
     name: "user-thankyou"
   }, {
     path: "/user/ticket",
-    component: _178c3474,
+    component: _54d712c7,
     name: "user-ticket"
   }, {
     path: "/user/wallet",
-    component: _2e15dee1,
+    component: _6b60bd34,
     name: "user-wallet"
   }, {
     path: "/user/wishlist",
-    component: _0af586ad,
+    component: _21021c40,
     name: "user-wishlist"
   }, {
     path: "/",
-    component: _66ad7005,
+    component: _90c48ddc,
     name: "index"
   }],
 

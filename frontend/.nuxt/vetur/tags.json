@@ -20,6 +20,9 @@
   "MainSlider": {
     "description": "Auto imported from components/MainSlider.vue"
   },
+  "MobileMenu": {
+    "description": "Auto imported from components/MobileMenu.vue"
+  },
   "Navbar": {
     "description": "Auto imported from components/Navbar.vue"
   },

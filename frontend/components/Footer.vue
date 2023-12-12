@@ -99,5 +99,6 @@
             </div>
         </div>
     </footer>
+    <MobileMenu/>
 </div>
 </template>
