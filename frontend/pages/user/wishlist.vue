@@ -18,76 +18,27 @@
                 <LeftsidebarDesktop />
             </div>
             <div class="col-xl-9">
-
+                <span v-if="loading">
+                    <Loader />
+                </span>
                 <div class="profile_right">
                     <h1 class="desktop_view">Wishlist</h1>
                     <div class="cart_list">
+
                         <ul>
-                            <li>
+                            <li v-for="(item, index) in products" :key="index">
                                 <div class="cart_item ">
 
                                     <div class="row" style="width: 100%;">
                                         <div class="col-md-6">
                                             <div class="cart_left">
                                                 <div class="c_price" style="position: unset;">
-                                                    <img src="/images/campain_slide1.gif" class="img-fulid" style="width: 100%;" alt="">
+                                                    <img :src="item.thumnail_img" class="img-fulid" style="width: 100%;" alt="">
                                                 </div>
                                                 <div class="cart_title">
-                                                    <h1>VIP Plate T-285 or BDT150, Lorem ipsum dolor sit amet
-                                                        consectetur
-                                                        adipisicing elit. Ipsum, quas.</h1>
+                                                    <h1>{{ item.name }}</h1>
                                                     <h6>Lottery credit</h6>
-                                                    <p>BDT5.00</p>
-                                                    <!-- sale progress  -->
-                                                    <div class="sell_progress">
-                                                        <div class="">
-                                                            <span id="timer" class="end_date" data-date="29 April 2028 23:59:00 GMT+01:00">
-                                                                Closing:
-                                                                <strong class="days" style="color: limegreen;"></strong>
-                                                                <strong class="hours" style="color: limegreen;"></strong>
-                                                                <strong class="minutes" style="color: limegreen;"></strong>
-                                                                <strong class="seconds" style="color: limegreen;"></strong>
-                                                            </span>
-                                                        </div>
-                                                        <div class="d-none">
-                                                            <span>1372 sold out of 1950</span>
-                                                            <div class="progress " role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                                <div class="progress-bar" style="width: 25%"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="value_change">
-                                                <div class="value_box">
-                                                    <button type="button" class="btn_submit" style="display: block;">Add
-                                                        To cart</button>
-
-                                                    <button type="button" class="btn_submit rm_w">Remove from
-                                                        wishlist</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="cart_item ">
-
-                                    <div class="row" style="width: 100%;">
-                                        <div class="col-md-6">
-                                            <div class="cart_left">
-                                                <div class="c_price" style="position: unset;">
-                                                    <img src="/images/cash2.png" class="img-fulid" style="width: 100%;" alt="">
-                                                </div>
-                                                <div class="cart_title">
-                                                    <h1>VIP Plate T-285 or BDT150, Lorem ipsum dolor sit amet
-                                                        consectetur
-                                                        adipisicing elit. Ipsum, quas.</h1>
-                                                    <h6>Lottery credit</h6>
-                                                    <p>BDT5.00</p>
+                                                    <p>BDT{{ item.price }}</p>
                                                     <div class="sell_progress">
                                                         <div class="d-none">
                                                             <span id="timer" class="end_date" data-date="29 April 2028 23:59:00 GMT+01:00">
@@ -111,11 +62,9 @@
                                         <div class="col-md-6">
                                             <div class="value_change">
                                                 <div class="value_box">
-                                                    <button type="button" class="btn_submit" style="display: block;">Add
-                                                        To cart</button>
+                                                    <button type="button" class="btn_submit" style="display: block;" @click="addtoCart(item)">Add To cart</button>
 
-                                                    <button type="button" class="btn_submit rm_w">Remove from
-                                                        wishlist</button>
+                                                    <button type="button" class="btn_submit rm_w" @click="remove(item.wishid)">Remove from wishlist</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,17 +91,83 @@ export default {
     },
     data() {
         return {
-
+            loading: false,
+            products: [],
+            cart: [],
         }
     },
     mounted() {
-
+        this.mainSlider();
     },
     methods: {
+        addtoCart(product) {
+            this.loading = true;
+            // const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = this.cart.find(item => item.id === product.id);
+            if (existingProduct) {
+                // existingProduct.quantity += 1;
+            } else {
+                this.cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            // Merge with existing data if any
+            const existingData = JSON.parse(localStorage.getItem('cart')) || [];
+            const newData = [...existingData, ...this.cart];
 
-        addtoCart() {
-            this.$router.push('/cart');
+            localStorage.setItem('cart', JSON.stringify(newData));
+
+            setTimeout(() => {
+                this.loading = false;
+            }, 1000);
         },
+        async remove(wishid) {
+            try {
+                this.loading = true; // Show loader
+                // Define parameters
+                const page = 1;
+                const limit = 10;
+                // Make GET request with parameters
+                const response = await this.$axios.get(`/order/removeWishList/${wishid}`);
+                console.log(response.data);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                this.mainSlider();
+                Toast.fire({
+                    icon: "success",
+                    title: "Item removed from wishlist successfully!"
+                });
+            } catch (error) {
+                console.error('Error fetching slidersImages:', error);
+            } finally {
+                this.loading = false; // Hide loader after response or error
+            }
+
+        },
+        async mainSlider() {
+            try {
+                this.loading = true; // Show loader
+                const response = await this.$axios.get('/order/allWishList');
+                this.products = response.data;
+                // Handle other logic related to products if needed
+            } catch (error) {
+                console.error('Error fetching sellingFast:', error);
+                // Handle error if needed
+            } finally {
+                this.loading = false; // Hide loader after response or error
+            }
+        },
+       
 
     }
 }

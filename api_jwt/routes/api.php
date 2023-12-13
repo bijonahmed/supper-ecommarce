@@ -174,7 +174,7 @@ Route::group([
 });
 
 
-
+ 
 Route::group([
     'prefix' => 'order'
 ], function () {
@@ -193,6 +193,7 @@ Route::group([
     Route::post('update_order_status', [OrderController::class, 'update_order_status']);
 });
 
+ 
 
 Route::group([
     //'middleware' => 'api',

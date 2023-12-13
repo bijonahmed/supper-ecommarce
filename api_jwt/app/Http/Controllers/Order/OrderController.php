@@ -89,6 +89,7 @@ class OrderController extends Controller
 
     function addtowish($slug)
     {
+       
         $findproduct = Product::where('slug', $slug)->select('id')->first();
         $row                  = new WishList();
         $row->customer_id     = $this->userid;
@@ -99,12 +100,17 @@ class OrderController extends Controller
 
     function allWishList()
     {
-        $rows = WishList::join('product', 'product.id', '=', 'wishlist.id')->select('wishlist.id as wishid', 'product.thumnail_img', 'product.slug', 'product.name', 'price', 'product.id')->get();
+       
+        $rows = WishList::join('product', 'product.id', '=', 'wishlist.product_id')
+                ->select('wishlist.id as wishid', 'product.thumnail_img', 'product.slug', 'product.name', 'price', 'product.id')
+                ->where('customer_id',$this->userid)
+                ->get();
+
         $products = [];
         foreach ($rows as $key => $v) {
             $products[] = [
                 'id'           => $v->id,
-                'product_name' => $v->name,
+                'name'         => $v->name,
                 'wishid'       => $v->wishid,
                 'price'        => number_format($v->price, 2),
                 'thumnail_img' => url($v->thumnail_img),
@@ -112,7 +118,6 @@ class OrderController extends Controller
 
             ];
         }
-
         return response()->json($products, 200);
     }
 

@@ -40,7 +40,7 @@
                                     </li>
 
 
-                                    <li class="nav-item">
+                                    <li class="nav-item" v-if="loggedIn">
                                         <nuxt-link to="/user/profile" class="nav-link">My Dashboard</nuxt-link>
                                     </li>
 

@@ -14,7 +14,7 @@
                         <div class="swiper-wrapper">
 
                             <!-- start  -->
-                            <div class="swiper-slide" v-for="(item, index) in prouducts" :key="index">
+                            <div class="swiper-slide" v-for="(item, index) in products" :key="index">
                                 <div class="sell_fast">
                                     <div class="sell_progress">
                                         <div id="timer" class="countdown_timer c_timer c_timer" data-endtime="25 june 2028 10:00:00 GMT+01:00"></div>
@@ -48,7 +48,7 @@ export default {
         return {
             loading: false,
             cart: [],
-            prouducts: [],
+            products: [],
             itemCount: 0,
             updatedQuantity: 0,
         }
@@ -62,15 +62,24 @@ export default {
     },
     methods: {
         async sellingFast() {
-            const response = await this.$axios.get('/unauthenticate/sellingFast');
-            this.prouducts = response.data;
+            try {
+                this.loading = true; // Show loader
+                const response = await this.$axios.get('/unauthenticate/sellingFast');
+                this.products = response.data;
+                // Handle other logic related to products if needed
+            } catch (error) {
+                console.error('Error fetching sellingFast:', error);
+                // Handle error if needed
+            } finally {
+                this.loading = false; // Hide loader after response or error
+            }
         },
         addtoCart(product) {
             this.loading = true;
             // const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const existingProduct = this.cart.find(item => item.id === product.id);
             if (existingProduct) {
-               // existingProduct.quantity += 1;
+                // existingProduct.quantity += 1;
             } else {
                 this.cart.push({
                     ...product,

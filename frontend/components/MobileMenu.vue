@@ -7,19 +7,19 @@
                 <div class="col-md-12">
                     <div class="f_mnu">
                         <ul>
-                            <li class="active">
+                            <li :class="{ active: $route.path === '/' }">
                                 <nuxt-link to="/"><i class="fa-solid fa-home"></i></nuxt-link>
                                 <p>Home</p>
                             </li>
-                            <li>
+                            <li :class="{ active: $route.path === '/ticket' }">
                                 <nuxt-link to="/ticket"><i class="fa-solid fa-ticket"></i></nuxt-link>
                                 <p>Ticket</p>
                             </li>
-                            <li>
+                            <li :class="{ active: $route.path === '/offer' }">
                                 <nuxt-link to="/offer"><i class="fa-solid fa-gift"></i></nuxt-link>
                                 <p>Offers</p>
                             </li>
-                            <li>
+                            <li :class="{ active: $route.path === '/cart' }">
                                 <nuxt-link to="/cart"><i class="fa-solid fa-cart-shopping"></i></nuxt-link>
                                 <p>Cart</p>
                             </li>
@@ -45,11 +45,8 @@
         </div>
         <div class="offcanvas-body" style="height: 90%;overflow: auto;">
             <!-- login registration part start here  -->
-
             <div class="tab-content" id="pills-tabContent">
-
                 <!-- link without login  -->
-
                 <div class="profile_links">
                     <ul>
                         <li v-if="loggedIn">
@@ -180,3 +177,5 @@ export default {
     },
 };
 </script>
+
+

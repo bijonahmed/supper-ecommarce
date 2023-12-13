@@ -67,7 +67,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="button_">
-                                                    <button type="button" class="btn_share active"><i class="fa-solid fa-heart"></i></button>
+                                                    <button type="button" class="btn_share active" @click="wishlist(item.slug)"><i class="fa-solid fa-heart"></i></button>
                                                     <button type="button" class="btn_share share_btn" @click="shareBtn"><i class="fa-solid fa-share"></i></button>
 
                                                 </div>
@@ -149,10 +149,40 @@ export default {
         this.sellingFast();
     },
     methods: {
+        async wishlist(slug) {
+            try {
+                this.loading = true; // Show loader
+                // Define parameters
+                const page = 1;
+                const limit = 10;
+                // Make GET request with parameters
+                const response = await this.$axios.get(`/order/addtowish/${slug}`);
+                console.log(response.data);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Item added to wishlist successfully!"
+                });
+            } catch (error) {
+                console.error('Error fetching slidersImages:', error);
+            } finally {
+                this.loading = false; // Hide loader after response or error
+            }
+
+        },
         async sellingFast() {
             const response = await this.$axios.get('/unauthenticate/sellingFast');
             this.prouducts = response.data;
-            //console.log("sellingFast" + response.data);
         },
         addtoCart(product) {
             this.loading = true;

@@ -17,6 +17,7 @@ use App\Models\Categorys;
 use Illuminate\Support\Str;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
+use App\Models\WishList;
 use DB;
 use File;
 use PhpParser\Node\Stmt\TryCatch;
@@ -38,6 +39,8 @@ class UnauthenticatedController extends Controller
         $response =  Countrys::where('status', 1)->orderBy('countryname', 'ASC')->get();
         return response()->json($response);
     }
+
+
 
     public function sellingFast()
     {
