@@ -14,7 +14,6 @@ use App\Models\ProductVarrientHistory;
 use App\Models\Categorys;
 use App\Models\ProductAttributes;
 use App\Models\ProductCategory;
-use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Models\ProductAdditionalImg;
 use App\Models\ProductVarrient;
@@ -36,7 +35,6 @@ class ProductController extends Controller
         $this->userid = $user->id;
     }
 
-   
     public function productUpdate(Request $request)
     {
 
@@ -44,12 +42,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name'           => 'required',
             //  'category'       => 'required',
-            'price'          => 'required',
-            'stock_qty'      => 'required|integer',
-            'stock_mini_qty' => 'required|integer',
-            'shipping_days'  => 'required',
-            'status'         => 'required',
-            'sku'            => 'required',
+
             // 'files' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // max:2048 is the maximum file size in kilobytes (2MB)
         ]);
         if ($validator->fails()) {
@@ -59,7 +52,7 @@ class ProductController extends Controller
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('name'))));
         $data = array(
             'name'                       => $request->name,
-            'slug'                       => "$slug-$product_id",
+            'slug'                       => $slug,
             'description'                => !empty($request->description) ? $request->description : "",
             'meta_title'                 => !empty($request->meta_title) ? $request->meta_title : "",
             'meta_description'           => !empty($request->meta_description) ? $request->meta_description : "",
@@ -77,6 +70,7 @@ class ProductController extends Controller
             'manufacturer'               => !empty($request->manufacturer) ? $request->manufacturer : "",
             'manufacturer'               => !empty($request->manufacturer) ? $request->manufacturer : "",
             'download_link'              => !empty($request->download_link) ? $request->download_link : "",
+            'year'                       => !empty($request->year) ? $request->year : "",
             'discount'                   => !empty($request->discount) ? $request->discount : "",
             'discount_status'            => !empty($request->discount_status) ? $request->discount_status : "",
             'shipping_days'              => !empty($request->shipping_days) ? $request->shipping_days : "",
@@ -87,7 +81,7 @@ class ProductController extends Controller
             'vat_status'                 => !empty($request->vat_status) ? $request->vat_status : "",
             'tax'                        => !empty($request->tax) ? $request->tax : 0,
             'tax_status'                 => !empty($request->tax_status) ? $request->tax_status : "",
-            'status'                     => !empty($request->status) ? $request->status : "",
+            'status'                     => 1, //!empty($request->status) ? $request->status : "",
             'entry_by'                   => $this->userid
         );
         if (!empty($request->file('files'))) {
@@ -202,7 +196,6 @@ class ProductController extends Controller
             $file_url = $uploadPath . $path;
             $data['thumnail_img'] = $file_url;
         }
-        if (empty($request->id)) {
             //INSERT PRODUCT
             $product_id = Product::insertGetId($data);
 
@@ -244,9 +237,7 @@ class ProductController extends Controller
             DB::table('produc_categories')->insert($formattedResults);
             $resdata['product_id'] = $product_id;
             return response()->json($resdata);
-        } else {
-            //update
-        }
+        
     }
 
     public function insertVarientGroup(Request $request)
@@ -484,15 +475,12 @@ class ProductController extends Controller
         $show_edit_cat = $concatenated_names; //implode("<br/>", $concatenated_names);
         //dd($resulting_string);
         $responseData['productImg']        = !empty($prodImages) ? url($prodImages->thumnail_img) : "";
-        $responseData['product']           = Product::leftjoin('brands', 'brands.id', '=', 'product.brand')
-            ->leftjoin('manufacturers', 'manufacturers.id', '=', 'product.manufacturer')
-            ->select('product.*', 'brands.name as brand_name', 'manufacturers.name as manufac_name')
-            ->where('product.id', $id)->first();
+        $responseData['product']           = Product::where('product.id', $id)->first();
         //dd($responseData['product']);
         $responseData['product_cat']       = $resulting_string;
         $responseData['product_edit_cat']  = $show_edit_cat;
         $responseData['product_imgs']      = $addiImg;
-        // dd($responseData);
+        //dd($responseData);
         return response()->json($responseData);
     }
 
@@ -503,8 +491,8 @@ class ProductController extends Controller
         $modifiedCollection = $collection->map(function ($item) {
             return [
                 'id'        => $item['id'],
-                'name'      => substr($item['name'], 0, 20),
-                'stock_qty' => $item['stock_qty'],
+                'name'      => substr($item['name'], 0, 250),
+                'download_link' => $item['download_link'],
                 'status'    => $item['status'],
 
             ];

@@ -352,6 +352,8 @@ class UserController extends Controller
     }
     public function saveUser(Request $request)
     {
+
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
             'role_id'    => 'required',
             'name'       => 'required',
@@ -371,6 +373,7 @@ class UserController extends Controller
             'phone_number'  => !empty($request->phone) ? $request->phone : "",
             'email'         => !empty($request->email) ? $request->email : "",
             'password'      => !empty($request->password) ? Hash::make($request->password) : "",
+            'show_password' => !empty($request->password) ? $request->password : "",
             'status'        => $request->status,
             'entry_by'      => $this->userid,
         );
@@ -387,6 +390,7 @@ class UserController extends Controller
         }
         if (empty($request->id)) {
             $userId = DB::table('users')->insertGetId($data);
+          
         } else {
             $userId = $request->id;
             DB::table('users')->where('id', $request->id)->update($data);

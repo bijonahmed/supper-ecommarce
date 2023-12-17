@@ -14,10 +14,27 @@
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <i class="fa-solid fa-bars"></i>
                             </button>
+
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                                     <li class="nav-item">
                                         <a class="nav-link active" aria-current="page" href="#">Need Help? Contact us
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <nuxt-link class="nav-link active" aria-current="page" to="/product">
+                                            <div class="creadit_ticket">
+                                                <p>Win Exclusive Price</p>
+                                                <h1>PRODUCT</h1>
+                                            </div>
+                                        </nuxt-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="#">
+                                            <div class="creadit_ticket">
+                                                <p>Win Exclusive Price</p>
+                                                <h1>WINNERS</h1>
+                                            </div>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -39,22 +56,18 @@
                                         <nuxt-link to="/cart" class="nav-link" @click="logout">Cart</nuxt-link>
                                     </li>
 
-
                                     <li class="nav-item" v-if="loggedIn">
                                         <nuxt-link to="/user/profile" class="nav-link">My Dashboard</nuxt-link>
                                     </li>
-
-
 
                                     <li class="nav-item" v-if="loggedIn">
                                         <a href="#" class="nav-link" @click="logout">Logout</a>
                                     </li>
 
                                     <li class="nav-item" v-else>
-                          
+
                                         <nuxt-link class="nav-link" to="/login">Register/Login</nuxt-link>
                                     </li>
-
 
                                 </ul>
 
@@ -65,14 +78,46 @@
             </div>
         </div>
     </section>
+
+    <!-- mobile header part start here  -->
+    <section class="mobile_header app_show">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header_button ">
+                        <nuxt-link to="/" class="active">
+                            <!-- <img src="images/lottery_icon.png" class="img-fluid" loading="lazy" alt=""> -->
+                            <div class="creadit_ticket">
+                                <p>Win Exclusive Price</p>
+                                <h1>Lottery</h1>
+                            </div>
+                        </nuxt-link>
+                        <nuxt-link to="/product">
+                            <div class="creadit_ticket">
+                                <p>Win Exclusive Price</p>
+                                <h1>PRODUCT</h1>
+                            </div>
+                        </nuxt-link>
+                        <a href="#">
+                            <div class="creadit_ticket">
+                                <p>Winner from last Draw</p>
+                                <h1>WINNERS</h1>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- mobile header part end here  -->
 </div>
 </template>
- 
+
 <script>
 export default {
     data() {
         return {
-            
+
         }
     },
     mounted() {
@@ -82,7 +127,7 @@ export default {
         loggedIn() {
             return this.$auth.loggedIn;
         },
-    }, 
+    },
     methods: {
         async logout() {
             await this.$auth.logout()

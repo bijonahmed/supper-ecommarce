@@ -18,7 +18,6 @@ use App\Http\Controllers\Manufacturer\ManufacturesController;
 use App\Http\Controllers\Brands\BrandsController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Cart\CartController;
-use App\Http\Controllers\Order\OrderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,7 +44,6 @@ Route::group([
     Route::get('showProfileData', [AuthController::class, 'showProfileData']);
     Route::post('password/email', [ForgotPasswordController::class, 'sendPasswordResetEmail']);
     Route::post('password/reset', [ResetPasswordController::class, 'updatePassword']);
-
 });
 Route::group([
     'middleware' => 'api',
@@ -111,6 +109,7 @@ Route::group([
     Route::get('attributes', [CategoryController::class, 'getAttribute']);
     Route::get('attributes-list', [CategoryController::class, 'getAttributeList']);
     Route::get('attributes-val-list', [CategoryController::class, 'getAttributeValList']);
+
 });
 
 Route::group([
@@ -131,7 +130,6 @@ Route::group([
     Route::get('deleteCategory', [ProductController::class, 'deleteCategory']);
     Route::get('getVarientHistory', [ProductController::class, 'getVarientHistory']);
     Route::get('removeProducts/{id}', [ProductController::class, 'removeProducts']);
-
 });
 
 Route::group([
@@ -172,29 +170,6 @@ Route::group([
     Route::get('getAllDocuments', [DocumentsController::class, 'getAllDocuments']);
     Route::get('documents-row/{id}', [DocumentsController::class, 'editId']);
 });
-
-
- 
-Route::group([
-    'prefix' => 'order'
-], function () {
-    //Add to cart 
-    Route::post('submitOrder', [OrderController::class, 'submitOrder']);
-    Route::get('getOrder', [OrderController::class, 'getOrder']);
-    Route::get('allOrders', [OrderController::class, 'allOrders']);
-    Route::get('orderDetails/{orderid}', [OrderController::class, 'orderDetails']);
-    Route::get('addtowish/{slug}', [OrderController::class, 'addtowish']);
-    Route::get('allWishList/', [OrderController::class, 'allWishList']);
-    Route::get('removeWishList/{productid}', [OrderController::class, 'removeWishList']);
-    Route::get('orderStatus', [OrderController::class, 'orderStatus']);
-    Route::get('orderStatusRow/{id}', [OrderController::class, 'orderStatusRow']);
-    Route::post('save_order', [OrderController::class, 'save_order']);
-    Route::get('allOrdersAdmin', [OrderController::class, 'allOrdersAdmin']);
-    Route::post('update_order_status', [OrderController::class, 'update_order_status']);
-});
-
- 
-
 Route::group([
     //'middleware' => 'api',
     'prefix' => 'unauthenticate'
@@ -204,23 +179,40 @@ Route::group([
     Route::get('getCartData', [CartController::class, 'getCartData']);
     Route::post('addToCart', [CartController::class, 'addToCart']);
     Route::get('searchProductCategory', [UnauthenticatedController::class, 'productCategory']);
-    Route::get('showCategoryTwo', [UnauthenticatedController::class, 'showCategoryTwo']);
-    Route::get('showCategoryThree', [UnauthenticatedController::class, 'showCategoryThree']);
+    
     Route::get('slidersImages', [UnauthenticatedController::class, 'slidersImages']);
     Route::get('topSellingProducts', [UnauthenticatedController::class, 'topSellProducts']);
     Route::get('limitedProducts', [UnauthenticatedController::class, 'limitedProducts']);
     Route::get('filterCategorys', [UnauthenticatedController::class, 'filterCategory']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategory']);
-    Route::get('findCategorys/{slug}', [UnauthenticatedController::class, 'findCategorys']);
-    Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
-    Route::get('countrys', [UnauthenticatedController::class, 'countrys']);
-    Route::get('sellingFast', [UnauthenticatedController::class, 'sellingFast']);
+ 
+    Route::get('getProductrow', [UnauthenticatedController::class, 'getProductrow']);
+    Route::get('get-paginated-products', [UnauthenticatedController::class, 'getPaginatedData']);
+    Route::get('defaultShowingProduct', [UnauthenticatedController::class, 'defaultShowingProduct']);
+    
+    //Route::get('defaultShowingMovies', [UnauthenticatedController::class, 'defaultShowingMovies']);
+
+    Route::get('defaultShowingMoviesHome', [UnauthenticatedController::class, 'defaultShowingMoviesHome']);
+    Route::get('loadMorePagination', [UnauthenticatedController::class, 'loadMorePagination']);
+    Route::get('findCategorys', [UnauthenticatedController::class, 'findCategorys']);
+
+    Route::get('showingMoviesCatWise', [UnauthenticatedController::class, 'showingMoviesCatWise']);
+    Route::get('videoPagination', [UnauthenticatedController::class, 'videoPagination']);
+    Route::get('paginatedMovies', [UnauthenticatedController::class, 'paginatedMovies']);
+    Route::get('catloadMorePagination', [UnauthenticatedController::class, 'loadMorePagination']);
+    Route::get('filderProduct', [UnauthenticatedController::class, 'filderProduct']);
+    Route::get('autocomplete', [UnauthenticatedController::class, 'autocomplete']);
+    Route::get('sliders', [UnauthenticatedController::class, 'slidersImages']);
 });
 
 Route::group([
     'middleware' => 'api',
     'prefix' => 'setting'
 ], function () {
+    //add slider 
+    Route::post('insertSlider', [SettingController::class, 'insertSlider']);
+    Route::get('slidersImages', [SettingController::class, 'slidersImages']);
+        Route::get('sliderrow/{id}', [SettingController::class, 'sliderrow']);
     //emp type
     Route::post('insertEmployeeType', [SettingController::class, 'insertEmployeeType']);
     Route::get('getEmployeeTypeList', [SettingController::class, 'getEmployeeTypeList']);

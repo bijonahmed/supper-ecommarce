@@ -12,6 +12,7 @@ const _f7323954 = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChu
 const _fd7547ae = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
 const _5ba6d59c = () => interopDefault(import('..\\pages\\offer.vue' /* webpackChunkName: "pages/offer" */))
 const _15e31887 = () => interopDefault(import('..\\pages\\privacy-policy.vue' /* webpackChunkName: "pages/privacy-policy" */))
+const _45e806a2 = () => interopDefault(import('..\\pages\\product.vue' /* webpackChunkName: "pages/product" */))
 const _e2861408 = () => interopDefault(import('..\\pages\\ticket.vue' /* webpackChunkName: "pages/ticket" */))
 const _d439fa34 = () => interopDefault(import('..\\pages\\user\\notification.vue' /* webpackChunkName: "pages/user/notification" */))
 const _38c07371 = () => interopDefault(import('..\\pages\\user\\offer.vue' /* webpackChunkName: "pages/user/offer" */))
@@ -24,6 +25,7 @@ const _54d712c7 = () => interopDefault(import('..\\pages\\user\\ticket.vue' /* w
 const _6b60bd34 = () => interopDefault(import('..\\pages\\user\\wallet.vue' /* webpackChunkName: "pages/user/wallet" */))
 const _21021c40 = () => interopDefault(import('..\\pages\\user\\wishlist.vue' /* webpackChunkName: "pages/user/wishlist" */))
 const _90c48ddc = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _408f6a16 = () => interopDefault(import('..\\pages\\product-details\\_slug.vue' /* webpackChunkName: "pages/product-details/_slug" */))
 
 const emptyFn = () => {}
 
@@ -68,6 +70,10 @@ export const routerOptions = {
     path: "/privacy-policy",
     component: _15e31887,
     name: "privacy-policy"
+  }, {
+    path: "/product",
+    component: _45e806a2,
+    name: "product"
   }, {
     path: "/ticket",
     component: _e2861408,
@@ -116,6 +122,10 @@ export const routerOptions = {
     path: "/",
     component: _90c48ddc,
     name: "index"
+  }, {
+    path: "/product-details/:slug?",
+    component: _408f6a16,
+    name: "product-details-slug"
   }],
 
   fallback: false

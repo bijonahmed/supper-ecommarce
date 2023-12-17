@@ -2,7 +2,7 @@ import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Welcome to Lottery',
+    title: 'Welcome to winup360',
     htmlAttrs: {
       lang: 'en'
     },
@@ -27,6 +27,7 @@ export default {
       { src: "https://code.jquery.com/jquery-3.7.0.js" },
       { src: "/assets/bootstrap-5.3.2/js/bootstrap.bundle.js" },
       { src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" },
+      { src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js" },
       { src: "/js/countdown.js" },
       { src: "/js/share_modal.js" },
       { src: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/intlTelInput.min.js" },
@@ -83,8 +84,8 @@ export default {
   },
    // Axios module configuration: https://go.nuxtjs.dev/config-axios
    axios: {
-     baseURL: "http://127.0.0.1:8000/api",
-     //baseURL: "https://ad-ecom.futuregenit.com/api",
+    //baseURL: "http://127.0.0.1:8000/api",
+    baseURL: "https://api.winup360.com/api",
     },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

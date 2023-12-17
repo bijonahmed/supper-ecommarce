@@ -57,8 +57,9 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="d-flex">
-                                                                <a href="javascript:" class="btn_details show_details" @click="viewDetails(item.slug)">View Details</a>
-                                                                <button type="button" @click="addtoCart(item)">add to cart</button>
+                                                                <nuxt-link :to="`/product-details/${item.slug}`">View Details</nuxt-link>
+                                                                <!-- <a href="javascript:" class="btn_details show_details" @click="viewDetails(item.slug)">View Details</a> -->
+                                                                <!-- <button type="button" @click="addtoCart(item)">add to cart</button> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">

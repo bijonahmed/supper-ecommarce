@@ -64,6 +64,7 @@ public function saveLead(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name'  => 'required',
+            'phone' => 'required',
             'email' => 'required',
         ]);
         if ($validator->fails()) {
@@ -71,17 +72,16 @@ public function saveLead(Request $request)
         }
         $data = array(
             'name'     => !empty($request->name) ? $request->name : "",
-            'address_1'   => !empty($request->address_1) ? $request->address_1 : "",
-            'address_2'   => !empty($request->address_2) ? $request->address_2 : "",
-            'address_3'   => !empty($request->address_3) ? $request->address_3 : "",
+            'phone'    => !empty($request->phone) ? $request->phone : "",
+            'addres'   => !empty($request->addres) ? $request->addres : "",
             'email'    => !empty($request->email) ? $request->email : "",
-           // 'entry_by' => $this->userid,
+            'entry_by' => $this->userid,
             'status'   => $request->status,
         );
         if (empty($request->id)) {
-            DB::table('users')->insertGetId($data);
+            DB::table('customer')->insertGetId($data);
         } else {
-            DB::table('users')->where('id', $request->id)->update($data);
+            DB::table('customer')->where('id', $request->id)->update($data);
         }
         $response = [
             'message' => 'Successfully Working',
@@ -92,7 +92,7 @@ public function saveLead(Request $request)
     {
        
         try {
-            $rows = User::where('role_id',2)->get();
+            $rows = Customer::filterCustomerList($request->all());
             $response = [
                 'data' => $rows,
                 'message' => 'success'
@@ -128,7 +128,7 @@ public function saveLead(Request $request)
     public function checkCustomer($id)
     {
         $id = (int) $id;
-        $data = User::where('id',$id)->first();
+        $data = Customer::checkCustomerRow($id);
         $response = [
             'data' => $data,
             'message' => 'success'

@@ -12,24 +12,25 @@
                     </span>
                     <div class="swiper pro_slider">
                         <div class="swiper-wrapper">
-
                             <!-- start  -->
                             <div class="swiper-slide" v-for="(item, index) in products" :key="index">
-                                <div class="sell_fast">
-                                    <div class="sell_progress">
-                                        <div id="timer" class="countdown_timer c_timer c_timer" data-endtime="25 june 2028 10:00:00 GMT+01:00"></div>
-                                        <div class="d-none">
-                                            <p>1372 sold out of 1950</p>
-                                            <div class="progress " role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar" style="width: 25%"></div>
+                                <nuxt-link :to="`/product-details/${item.slug}`">
+                                    <div class="sell_fast">
+                                        <div class="sell_progress">
+                                            <!-- <div id="timer" class="countdown_timer c_timer c_timer" data-endtime="25 june 2028 10:00:00 GMT+01:00"></div> -->
+                                            <div class="d-none">
+                                                <p>1372 sold out of 1950</p>
+                                                <div class="progress " role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar" style="width: 25%"></div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <img :src="item.thumnail" class="img-fulid" loading="lazy" alt="">
+                                        <h3>Get a chance to <span>WIN</span></h3>
+                                        <h2>{{ item.name }}</h2>
+                                        <!-- <button type="button" class="add_cart" @click="addtoCart(item)">add to cart</button> -->
                                     </div>
-                                    <img :src="item.thumnail" class="img-fulid" loading="lazy" alt="">
-                                    <h3>Get a chance to <span>WIN</span></h3>
-                                    <h2>{{ item.name }}</h2>
-                                    <button type="button" class="add_cart" @click="addtoCart(item)">add to cart</button>
-                                </div>
+                                </nuxt-link>
                             </div>
                             <!-- end -->
 

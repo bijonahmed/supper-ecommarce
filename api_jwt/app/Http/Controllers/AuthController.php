@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\User;
-use App\Models\Countrys;
 use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -20,12 +19,11 @@ class AuthController extends Controller
             'email' => 'required|string',
             'password' => 'required|string',
         ]);
-        
     }
-
-     
     public function login(Request $request)
     {
+       // dd($request->all());
+
         $this->validateLogin($request);
         $credentials = request(['email', 'password']);
         if (!$token = auth('api')->attempt($credentials)) {
@@ -39,55 +37,17 @@ class AuthController extends Controller
         }
         return $this->respondWithToken($token);
     }
-
-
-
     public function register(Request $request)
     {
-      // dd($request->all());
-       $validator = \Validator::make($request->all(), [
-            'fname'          => 'required',
-            'lname'          => 'required',
-            'phone_number'   => 'required|unique:users,phone_number',
-            'date_of_birth'  => 'required',
-            'gender'         => 'required',
-            'nationality_id' => 'required',
-            'email'          => 'required|unique:users,email',
-            'password'       => 'required|min:2|confirmed', // Add the 'confirmed' rule
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:6'
         ]);
-
-        $validator->setCustomMessages([
-            'fname.required'          => 'The first name is required.',
-            'lname.required'          => 'The last name is required.',
-            'phone_number.required'   => 'The phone number is required.',
-            'date_of_birth.required'  => 'The date of birth is required.',
-            'gender.required'         => 'The gender is required.',
-            'nationality_id.required' => 'The nationality is required.',
-            'email.required'          => 'The email is required.',
-            'email.unique'            => 'The email has already been taken.',
-            'password.required'       => 'The password is required.',
-            'password.min'            => 'The password must be at least :min characters.',
-            'password.confirmed'      => 'The password confirmation does not match.',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         $user = User::create([
-
-            'fname'            => $request->fname,
-            'lname'            => $request->lname,
-            'name'             => "$request->fname $request->lname",
-            'date_of_birth'    => date("Y-m-d",strtotime($request->date_of_birth)),
-            'gender'           => $request->gender,
-            'phone_number'     => $request->phone_number,
-            'nationality_id'   => $request->nationality_id,
-            'email'            => $request->email,
-            'role_id'          => 2,
-            'status'           => 1,
-            'show_password'    => $request->password,
-            'password'         => bcrypt($request->password),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
         // Get the token
         $token = auth('api')->login($user);
@@ -96,6 +56,7 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json($this->guard('api')->user());
+
     }
     public function logout()
     {
@@ -144,38 +105,26 @@ class AuthController extends Controller
     {
         $user = auth('api')->user();
         $authId = $user->id;
-        $validator = \Validator::make($request->all(), [
-            'fname'          => 'required',
-            'lname'          => 'required',
-            'phone_number'   => 'required',
-            'email'          => 'required',
-
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
         ]);
-
-        $validator->setCustomMessages([
-            'fname.required'          => 'The first name is required.',
-            'lname.required'          => 'The last name is required.',
-            'phone_number.required'   => 'The phone number is required.',
-            'email.required'          => 'The email is required.',
-            'email.unique'            => 'The email has already been taken.',
-            
-        ]);
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $name = "$request->fname $request->lname";
         $data = array(
             'id'                => $authId,
-            'fname'             => !empty($request->fname) ? $request->fname : "",
-            'lname'             => !empty($request->lname) ? $request->lname : "",
-            'name'              => $name,
+            'name'              => !empty($request->name) ? $request->name : "",
             'email'             => !empty($request->email) ? $request->email : "",
             'phone_number'      => !empty($request->phone_number) ? $request->phone_number : "",
-            'nationality_id'    => !empty($request->nationality_id) ? $request->nationality_id : "",
-            'date_of_birth'     => !empty($request->date_of_birth) ? date("Y-m-d",strtotime($request->date_of_birth)) : "",
-            'country_residence' => !empty($request->country_residence) ? $request->country_residence : "",
-           
+            'address'           => !empty($request->address) ? $request->address : "",
+            'website'           => !empty($request->website) ? $request->website : "",
+            'github'            => !empty($request->github) ? $request->github : "",
+            'twitter'           => !empty($request->twitter) ? $request->twitter : "",
+            'instagram'         => !empty($request->instagram) ? $request->instagram : "",
+            'facebook'          => !empty($request->facebook) ? $request->facebook : "",
         );
         if (!empty($request->file('file'))) {
             $documents = $request->file('file');
@@ -195,8 +144,6 @@ class AuthController extends Controller
         ];
         return response()->json($response);
     }
-
-  
     public function showProfileData(Request $request)
     {
         $data = auth('api')->user();
