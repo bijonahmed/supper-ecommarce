@@ -65,15 +65,15 @@
                                 <form @submit.prevent="saveData()" id="formrest" class="forms-sample">
                                     <h5>Registration</h5>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="input-container">
-                                                <input placeholder="First Name " class="input-field" type="text" v-model="insertdata.fname">
-                                                <label for="input-field" class="input-label">First Name </label>
-                                                <span class="text-danger" v-if="errors.fname">{{ errors.fname[0] }}</span>
+                                                <input placeholder=" Name " class="input-field" type="text" v-model="insertdata.name">
+                                                <label for="input-field" class="input-label">Name </label>
+                                                <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                                                 <span class="input-highlight"></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 d-none">
                                             <div class="input-container">
                                                 <input placeholder="Last Name " class="input-field" type="text" v-model="insertdata.lname">
                                                 <label for="input-field" class="input-label">Last Name </label>
@@ -98,7 +98,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 d-none">
                                             <div class="input-container">
                                                 <input placeholder="Date Of Birth" onfocus="type='date'" class="input-field" type="text" v-model="insertdata.date_of_birth">
                                                 <label for="input-field" class="input-label">Date Of Birth</label>
@@ -106,7 +106,7 @@
                                                 <span class="input-highlight"></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 d-none">
                                             <div class="input_group input-container">
                                                 <label for="gender" class="s_label">Gender</label>
                                                 <select name="" id="gender" class="form-control input-field" v-model="insertdata.gender">
@@ -119,7 +119,7 @@
                                             <span class="text-danger" v-if="errors.gender">{{ errors.gender[0] }}</span>
                                             <span class="input-highlight"></span>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 d-none">
                                             <div class="input_group input-container">
                                                 <label for="nationality" class="s_label">Nationality</label>
                                                 <select v-model="insertdata.nationality_id" class="form-control input-field" id="nationality">
@@ -208,8 +208,8 @@ export default {
         },
         saveData() {
             const formData = new FormData();
-            formData.append('fname', this.insertdata.fname);
-            formData.append('lname', this.insertdata.lname);
+            formData.append('name', this.insertdata.name);
+            //formData.append('lname', this.insertdata.lname);
             formData.append('email', this.insertdata.email);
             formData.append('date_of_birth', this.insertdata.date_of_birth);
             formData.append('gender', this.insertdata.gender);

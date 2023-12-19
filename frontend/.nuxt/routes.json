@@ -56,11 +56,11 @@
     "_name": "_15e31887"
   },
   {
-    "name": "product",
-    "path": "/product",
-    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\product.vue",
-    "chunkName": "pages/product",
-    "_name": "_45e806a2"
+    "name": "products",
+    "path": "/products",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\products.vue",
+    "chunkName": "pages/products",
+    "_name": "_6fc18b58"
   },
   {
     "name": "ticket",
@@ -68,6 +68,13 @@
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\ticket.vue",
     "chunkName": "pages/ticket",
     "_name": "_e2861408"
+  },
+  {
+    "name": "winners",
+    "path": "/winners",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\winners.vue",
+    "chunkName": "pages/winners",
+    "_name": "_c333c558"
   },
   {
     "name": "user-notification",
@@ -82,6 +89,20 @@
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\offer.vue",
     "chunkName": "pages/user/offer",
     "_name": "_38c07371"
+  },
+  {
+    "name": "user-order-details",
+    "path": "/user/order-details",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\order-details.vue",
+    "chunkName": "pages/user/order-details",
+    "_name": "_410e2f58"
+  },
+  {
+    "name": "user-orderlist",
+    "path": "/user/orderlist",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\orderlist.vue",
+    "chunkName": "pages/user/orderlist",
+    "_name": "_472c28fe"
   },
   {
     "name": "user-payment",

@@ -18,6 +18,7 @@ use App\Http\Controllers\Manufacturer\ManufacturesController;
 use App\Http\Controllers\Brands\BrandsController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Order\OrderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -109,14 +110,34 @@ Route::group([
     Route::get('attributes', [CategoryController::class, 'getAttribute']);
     Route::get('attributes-list', [CategoryController::class, 'getAttributeList']);
     Route::get('attributes-val-list', [CategoryController::class, 'getAttributeValList']);
-
 });
+
+
+
+Route::group([
+    'prefix' => 'order'
+], function () {
+    //Add to cart 
+    Route::post('submitOrder', [OrderController::class, 'submitOrder']);
+    Route::get('getOrder', [OrderController::class, 'getOrder']);
+    Route::get('allOrders', [OrderController::class, 'allOrders']);
+    Route::get('orderDetails/{orderid}', [OrderController::class, 'orderDetails']);
+    Route::get('addtowish/{slug}', [OrderController::class, 'addtowish']);
+    Route::get('allWishList/', [OrderController::class, 'allWishList']);
+    Route::get('removeWishList/{productid}', [OrderController::class, 'removeWishList']);
+    Route::get('orderStatus', [OrderController::class, 'orderStatus']);
+    Route::get('orderStatusRow/{id}', [OrderController::class, 'orderStatusRow']);
+    Route::post('save_order', [OrderController::class, 'save_order']);
+    Route::get('allOrdersAdmin', [OrderController::class, 'allOrdersAdmin']);
+    Route::post('update_order_status', [OrderController::class, 'update_order_status']);
+});
+
 
 Route::group([
     'middleware' => 'api',
     'prefix' => 'product'
 ], function () {
- 
+
     Route::post('save', [ProductController::class, 'save']);
     Route::post('product-update', [ProductController::class, 'productUpdate']);
     Route::post('insertVarientGroup', [ProductController::class, 'insertVarientGroup']);
@@ -178,18 +199,20 @@ Route::group([
     Route::get('cart', [CartController::class, 'index']);
     Route::get('getCartData', [CartController::class, 'getCartData']);
     Route::post('addToCart', [CartController::class, 'addToCart']);
-    Route::get('searchProductCategory', [UnauthenticatedController::class, 'productCategory']);
-    
+    Route::get('searchProductCategory/{category_id}', [UnauthenticatedController::class, 'productCategory']);
+    Route::get('sellingFast', [UnauthenticatedController::class, 'sellingFast']);
+
     Route::get('slidersImages', [UnauthenticatedController::class, 'slidersImages']);
     Route::get('topSellingProducts', [UnauthenticatedController::class, 'topSellProducts']);
     Route::get('limitedProducts', [UnauthenticatedController::class, 'limitedProducts']);
     Route::get('filterCategorys', [UnauthenticatedController::class, 'filterCategory']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategory']);
- 
+
     Route::get('getProductrow', [UnauthenticatedController::class, 'getProductrow']);
     Route::get('get-paginated-products', [UnauthenticatedController::class, 'getPaginatedData']);
     Route::get('defaultShowingProduct', [UnauthenticatedController::class, 'defaultShowingProduct']);
-    
+    Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
+
     //Route::get('defaultShowingMovies', [UnauthenticatedController::class, 'defaultShowingMovies']);
 
     Route::get('defaultShowingMoviesHome', [UnauthenticatedController::class, 'defaultShowingMoviesHome']);
@@ -212,7 +235,7 @@ Route::group([
     //add slider 
     Route::post('insertSlider', [SettingController::class, 'insertSlider']);
     Route::get('slidersImages', [SettingController::class, 'slidersImages']);
-        Route::get('sliderrow/{id}', [SettingController::class, 'sliderrow']);
+    Route::get('sliderrow/{id}', [SettingController::class, 'sliderrow']);
     //emp type
     Route::post('insertEmployeeType', [SettingController::class, 'insertEmployeeType']);
     Route::get('getEmployeeTypeList', [SettingController::class, 'getEmployeeTypeList']);

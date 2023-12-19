@@ -40,10 +40,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="social">
-                            <a href="https://facebook.com" target="_blank">
+                            <a href="https://www.facebook.com/winup360" target="_blank">
                                 <i class="fa-brands fa-facebook-f"></i>
                             </a>
-                            <a href="#" target="_blank">
+                            <!-- <a href="#" target="_blank">
                                 <i class="fa-brands fa-x-twitter"></i>
                             </a>
                             <a href="#" target="_blank">
@@ -57,7 +57,7 @@
                             </a>
                             <a href="#" target="_blank">
                                 <i class="fa-brands fa-tiktok"></i>
-                            </a>
+                            </a> -->
                         </div>
                         <div class="app_link">
                             <p>Download the LOTTERY app for the ultimate shopping experience!</p>
@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="copyright_text">
-                            <p>© Copyright 2023 <strong style="color: #aded28;">Futuregenit</strong>. All Rights Reserved.</p>
+                            <p>© Copyright 2024 <strong style="color: #aded28;">winup360</strong>. All Rights Reserved.</p>
                             <ul>
                                 <li>
                                     <nuxt-link to="/agreement" href="javascript:void();">User Agreement</nuxt-link>

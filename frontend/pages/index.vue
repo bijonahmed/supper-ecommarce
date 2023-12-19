@@ -30,7 +30,7 @@
             <div class="content">
                 <p>Share this link via</p>
                 <ul class="icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/winup360"  target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
                     <a href="#"><i class="fab fa-telegram-plane"></i></a>
@@ -38,7 +38,7 @@
                 <p>Or copy link</p>
                 <div class="field">
                     <i class="url-icon uil uil-link"></i>
-                    <input type="text" readonly id="myInput" value="https://futuregenit.com">
+                    <input type="text" readonly id="myInput" value="https://winup360.com/">
                     <button onclick="copy()" id="change_txt">Copy</button>
                 </div>
             </div>

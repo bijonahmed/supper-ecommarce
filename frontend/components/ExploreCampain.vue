@@ -50,10 +50,8 @@
                                         <div class="col-md-7">
                                             <div class="c_content_right">
                                                 <div class="c_content_box">
-                                                    <h1>Win</h1>
-                                                    <h2>{{ item.name }}</h2>
-                                                    <h6>Buy a lottery credit and make it yours!</h6>
-                                                    <span>${{ item.price }}</span>
+                                                    <h1>Lottery -1</h1>
+                                                    <span>BDT{{ item.price }}</span>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="d-flex">

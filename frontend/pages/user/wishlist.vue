@@ -36,7 +36,7 @@
                                                     <img :src="item.thumnail_img" class="img-fulid" style="width: 100%;" alt="">
                                                 </div>
                                                 <div class="cart_title">
-                                                    <h1>{{ item.name }}</h1>
+                                                    <h1>{{ item.product_name }}</h1>
                                                     <h6>Lottery credit</h6>
                                                     <p>BDT{{ item.price }}</p>
                                                     <div class="sell_progress">
@@ -62,7 +62,8 @@
                                         <div class="col-md-6">
                                             <div class="value_change">
                                                 <div class="value_box">
-                                                    <button type="button" class="btn_submit" style="display: block;" @click="addtoCart(item)">Add To cart</button>
+                                                    <nuxt-link :to="`/product-details/${item.slug}`"  class="btn_submit" style="display: block; text-decoration: none;">View Details</nuxt-link>
+                                                    <!-- <button type="button" class="btn_submit" style="display: block;" @click="addtoCart(item)">Add To cart</button> -->
 
                                                     <button type="button" class="btn_submit rm_w" @click="remove(item.wishid)">Remove from wishlist</button>
                                                 </div>

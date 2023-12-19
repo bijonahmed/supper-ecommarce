@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Validator;
 use Illuminate\Support\Str;
@@ -7,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use DB;
+
 class AuthController extends Controller
 {
     public function __construct()
@@ -22,7 +25,7 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
 
         $this->validateLogin($request);
         $credentials = request(['email', 'password']);
@@ -41,13 +44,17 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'phone_number' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:6'
         ]);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' => 2,
+            'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
+            'show_password' => $request->password,
         ]);
         // Get the token
         $token = auth('api')->login($user);
@@ -56,7 +63,6 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json($this->guard('api')->user());
-
     }
     public function logout()
     {
@@ -109,7 +115,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required',
             'phone_number' => 'required',
-            'address' => 'required',
+            //'address' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -125,6 +131,8 @@ class AuthController extends Controller
             'twitter'           => !empty($request->twitter) ? $request->twitter : "",
             'instagram'         => !empty($request->instagram) ? $request->instagram : "",
             'facebook'          => !empty($request->facebook) ? $request->facebook : "",
+            'gender'            => !empty($request->gender) ? $request->gender : "",
+            'date_of_birth'     => !empty($request->date_of_birth) ? $request->date_of_birth : "",
         );
         if (!empty($request->file('file'))) {
             $documents = $request->file('file');

@@ -18,11 +18,11 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                                     <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="#">Need Help? Contact us
+                                        <a class="nav-link active" aria-current="page" href="https://www.facebook.com/winup360" target="_blank">Need Help? Contact us
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <nuxt-link class="nav-link active" aria-current="page" to="/product">
+                                        <nuxt-link class="nav-link active" aria-current="page" to="/products">
                                             <div class="creadit_ticket">
                                                 <p>Win Exclusive Price</p>
                                                 <h1>PRODUCT</h1>
@@ -30,16 +30,16 @@
                                         </nuxt-link>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="#">
+                                        <nuxt-link to="/winners" class="nav-link active" aria-current="page">
                                             <div class="creadit_ticket">
                                                 <p>Win Exclusive Price</p>
                                                 <h1>WINNERS</h1>
                                             </div>
-                                        </a>
+                                        </nuxt-link>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a class="nav-link mobile_" href="tel:888000">Call 01910000000</a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item d-none">
                                         <select name="" class="" id="">
                                             <option value=""><img src="/images/flags/united-states-emoji-96.png" class="img-fulid" loading="lazy" alt="">USDT</option>
@@ -84,27 +84,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="header_button ">
-                        <nuxt-link to="/" class="active">
-                            <!-- <img src="images/lottery_icon.png" class="img-fluid" loading="lazy" alt=""> -->
+                    <div class="header_button">
+                        <nuxt-link to="/" :class="{ 'active': $route.path === '/' }">
                             <div class="creadit_ticket">
                                 <p>Win Exclusive Price</p>
                                 <h1>Lottery</h1>
                             </div>
                         </nuxt-link>
-                        <nuxt-link to="/product">
+                        <nuxt-link to="/products" :class="{ 'active': $route.path === '/products' }">
                             <div class="creadit_ticket">
                                 <p>Win Exclusive Price</p>
                                 <h1>PRODUCT</h1>
                             </div>
                         </nuxt-link>
-                        <a href="#">
+                        <nuxt-link to="/winners" :class="{ 'active': $route.path === '/winners' }">
                             <div class="creadit_ticket">
                                 <p>Winner from last Draw</p>
                                 <h1>WINNERS</h1>
                             </div>
-                        </a>
+                        </nuxt-link>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -10,10 +10,13 @@ use Validator;
 use Helper;
 use App\Models\Product;
 use App\Models\Sliders;
+use App\Models\ProductAdditionalImg;
 use App\Models\ProductCategory;
 use App\Models\Categorys;
+use App\Models\ProductAttributes;
 use Illuminate\Support\Str;
 use App\Rules\MatchOldPassword;
+use App\Models\Attribute;
 use Illuminate\Support\Facades\Hash;
 use DB;
 use File;
@@ -49,6 +52,7 @@ class UnauthenticatedController extends Controller
         return response()->json($modifiedCollection, 200);
     }
 
+
     public function topSellProducts()
     {
         $data = Product::orderBy('id', 'desc')->select('id', 'name', 'thumnail_img', 'slug')->limit(12)->get();
@@ -65,6 +69,80 @@ class UnauthenticatedController extends Controller
         return response()->json($result, 200);
     }
 
+    public function findProductSlug($slug)
+    {
+
+        $data['prodAttr'] = Attribute::where('status', 1)->get();
+
+        $data['pro_row']  = Product::where('product.slug', $slug)
+            ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
+            ->first();
+
+
+        $product_chk       = Product::where('product.slug', $slug)
+            ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
+            ->get();
+        $products = [];
+        foreach ($product_chk as $key => $v) {
+            $products[] = [
+                'id'           => $v->id,
+                'product_id'   => $v->product_id,
+                'product_name' => $v->pro_name,
+                'discount'     => $v->discount,
+                'price'        => number_format($v->price, 2),
+                'thumnail_img' => url($v->thumnail_img),
+                'pro_slug'     => $v->pro_slug,
+
+            ];
+        }
+        $findproductrow   = $data['pro_row'];
+
+
+
+        $insertimg['product_id'] = $findproductrow->id;
+        $insertimg['images'] = $findproductrow->thumnail_img;
+
+        $chkpoings  = ProductAdditionalImg::where('product_id', $findproductrow->id)->where('images', $findproductrow->thumnail_img)->first();
+        // dd($chkpoings);
+        if (empty($chkpoings)) {
+            ProductAdditionalImg::create($insertimg);
+        }
+
+        $data['att_img']   = ProductAdditionalImg::orderBy('id', 'desc')->where('product_id', $findproductrow->id)->get();
+
+        $mul_slider_img = [];
+        foreach ($data['att_img'] as $v) {
+            $mul_slider_img[] = [
+                'product_id' => $v->product_id,
+                'thumnail' => !empty($v->images) ? url($v->images) : "", // Assuming thumnail_img is the correct column name
+            ];
+        }
+
+        //  dd($mul_slider_img);
+        $data['slider_img']    = !empty($mul_slider_img) ? $mul_slider_img : "";
+        $data['featuredImage'] = url($findproductrow->thumnail_img);
+        $data['product']       = $products;
+        return response()->json($data, 200);
+    }
+
+    public function sellingFast()
+    {
+        $data = Product::orderBy('id', 'desc')->select('id', 'name', 'thumnail_img', 'slug')->limit(12)->get();
+        foreach ($data as $v) {
+            $result[] = [
+                'id'   => $v->id,
+                'name' => substr($v->name, 0, 50) . '...',
+                'thumnail'  => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
+                'slug'     => $v->slug,
+            ];
+        }
+
+        // dd($result);
+        return response()->json($result, 200);
+    }
+
+
+
     public function slidersImages()
     {
         $data = Sliders::where('status', 1)->get();
@@ -80,30 +158,51 @@ class UnauthenticatedController extends Controller
         return response()->json($result, 200);
     }
 
-    public function productCategory(Request $request)
+    public function productCategory($category_id)
     {
 
-        $category_id = $request->category_id;
-        $category    = Categorys::find($category_id);
-        $categorys   = ProductCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
-            ->select('produc_categories.product_id', 'product.name', 'product.slug', 'product.thumnail_img')
-            ->where('produc_categories.category_id', $category_id)
-            ->orderByDesc('product.id')
-            ->limit(10)
-            ->get();
+        //echo $category_id;exit; 
 
+        $categoryId = Categorys::where('parent_id', $category_id)->pluck('id')->toArray();
+        $implodeCategory = implode(',', $categoryId);
+
+        if ($category_id !== 'all') {
+            $categoryId = Categorys::where('parent_id', $category_id)->pluck('id')->toArray();
+            $implodeCategory = implode(',', $categoryId);
+            $categoryIds = explode(',', $implodeCategory);
+        
+            $categorys = ProductCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
+            ->join('categorys', 'categorys.id', '=', 'produc_categories.category_id') 
+                ->select('categorys.name as categoryname','produc_categories.product_id', 'product.name', 'product.price','product.slug', 'product.thumnail_img')
+                ->whereIn('produc_categories.category_id', $categoryIds)
+                ->orderByDesc('product.id')
+                ->distinct() // Add this line to remove duplicate products
+                ->get();
+        } else {
+            // Logic to fetch all products without the whereIn clause
+            $categorys = ProductCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
+            ->join('categorys', 'categorys.id', '=', 'produc_categories.category_id') 
+                ->select('categorys.name as categoryname','produc_categories.product_id', 'product.name', 'product.price', 'product.slug', 'product.thumnail_img')
+                ->orderByDesc('product.id')
+                ->groupby('product.id') // Add this line to remove duplicate products
+                ->get();
+        }
+        
+
+        //dd($categorys);
+        $result = [];
         foreach ($categorys as $v) {
             $result[] = [
                 'product_id'   => $v->product_id,
+                'price'        => $v->price,
                 'name'         => substr($v->name, 0, 12) . '...',
                 'thumnail'     => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
                 'slug'         => $v->slug,
+                'category_name' => $v->categoryname,
             ];
         }
 
         $data['result']  = !empty($result) ? $result : "";
-        $data['name']    = $category->name;
-        $data['catslug'] = $category->slug;
         return response()->json($data, 200);
     }
 

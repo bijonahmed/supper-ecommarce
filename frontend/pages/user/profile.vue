@@ -17,16 +17,16 @@
 
                     <form @submit.prevent="updateprofile()" id="userSubmitFrm" class="forms-sample" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="input-container">
                                     <input type="hidden" v-model="insertdata.id">
-                                    <input placeholder="First Name " class="input-field" type="text" v-model="insertdata.fname">
-                                    <label for="input-field" class="input-label">First Name </label>
-                                    <span class="text-danger" v-if="errors.fname">{{ errors.fname[0] }}</span>
+                                    <input placeholder="Name " class="input-field" type="text" v-model="insertdata.name">
+                                    <label for="input-field" class="input-label"> Name </label>
+                                    <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                                     <span class="input-highlight"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-none">
                                 <div class="input-container">
                                     <input placeholder="Last Name " class="input-field" type="text" v-model="insertdata.lname">
                                     <label for="input-field" class="input-label">Last Name </label>
@@ -68,7 +68,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-none">
                                 <div class="input_group input-container">
                                     <label for="nationality" class="s_label">Nationality</label>
                                     <select v-model="insertdata.nationality_id" class="form-control input-field" id="nationality">
@@ -77,7 +77,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6  d-none">
                                 <div class="input_group input-container">
                                     <label for="residence" class="s_label">Country Of Residence</label>
                                     <select v-model="insertdata.country_residence" class="form-control input-field" id="country_residence">
@@ -130,7 +130,7 @@ export default {
         }
     },
     mounted() {
-        this.countrys();
+       // this.countrys();
         this.defaultLoadingData();
     },
     methods: {
@@ -138,7 +138,7 @@ export default {
             this.loading = true;
             const formData = new FormData();
             // formData.append('file', this.file);
-            formData.append('fname', this.insertdata.fname);
+            formData.append('name', this.insertdata.name);
             formData.append('lname', this.insertdata.lname);
             formData.append('email', this.insertdata.email);
             formData.append('phone_number', this.insertdata.phone_number);

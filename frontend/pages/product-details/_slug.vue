@@ -2,7 +2,7 @@
 <div>
     <Navbar />
     <!-- mobile header part start here  -->
-    <section class="mobile_header app_show">
+    <section class="mobile_header app_show d-none">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -36,15 +36,17 @@
     <section class="product_details">
         <div class="container">
             <div class="row">
+                <span v-if="loading">
+                    <Loader />
+                </span>
+
                 <div class="col-md-5">
                     <!-- images slider part start here  -->
                     <div class="pd_slider">
                         <swiper-container class="mySwiper" pagination="true">
-
                             <swiper-slide v-for="(img, index) in slider_img" :key="index">
                                 <img :src="img.thumnail" class="img-fluid" loading="lazy" alt="">
                             </swiper-slide>
-
                         </swiper-container>
                     </div>
                     <!-- images slider part end here  -->
@@ -58,13 +60,9 @@
                             <h2 class="mb-2">You will get a Lottery Ticket for free </h2>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="custom-select">
-                                    <select name="Country">
+                                    <select name="choose_size" v-model="choose_size">
                                         <option value="">Size</option>
-                                        <option value="">XS</option>
-                                        <option value="">XL</option>
-                                        <option value="">L</option>
-                                        <option value="">M</option>
-                                        <option value="">S</option>
+                                        <option v-for="size in prodAttr" :key="size.id">{{ size.name }}</option>
                                     </select>
                                     <span class="custom-arrow"></span>
                                 </div>
@@ -79,7 +77,7 @@
                                 <p>Product Price</p>
                                 <h3>BDT {{ pro_row.price }}</h3>
                             </div>
-                            <button class="btn_submit">Add to cart</button>
+                            <button class="btn_submit" @click="addtoCart(pro_row)">Add to cart</button>
                         </div>
                         <div class="accordion accordion-flush" id="accordionFlushExample">
                             <div class="accordion-item">
@@ -129,8 +127,10 @@ export default {
             cart: [],
             itemCount: 0,
             slider_img: [],
+            choose_size: '',
             subtotal: 0,
             pro_row: [],
+            prodAttr: [],
             loading: false,
         }
     },
@@ -142,19 +142,63 @@ export default {
 
     },
     methods: {
-        btnSize(){
+        addtoCart(product) {
+            this.loading = true;
+            // const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            const chksizeval = this.choose_size;
+            //console.log("======" + chksizeval);
+            // return false;
+            if (chksizeval == "") {
+                this.loading = false;
+                Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: "Please select your size!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return false;
+            } else {
+                const existingProduct =  this.cart.find(item => item.id === product.id && item.size === this.choose_size);
+                //this.cart.find(item => item.id === product.id);
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    this.cart.push({
+                        ...product,
+                        size: this.choose_size,
+                        quantity: 1
+                    });
+                }
+                // Merge with existing data if any
+                const existingData = JSON.parse(localStorage.getItem('cart')) || [];
+                const newData = [...existingData, ...this.cart];
+
+                localStorage.setItem('cart', JSON.stringify(newData));
+
+                setTimeout(() => {
+                    this.loading = false;
+                }, 1000);
+            }
+        },
+        saveCart() {
+            if (process.client) {
+                localStorage.setItem('cart', JSON.stringify(this.cart));
+            }
+        },
+        btnSize() {
             $(".size_chart_modal").fadeIn();
         },
-        btnSizeClose(){
+        btnSizeClose() {
             $(".size_chart_modal").fadeOut();
         },
         async fetchData() {
-            const prosulg = this.$route.params.slug; //this.$route.query.slug;
-            console.log("-----------" + prosulg);
-            //return false; 
+            const prosulg = this.$route.params.slug;
             const response = await this.$axios.get(`/unauthenticate/productSlug/${prosulg}`);
-            console.log("----" + response.data.slider_img);
+          //  console.log("----" + response.data.prodAttr);
             this.slider_img = response.data.slider_img;
+            this.prodAttr = response.data.prodAttr;
             this.pro_row = response.data.pro_row;
             $(".productdetails").html(response.data.pro_row.description);
         },

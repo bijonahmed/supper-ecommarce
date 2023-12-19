@@ -12,10 +12,13 @@ const _f7323954 = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChu
 const _fd7547ae = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
 const _5ba6d59c = () => interopDefault(import('..\\pages\\offer.vue' /* webpackChunkName: "pages/offer" */))
 const _15e31887 = () => interopDefault(import('..\\pages\\privacy-policy.vue' /* webpackChunkName: "pages/privacy-policy" */))
-const _45e806a2 = () => interopDefault(import('..\\pages\\product.vue' /* webpackChunkName: "pages/product" */))
+const _6fc18b58 = () => interopDefault(import('..\\pages\\products.vue' /* webpackChunkName: "pages/products" */))
 const _e2861408 = () => interopDefault(import('..\\pages\\ticket.vue' /* webpackChunkName: "pages/ticket" */))
+const _c333c558 = () => interopDefault(import('..\\pages\\winners.vue' /* webpackChunkName: "pages/winners" */))
 const _d439fa34 = () => interopDefault(import('..\\pages\\user\\notification.vue' /* webpackChunkName: "pages/user/notification" */))
 const _38c07371 = () => interopDefault(import('..\\pages\\user\\offer.vue' /* webpackChunkName: "pages/user/offer" */))
+const _410e2f58 = () => interopDefault(import('..\\pages\\user\\order-details.vue' /* webpackChunkName: "pages/user/order-details" */))
+const _472c28fe = () => interopDefault(import('..\\pages\\user\\orderlist.vue' /* webpackChunkName: "pages/user/orderlist" */))
 const _51650a4a = () => interopDefault(import('..\\pages\\user\\payment.vue' /* webpackChunkName: "pages/user/payment" */))
 const _7c509730 = () => interopDefault(import('..\\pages\\user\\personal-details.vue' /* webpackChunkName: "pages/user/personal-details" */))
 const _3db548fe = () => interopDefault(import('..\\pages\\user\\profile.vue' /* webpackChunkName: "pages/user/profile" */))
@@ -71,13 +74,17 @@ export const routerOptions = {
     component: _15e31887,
     name: "privacy-policy"
   }, {
-    path: "/product",
-    component: _45e806a2,
-    name: "product"
+    path: "/products",
+    component: _6fc18b58,
+    name: "products"
   }, {
     path: "/ticket",
     component: _e2861408,
     name: "ticket"
+  }, {
+    path: "/winners",
+    component: _c333c558,
+    name: "winners"
   }, {
     path: "/user/notification",
     component: _d439fa34,
@@ -86,6 +93,14 @@ export const routerOptions = {
     path: "/user/offer",
     component: _38c07371,
     name: "user-offer"
+  }, {
+    path: "/user/order-details",
+    component: _410e2f58,
+    name: "user-order-details"
+  }, {
+    path: "/user/orderlist",
+    component: _472c28fe,
+    name: "user-orderlist"
   }, {
     path: "/user/payment",
     component: _51650a4a,

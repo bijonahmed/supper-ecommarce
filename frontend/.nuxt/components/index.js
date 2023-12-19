@@ -1,15 +1,15 @@
-export const Banner = () => import('../..\\components\\Banner.vue' /* webpackChunkName: "components/banner" */).then(c => wrapFunctional(c.default || c))
-export const ExploreCampain = () => import('../..\\components\\ExploreCampain.vue' /* webpackChunkName: "components/explore-campain" */).then(c => wrapFunctional(c.default || c))
-export const Footer = () => import('../..\\components\\Footer.vue' /* webpackChunkName: "components/footer" */).then(c => wrapFunctional(c.default || c))
-export const LeftsidebarDesktop = () => import('../..\\components\\LeftsidebarDesktop.vue' /* webpackChunkName: "components/leftsidebar-desktop" */).then(c => wrapFunctional(c.default || c))
-export const LeftsidebarMobile = () => import('../..\\components\\LeftsidebarMobile.vue' /* webpackChunkName: "components/leftsidebar-mobile" */).then(c => wrapFunctional(c.default || c))
-export const Loader = () => import('../..\\components\\Loader.vue' /* webpackChunkName: "components/loader" */).then(c => wrapFunctional(c.default || c))
-export const MainSlider = () => import('../..\\components\\MainSlider.vue' /* webpackChunkName: "components/main-slider" */).then(c => wrapFunctional(c.default || c))
-export const MobileMenu = () => import('../..\\components\\MobileMenu.vue' /* webpackChunkName: "components/mobile-menu" */).then(c => wrapFunctional(c.default || c))
-export const Navbar = () => import('../..\\components\\Navbar.vue' /* webpackChunkName: "components/navbar" */).then(c => wrapFunctional(c.default || c))
-export const SellingFastSlider = () => import('../..\\components\\SellingFastSlider.vue' /* webpackChunkName: "components/selling-fast-slider" */).then(c => wrapFunctional(c.default || c))
-export const SoldOut = () => import('../..\\components\\SoldOut.vue' /* webpackChunkName: "components/sold-out" */).then(c => wrapFunctional(c.default || c))
-export const Winner = () => import('../..\\components\\Winner.vue' /* webpackChunkName: "components/winner" */).then(c => wrapFunctional(c.default || c))
+export { default as Banner } from '../..\\components\\Banner.vue'
+export { default as ExploreCampain } from '../..\\components\\ExploreCampain.vue'
+export { default as Footer } from '../..\\components\\Footer.vue'
+export { default as LeftsidebarDesktop } from '../..\\components\\LeftsidebarDesktop.vue'
+export { default as LeftsidebarMobile } from '../..\\components\\LeftsidebarMobile.vue'
+export { default as Loader } from '../..\\components\\Loader.vue'
+export { default as MainSlider } from '../..\\components\\MainSlider.vue'
+export { default as MobileMenu } from '../..\\components\\MobileMenu.vue'
+export { default as Navbar } from '../..\\components\\Navbar.vue'
+export { default as SellingFastSlider } from '../..\\components\\SellingFastSlider.vue'
+export { default as SoldOut } from '../..\\components\\SoldOut.vue'
+export { default as Winner } from '../..\\components\\Winner.vue'
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {

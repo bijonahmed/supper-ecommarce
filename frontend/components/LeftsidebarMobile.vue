@@ -19,6 +19,9 @@
                                     Details</span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
                         </li>
                         <li>
+                            <nuxt-link to="/user/orderlist"><span><strong class="fa-solid fa-heart"></strong>Order List</span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
+                        </li>
+                        <li>
                             <nuxt-link to="/user/wishlist"><span><strong class="fa-solid fa-heart"></strong>Wishlist</span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
                         </li>
                         <li>

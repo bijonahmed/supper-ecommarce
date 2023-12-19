@@ -89,7 +89,6 @@ class OrderController extends Controller
 
     function addtowish($slug)
     {
-       
         $findproduct = Product::where('slug', $slug)->select('id')->first();
         $row                  = new WishList();
         $row->customer_id     = $this->userid;
@@ -100,17 +99,12 @@ class OrderController extends Controller
 
     function allWishList()
     {
-       
-        $rows = WishList::join('product', 'product.id', '=', 'wishlist.product_id')
-                ->select('wishlist.id as wishid', 'product.thumnail_img', 'product.slug', 'product.name', 'price', 'product.id')
-                ->where('customer_id',$this->userid)
-                ->get();
-
+        $rows = WishList::join('product', 'product.id', '=', 'wishlist.id')->select('wishlist.id as wishid', 'product.thumnail_img', 'product.slug', 'product.name', 'price', 'product.id')->get();
         $products = [];
         foreach ($rows as $key => $v) {
             $products[] = [
                 'id'           => $v->id,
-                'name'         => $v->name,
+                'product_name' => $v->name,
                 'wishid'       => $v->wishid,
                 'price'        => number_format($v->price, 2),
                 'thumnail_img' => url($v->thumnail_img),
@@ -118,6 +112,7 @@ class OrderController extends Controller
 
             ];
         }
+
         return response()->json($products, 200);
     }
 
@@ -239,33 +234,36 @@ class OrderController extends Controller
     public function submitOrder(Request $request)
     {
 
+        //dd($request->all());
+
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
 
         $cartData = $request->input('cart');
         // dd($cartData);
         $total = 0;
         foreach ($cartData as $cartItem) {
-            $productid = $cartItem['product']['id'];
+            $productid = $cartItem['id'];
             $quantity  = $cartItem['quantity'];
-            $price     = str_replace(',', '', $cartItem['product']['price']); // Remove commas
+            $price     = $cartItem['price']; //str_replace(',', '', $cartItem['price']); // Remove commas
             $price     = floatval($price); // Convert to float
 
             if (!is_numeric($quantity) || !is_numeric($price)) {
-                echo "Invalid quantity or price for Product ID: {$productid}<br/>";
+                //  echo "Invalid quantity or price for Product ID: {$productid}<br/>";
                 continue;  // Skip the current iteration and move to the next item
             }
             // Calculate the subtotal for the current item
             $subtotal = $quantity * $price;
             // Add the subtotal to the total
             $total += $subtotal;
-            echo "Product ID: {$productid} - Quantity: {$quantity} - Price: {$price} - Subtotal: {$subtotal} - Total: {$total}<br/>";
+            //echo "Product ID: {$productid} - Quantity: {$quantity} - Price: {$price} - Subtotal: {$subtotal} - Total: {$total}<br/>";
         }
 
         $order                  = new Order();
         $order->orderId         = $randomNum;
         $order->total           = $total;
-        $order->subtotal         = $total;
+        $order->subtotal        = $total;
         $order->customer_id     = $this->userid;
+        $order->order_status    = 1; // Order Placed 
         $order->save();
         // Get the last inserted order ID
         $lastOrderId = $order->id;
@@ -273,9 +271,9 @@ class OrderController extends Controller
 
         $itemtotal = 0;
         foreach ($cartData as $cartItem) {
-            $productid = $cartItem['product']['id'];
+            $productid = $cartItem['id'];
             $quantity  = $cartItem['quantity'];
-            $price     = str_replace(',', '', $cartItem['product']['price']); // Remove commas
+            $price     = $cartItem['price'];//str_replace(',', '', $cartItem['price']); // Remove commas
             $price     = floatval($price); // Convert to float
 
             $subtotal = $quantity * $price;
@@ -287,7 +285,6 @@ class OrderController extends Controller
             $order_history->quantity        = $quantity;
             $order_history->price           = $price;
             $order_history->total           = $itemtotal;
-            $order_history->order_status    = 1; // Order Placed 
             $order_history->save();
         }
         return response()->json("Your order successfully done!", 200);

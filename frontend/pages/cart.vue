@@ -11,7 +11,7 @@
                         <span v-if="loading">
                             <Loader />
                         </span>
-                        <p class="l_alrt">Please Login for Complete this process.</p>
+                        <p class="l_alrt"  v-if="!loggedIn">Please Login for Complete this process.</p>
                         <ul>
                             <li v-for="item in cart" :key="item.id">
                                 <div class="cart_item ">
@@ -25,7 +25,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="cart_title">
-                                                    <h1>{{ item.name }}</h1>
+                                                    <h1>{{ item.name }} </h1>
+                                                    <span>{{ item.size }}</span>
                                                     <h6>Lottery credit</h6>
                                                     <p>{{ formatPrice(item.price) }}</p>
                                                     <span>You will get 1 tickets</span>
@@ -207,8 +208,53 @@ export default {
         },
     },
     methods: {
-        orderConfirm(){
-                alert("Order confirm....");
+        orderConfirm() {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to submit an order?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const response = this.$axios.post('/order/submitOrder', {
+                        cart: this.cart,
+                    });
+                    this.clearCart();
+                    console.log(response.data); // Log the API response
+
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Your order has been submited.",
+                        icon: "success"
+                    });
+                }
+            });
+        },
+
+        clearCart() {
+            this.loading = true;
+            localStorage.removeItem('cart');
+            this.cart = [];
+            this.cartItemCount();
+            setTimeout(() => {
+                this.loading = false;
+            }, 2000);
+
+        },
+
+        cartItemCount() {
+            //  this.loading = true;
+            let itemCount = 0;
+            this.cart.forEach((item) => {
+                itemCount += parseInt(item.quantity);
+            });
+            this.itemCount = itemCount;
+            console.log('Emitting cartItemCountUpdated event with itemCount:', this.itemCount);
+            this.$eventBus.$emit('cartItemCountUpdated', this.itemCount);
+
         },
         increaseQuantity(productId) {
             const savedCart = localStorage.getItem('cart');
@@ -300,8 +346,11 @@ export default {
     }
 }
 </script>
+
 <style>
-.txtformat{
-    text-decoration: none ; width: 100%; text-align: center;
+.txtformat {
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
 }
 </style>
