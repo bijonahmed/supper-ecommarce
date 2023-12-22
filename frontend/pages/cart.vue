@@ -185,6 +185,7 @@
 </template>
 
 <script>
+import bus from '~/plugins/bus.js';
 export default {
     head: {
         title: 'Cart',
@@ -200,6 +201,7 @@ export default {
     mounted() {
         this.getCartTotal();
         this.loadCart();
+        this.calculateTotalQuantity();
 
     },
     computed: {
@@ -238,22 +240,20 @@ export default {
             this.loading = true;
             localStorage.removeItem('cart');
             this.cart = [];
-            this.cartItemCount();
+            this.calculateTotalQuantity();
             setTimeout(() => {
                 this.loading = false;
             }, 2000);
 
         },
 
-        cartItemCount() {
-            //  this.loading = true;
-            let itemCount = 0;
-            this.cart.forEach((item) => {
-                itemCount += parseInt(item.quantity);
-            });
-            this.itemCount = itemCount;
-            console.log('Emitting cartItemCountUpdated event with itemCount:', this.itemCount);
-            this.$eventBus.$emit('cartItemCountUpdated', this.itemCount);
+        calculateTotalQuantity() {
+            // Get the cart data from local storage
+            const cartData = localStorage.getItem('cart');
+            const cart = JSON.parse(cartData) || [];
+            const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+            console.log("Total Quantity in Cart:", totalQuantity);
+            this.itemCount =  totalQuantity;
 
         },
         increaseQuantity(productId) {
@@ -290,6 +290,7 @@ export default {
             this.loading = true;
             // Load the cart from local storage
             const savedCart = localStorage.getItem('cart');
+           // this.$store.commit('cart/setCart', savedCart);
 
             if (savedCart) {
                 const cartData = JSON.parse(savedCart);
@@ -297,6 +298,7 @@ export default {
                 // Update the cart and save it back to local storage
                 this.cart = this.getUniqueItems(updatedCart);
                 localStorage.setItem('cart', JSON.stringify(updatedCart));
+                bus.$emit('updateCart', this.cart);
                 this.loadCart();
                 setTimeout(() => {
                     this.loading = false;
@@ -312,7 +314,7 @@ export default {
             return price;
         },
         loadCart() {
-
+            this.calculateTotalQuantity();
             const savedCart = localStorage.getItem('cart');
             if (savedCart) {
 

@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="input-container">
-                                                <input type="submit" class="btn_submit" value="Update">
+                                                <input type="submit" class="btn_submit" value="Submit">
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +198,7 @@ export default {
         }
     },
     mounted() {
-        this.countrys();
+      //  this.countrys();
     },
     methods: {
         async countrys() {

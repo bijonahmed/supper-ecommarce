@@ -8,7 +8,7 @@
                         <div class="container-fluid">
                             <nuxt-link class="navbar-brand" to="/">
                                 <div class="logo_">
-                                    Lottery
+                                    <img src="/images/logo.png" class="img-fluid" loading="lazy" alt="">
                                 </div>
                             </nuxt-link>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,8 +52,14 @@
                                             <option value="">Bengali</option>
                                         </select>
                                     </li>
+
                                     <li class="nav-item">
-                                        <nuxt-link to="/cart" class="nav-link" @click="logout">Cart</nuxt-link>
+                                        <nuxt-link class="nav-link mobile_ position-relative" to="/cart">
+                                            cart
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                {{ itemCounts }}
+                                            </span>
+                                        </nuxt-link>
                                     </li>
 
                                     <li class="nav-item" v-if="loggedIn">
@@ -114,21 +120,52 @@
 </template>
 
 <script>
+import bus from '~/plugins/bus.js';
 export default {
     data() {
         return {
-
+            cart: [],
+            _itemCount: 0,
+            itemCounts: 0,
         }
     },
     mounted() {
-
+        this.loadCart();
+        bus.$on('updateCart', (updatedCart) => {
+            this.loadCart();
+        });
     },
     computed: {
         loggedIn() {
             return this.$auth.loggedIn;
         },
+
+        itemCount: {
+            get() {
+                return this._itemCount;
+            },
+            set(value) {
+                this._itemCount = value;
+            },
+        },
+
     },
     methods: {
+        loadCart() {
+            const savedCart = localStorage.getItem('cart');
+
+            if (savedCart) {
+                this.cart = JSON.parse(savedCart);
+            }
+
+            let itemCount = 0;
+            this.cart.forEach((item) => {
+                itemCount += parseInt(item.quantity);
+            });
+
+            console.log("Finally get total Cart" + itemCount);
+            this.itemCounts = itemCount;
+        },
         async logout() {
             await this.$auth.logout()
             localStorage.removeItem('jwtToken');

@@ -28,6 +28,7 @@ const _54d712c7 = () => interopDefault(import('..\\pages\\user\\ticket.vue' /* w
 const _6b60bd34 = () => interopDefault(import('..\\pages\\user\\wallet.vue' /* webpackChunkName: "pages/user/wallet" */))
 const _21021c40 = () => interopDefault(import('..\\pages\\user\\wishlist.vue' /* webpackChunkName: "pages/user/wishlist" */))
 const _90c48ddc = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _1d735ea4 = () => interopDefault(import('..\\pages\\categories\\_slug.vue' /* webpackChunkName: "pages/categories/_slug" */))
 const _408f6a16 = () => interopDefault(import('..\\pages\\product-details\\_slug.vue' /* webpackChunkName: "pages/product-details/_slug" */))
 
 const emptyFn = () => {}
@@ -137,6 +138,10 @@ export const routerOptions = {
     path: "/",
     component: _90c48ddc,
     name: "index"
+  }, {
+    path: "/categories/:slug?",
+    component: _1d735ea4,
+    name: "categories-slug"
   }, {
     path: "/product-details/:slug?",
     component: _408f6a16,

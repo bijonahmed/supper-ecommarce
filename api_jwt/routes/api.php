@@ -99,6 +99,7 @@ Route::group([
     Route::post('saveAttribute', [CategoryController::class, 'saveAttribute']);
     Route::post('saveAttributeVal', [CategoryController::class, 'saveAttributeVal']);
     Route::get('getCategoryList', [CategoryController::class, 'allCategory']);
+ 
     Route::get('getInacCategoryList', [CategoryController::class, 'allInacCategory']);
     Route::get('categoryRow/{id}', [CategoryController::class, 'findCategoryRow']);
     Route::get('getCategoryListParent', [CategoryController::class, 'getCategoryListParent']);
@@ -151,6 +152,7 @@ Route::group([
     Route::get('deleteCategory', [ProductController::class, 'deleteCategory']);
     Route::get('getVarientHistory', [ProductController::class, 'getVarientHistory']);
     Route::get('removeProducts/{id}', [ProductController::class, 'removeProducts']);
+    Route::get('productsearchAutocomplete', [ProductController::class, 'autocompleteSearch']);
 });
 
 Route::group([
@@ -201,18 +203,19 @@ Route::group([
     Route::post('addToCart', [CartController::class, 'addToCart']);
     Route::get('searchProductCategory/{category_id}', [UnauthenticatedController::class, 'productCategory']);
     Route::get('sellingFast', [UnauthenticatedController::class, 'sellingFast']);
+    Route::get('getTickets', [UnauthenticatedController::class, 'getTickets']);
 
     Route::get('slidersImages', [UnauthenticatedController::class, 'slidersImages']);
     Route::get('topSellingProducts', [UnauthenticatedController::class, 'topSellProducts']);
     Route::get('limitedProducts', [UnauthenticatedController::class, 'limitedProducts']);
     Route::get('filterCategorys', [UnauthenticatedController::class, 'filterCategory']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategory']);
-
+    Route::get('getsubCategoryList', [UnauthenticatedController::class, 'allsubCategory']);
+    Route::get('findCategoryWiseProduct/{slug}', [UnauthenticatedController::class, 'findCategorys']);
     Route::get('getProductrow', [UnauthenticatedController::class, 'getProductrow']);
     Route::get('get-paginated-products', [UnauthenticatedController::class, 'getPaginatedData']);
     Route::get('defaultShowingProduct', [UnauthenticatedController::class, 'defaultShowingProduct']);
     Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
-
     //Route::get('defaultShowingMovies', [UnauthenticatedController::class, 'defaultShowingMovies']);
 
     Route::get('defaultShowingMoviesHome', [UnauthenticatedController::class, 'defaultShowingMoviesHome']);

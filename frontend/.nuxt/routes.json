@@ -168,6 +168,13 @@
     "_name": "_90c48ddc"
   },
   {
+    "name": "categories-slug",
+    "path": "/categories/:slug?",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\categories\\\\_slug.vue",
+    "chunkName": "pages/categories/_slug",
+    "_name": "_1d735ea4"
+  },
+  {
     "name": "product-details-slug",
     "path": "/product-details/:slug?",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\product-details\\\\_slug.vue",

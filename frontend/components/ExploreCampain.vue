@@ -17,7 +17,7 @@
                                     <div class="total_ticket">
                                         <div class="t_count">
                                             <div>
-                                                <h6>25</h6>
+                                                <h6>{{ item.stock_qty }}</h6>
                                                 <p>Total</p>
                                             </div>
                                         </div>
@@ -27,22 +27,24 @@
                                         <div class="col-md-5">
                                             <div class="c_campain_left">
                                                 <div class="camp_count">
-                                                    <div id="timer" class=" c_timer" data-endtime="25 october 2024 10:00:00 GMT+01:00"></div>
+                                                    <!-- <div id="timer" class=" c_timer" data-endtime="25 october 2024 10:00:00 GMT+01:00"></div> -->
+                                                    <div>BDT{{ item.price }}</div>
                                                 </div>
                                                 <div class="campain_image">
                                                     <!-- Swiper -->
                                                     <div class="swiper campain_s">
                                                         <div class="swiper-wrapper">
-                                                            <div class="swiper-slide"><img src="/images/cash.png" class="img-fulid" loading="lazy" alt=""></div>
+                                                            <div class="swiper-slide"><img :src="item.thumnail" class="img-fulid" loading="lazy" alt=""></div>
+                                                            <!-- <div class="swiper-slide"><img src="/images/cash.png" class="img-fulid" loading="lazy" alt=""></div>
                                                             <div class="swiper-slide"><img src="/images/cash1.png" class="img-fulid" loading="lazy" alt=""></div>
-                                                            <div class="swiper-slide"><img src="/images/cash2.png" class="img-fulid" loading="lazy" alt=""></div>
+                                                            <div class="swiper-slide"><img src="/images/cash2.png" class="img-fulid" loading="lazy" alt=""></div> -->
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="c_price">
                                                     <div class="creadit_ticket">
                                                         <p>Lottery Creadit</p>
-                                                        <h1>BDT125</h1>
+                                                        <h1>BDT{{ item.price }}</h1>
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,8 +52,8 @@
                                         <div class="col-md-7">
                                             <div class="c_content_right">
                                                 <div class="c_content_box">
-                                                    <h1>Lottery -1</h1>
-                                                    <span>BDT{{ item.price }}</span>
+                                                    <h1>{{ item.name }}</h1>
+                                                    <!-- <span>BDT{{ item.price }}</span> -->
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="d-flex">
@@ -123,7 +125,7 @@
                 <p>Or copy link</p>
                 <div class="field">
                     <i class="url-icon uil uil-link"></i>
-                    <input type="text" readonly id="myInput" value="https://futuregenit.com">
+                    <input type="text" readonly id="myInput" value="https://winup360.com/">
                     <button onclick="copy()" id="change_txt">Copy</button>
                 </div>
             </div>
@@ -145,7 +147,7 @@ export default {
         }
     },
     mounted() {
-        this.sellingFast();
+        this.onlyloadingTicket();
     },
     methods: {
         async wishlist(slug) {
@@ -179,10 +181,17 @@ export default {
             }
 
         },
-        async sellingFast() {
-            const response = await this.$axios.get('/unauthenticate/sellingFast');
+
+
+        async onlyloadingTicket() {
+            const response = await this.$axios.get('/unauthenticate/getTickets');
             this.prouducts = response.data;
+            //console.log("tickets: " +  response.data);
         },
+
+
+
+
         addtoCart(product) {
             this.loading = true;
             // const cart = JSON.parse(localStorage.getItem('cart')) || [];

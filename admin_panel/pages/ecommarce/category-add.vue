@@ -116,10 +116,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
-                                                                <label for="input-meta-description-1" class="col-sm-2 col-form-label">Icon (100x100)</label>
+                                                                <label for="input-meta-description-1" class="col-sm-2 col-form-label">Icon (393x491px)</label>
                                                                 <div class="col-sm-10">
                                                                     <input class="form-control form-control-sm" id="file" ref="file" @change="onFileSelected" type="file">
-                                                                    <a href="https://icons8.com/" target="_blank">https://icons8.com/</a>
+                                                                    <!-- <a href="https://icons8.com/" target="_blank">https://icons8.com/</a> -->
                                                                 </div>
                                                             </div>
 

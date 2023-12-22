@@ -167,6 +167,8 @@ class CategoryController extends Controller
         } else {
             $imagePath = "";
         }
+
+        //echo $imagePath;exit; 
         $slug     = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('name'))));
         if (empty($request->id)) {
             // Save to database
@@ -185,19 +187,19 @@ class CategoryController extends Controller
             ]);
         } else {
             $data = Categorys::find($request->id);
-            if (!empty($request->file('file'))) {
-                $files = $request->file('file');
-                $fileName = Str::random(20);
-                $ext = strtolower($files->getClientOriginalExtension());
-                $path = $fileName . '.' . $ext;
-                $uploadPath = '/backend/files/';
-                $upload_url = $uploadPath . $path;
-                $files->move(public_path('/backend/files/'), $upload_url);
-                $file_url = $uploadPath . $path;
-                $imagePath = $file_url;
-            } else {
-                $imagePath =  $data->file;
-            }
+            // if (!empty($request->file('file'))) {
+            //     $files = $request->file('file');
+            //     $fileName = Str::random(20);
+            //     $ext = strtolower($files->getClientOriginalExtension());
+            //     $path = $fileName . '.' . $ext;
+            //     $uploadPath = '/backend/files/';
+            //     $upload_url = $uploadPath . $path;
+            //     $files->move(public_path('/backend/files/'), $upload_url);
+            //     $file_url = $uploadPath . $path;
+            //     $imagePath = $file_url;
+            // } else {
+            //     $imagePath =  $data->file;
+            // }
             $data->name              =  $request->input('name');
             $data->slug              =  $slug;
             $data->description       =  $request->input('description');
@@ -207,6 +209,7 @@ class CategoryController extends Controller
             $data->parent_id         =  $request->input('parent_id');
             $data->status            =  $request->input('status');
             $data->keyword           =  $request->input('keyword');
+            $data->file              =  $imagePath;
             $data->mobile_view_class =  $request->input('mobile_view_class');
             $data->save();
         }
@@ -225,6 +228,9 @@ class CategoryController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+
+   
 
     public function allInacCategory(Request $request)
     {
@@ -284,6 +290,7 @@ class CategoryController extends Controller
         $data = Categorys::find($id);
         $response = [
             'data' => $data,
+            'file'     => !empty($data->file) ? url($data->file) : "",
             'message' => 'success'
         ];
         return response()->json($response, 200);

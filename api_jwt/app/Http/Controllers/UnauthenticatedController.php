@@ -52,7 +52,6 @@ class UnauthenticatedController extends Controller
         return response()->json($modifiedCollection, 200);
     }
 
-
     public function topSellProducts()
     {
         $data = Product::orderBy('id', 'desc')->select('id', 'name', 'thumnail_img', 'slug')->limit(12)->get();
@@ -78,7 +77,6 @@ class UnauthenticatedController extends Controller
             ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
             ->first();
 
-
         $product_chk       = Product::where('product.slug', $slug)
             ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
             ->get();
@@ -96,8 +94,6 @@ class UnauthenticatedController extends Controller
             ];
         }
         $findproductrow   = $data['pro_row'];
-
-
 
         $insertimg['product_id'] = $findproductrow->id;
         $insertimg['images'] = $findproductrow->thumnail_img;
@@ -127,7 +123,17 @@ class UnauthenticatedController extends Controller
 
     public function sellingFast()
     {
-        $data = Product::orderBy('id', 'desc')->select('id', 'name', 'thumnail_img', 'slug')->limit(12)->get();
+        //$data = Product::orderBy('id', 'desc')->select('id', 'name', 'thumnail_img', 'slug')->limit(12)->get();
+
+        $category_id = 27; //for tickets categoryies id 27. 
+        $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
+                ->where('produc_categories.category_id', '!=', $category_id)
+                ->orderBy('product.id', 'desc')
+                ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
+                ->limit(12)
+                ->groupby('product.id')
+                ->get();
+
         foreach ($data as $v) {
             $result[] = [
                 'id'   => $v->id,
@@ -136,12 +142,32 @@ class UnauthenticatedController extends Controller
                 'slug'     => $v->slug,
             ];
         }
-
-        // dd($result);
         return response()->json($result, 200);
     }
 
+    public function getTickets()
+    {
+       
+        $category_id = 27; //for tickets categoryies id 27. 
+        $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
+                ->where('produc_categories.category_id',$category_id)
+                ->orderBy('product.id', 'desc')
+                ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
+                //->limit(12)
+                ->get();
 
+        foreach ($data as $v) {
+            $result[] = [
+                'id'        => $v->id,
+                'name'      => substr($v->name, 0, 350) . '...',
+                'thumnail'  => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
+                'slug'      => $v->slug,
+                'price'     => $v->price,
+                'stock_qty' => $v->stock_qty,
+            ];
+        }
+        return response()->json($result, 200);
+    }
 
     public function slidersImages()
     {
@@ -170,10 +196,10 @@ class UnauthenticatedController extends Controller
             $categoryId = Categorys::where('parent_id', $category_id)->pluck('id')->toArray();
             $implodeCategory = implode(',', $categoryId);
             $categoryIds = explode(',', $implodeCategory);
-        
+
             $categorys = ProductCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
-            ->join('categorys', 'categorys.id', '=', 'produc_categories.category_id') 
-                ->select('categorys.name as categoryname','produc_categories.product_id', 'product.name', 'product.price','product.slug', 'product.thumnail_img')
+                ->join('categorys', 'categorys.id', '=', 'produc_categories.category_id')
+                ->select('categorys.name as categoryname', 'produc_categories.product_id', 'product.name', 'product.price', 'product.slug', 'product.thumnail_img')
                 ->whereIn('produc_categories.category_id', $categoryIds)
                 ->orderByDesc('product.id')
                 ->distinct() // Add this line to remove duplicate products
@@ -181,13 +207,12 @@ class UnauthenticatedController extends Controller
         } else {
             // Logic to fetch all products without the whereIn clause
             $categorys = ProductCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
-            ->join('categorys', 'categorys.id', '=', 'produc_categories.category_id') 
-                ->select('categorys.name as categoryname','produc_categories.product_id', 'product.name', 'product.price', 'product.slug', 'product.thumnail_img')
+                ->join('categorys', 'categorys.id', '=', 'produc_categories.category_id')
+                ->select('categorys.name as categoryname', 'produc_categories.product_id', 'product.name', 'product.price', 'product.slug', 'product.thumnail_img')
                 ->orderByDesc('product.id')
                 ->groupby('product.id') // Add this line to remove duplicate products
                 ->get();
         }
-        
 
         //dd($categorys);
         $result = [];
@@ -309,17 +334,12 @@ class UnauthenticatedController extends Controller
     }
 
     //filter category
-    public function findCategorys(Request $request)
+    public function findCategorys($slug)
     {
-        $slug = $request->slug;
-        $perPage = 24; // Update to load 10 products at a time
-        $page = $request->input('page', 1);
-        $skip = ($page - 1) * $perPage;
         $chkCategory   = Categorys::where('slug', $slug)->select('id', 'slug', 'parent_id', 'name')->first();
         $proCategorys  = ProductCategory::where('category_id', $chkCategory->id)
+            ->join('product', 'product.id', '=', 'produc_categories.product_id')
             ->select('product.id', 'product.download_link', 'produc_categories.product_id', 'product.name as pro_name', 'produc_categories.category_id', 'description', 'thumnail_img', 'product.slug as pro_slug')
-            ->join('product', 'product.id', '=', 'produc_categories.product_id')->skip($skip)
-            ->take($perPage)
             ->get();;
 
         $result = [];
@@ -327,12 +347,12 @@ class UnauthenticatedController extends Controller
             $result[] = [
                 'id'           => $v->id,
                 'product_id'   => $v->product_id,
-                'product_name' => $v->pro_name, // substr($v->pro_name, 0, 12) . '...',
+                'name'         => $v->pro_name, // substr($v->pro_name, 0, 12) . '...',
                 'p_name'       => $v->pro_name,
                 'category_id'  => $v->category_id,
                 'download_link' => $v->download_link,
-                'thumnail_img' => url($v->thumnail_img),
-                'pro_slug'     => $v->pro_slug,
+                'thumnail'     => url($v->thumnail_img),
+                'slug'         => $v->pro_slug,
 
             ];
         }
@@ -342,7 +362,7 @@ class UnauthenticatedController extends Controller
         $data['categoryname']  = $chkCategory->name;
         $data['category_slug'] = $chkCategory->slug;
         $data['category_id']   = $chkCategory->parent_id;
-        // dd($data);
+        //dd($data);
         return response()->json($data, 200);
     }
 
@@ -421,5 +441,27 @@ class UnauthenticatedController extends Controller
         }
         //dd($results);
         return response()->json($data);
+    }
+
+    public function allsubCategory()
+    {
+        try {
+            $categories =  Categorys::where('parent_id', '!=', 0)->where('file', '!=', '')->where('status', 1)->get();
+            $collection = collect($categories);
+            $modifiedCollection = $collection->map(function ($item) {
+                return [
+                    'id'         => $item['id'],
+                    'slug'       => $item['slug'],
+                    'name'       => $item['name'],
+                    'thumnail'   => !empty($item->file) ? url($item->file) : "",
+                    'status'     => $item['status'],
+
+                ];
+            });
+            //dd($modifiedCollection);
+            return response()->json($modifiedCollection, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

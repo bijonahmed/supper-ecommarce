@@ -19,9 +19,13 @@
                                 <nuxt-link to="/offer"><i class="fa-solid fa-gift"></i></nuxt-link>
                                 <p>Offers</p>
                             </li>
+
                             <li :class="{ active: $route.path === '/cart' }">
                                 <nuxt-link to="/cart"><i class="fa-solid fa-cart-shopping"></i></nuxt-link>
                                 <p>Cart</p>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ itemCounts }}
+                                </span>
                             </li>
                             <li>
                                 <a data-bs-toggle="offcanvas" href="#mobile_menu" role="button" aria-controls="mobile_menu">
@@ -153,11 +157,15 @@
 </template>
 
 <script>
+import bus from '~/plugins/bus.js';
 import axios from 'axios';
 export default {
     data() {
         return {
             //loggedIn: false,
+            cart: [],
+            _itemCount: 0,
+            itemCounts: 0,
         };
     },
 
@@ -165,9 +173,37 @@ export default {
         loggedIn() {
             return this.$auth.loggedIn;
         },
+        itemCount: {
+            get() {
+                return this._itemCount;
+            },
+            set(value) {
+                this._itemCount = value;
+            },
+        },
+    },
+    mounted() {
+        this.loadCart();
+        bus.$on('updateCart', (updatedCart) => {
+            this.loadCart();
+        });
     },
     methods: {
+        loadCart() {
+            const savedCart = localStorage.getItem('cart');
 
+            if (savedCart) {
+                this.cart = JSON.parse(savedCart);
+            }
+
+            let itemCount = 0;
+            this.cart.forEach((item) => {
+                itemCount += parseInt(item.quantity);
+            });
+
+            console.log("Finally get total Cart" + itemCount);
+            this.itemCounts = itemCount;
+        },
         async logout() {
             await this.$auth.logout()
             localStorage.removeItem('jwtToken');
@@ -178,4 +214,18 @@ export default {
 };
 </script>
 
+<style scoped>
+.mobile_footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+    z-index: 1000;
+}
 
+/* Add styles for the 'active' class to highlight the active menu item */
+.active {
+    color: #007bff;
+    /* Set your desired active color */
+}
+</style>

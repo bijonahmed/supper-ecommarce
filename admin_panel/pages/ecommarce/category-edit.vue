@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item" aria-current="page">
                                 <router-link to="/ecommarce/category-list">Category List</router-link>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">New Category</li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit Category</li>
                         </ol>
                     </nav>
                 </div>
@@ -115,10 +115,11 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
-                                                                <label for="input-meta-description-1" class="col-sm-2 col-form-label">Icon (100x100)</label>
+                                                                <label for="input-meta-description-1" class="col-sm-2 col-form-label">Icon (393x491px)</label>
                                                                 <div class="col-sm-10">
                                                                     <input class="form-control form-control-sm" id="file" ref="file" @change="onFileSelected" type="file">
-                                                                    <a href="https://icons8.com/" target="_blank">https://icons8.com/</a>
+                                                                    <!-- <a href="https://icons8.com/" target="_blank">https://icons8.com/</a> -->
+                                                                    <img :src="catImg" alt="N/A" style="height:393px; width: 491px;" class="img-fluid max-width-100 img-thumbnail" />
                                                                 </div>
                                                             </div>
 
@@ -174,11 +175,13 @@
     <!--end page wrapper -->
 </div>
 </template>
+
 <style>
 .bg-dark {
     background-color: #0d4b88 !important;
 }
 </style>
+
 <script>
 export default {
     components: {
@@ -214,6 +217,8 @@ export default {
                 keyword: '',
                 status: '',
             },
+          
+            catImg:'',
             categories: [],
             notifmsg: '',
             file: '',
@@ -227,8 +232,8 @@ export default {
         await this.loadCKEditor();
         CKEDITOR.replace('editor');
     },
-   
-    methods: { 
+
+    methods: {
         async fetchDataParent() {
             try {
                 const response = await this.$axios.get(`/category/getCategoryListParent`);
@@ -257,6 +262,9 @@ export default {
         saveData() {
             const formData = new FormData();
             formData.append('file', this.file);
+
+            console.log("files ====" + this.file);
+
             formData.append('id', this.insertdata.id);
             formData.append('name', this.insertdata.name);
             formData.append('mobile_view_class', this.insertdata.mobile_view_class);
@@ -289,6 +297,8 @@ export default {
             let id = this.$route.query.id;
             //alert(id);
             this.$axios.get(`/category/categoryRow/${id}`).then(response => {
+                console.log("file:" + response.data.file);
+                this.catImg = response.data.file;
                 this.insertdata.id = response.data.data.id;
                 this.insertdata.name = response.data.data.name;
                 this.insertdata.mobile_view_class = response.data.data.mobile_view_class;

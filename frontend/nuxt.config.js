@@ -13,7 +13,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/images/logo.png' },
       { rel: "preconnect",href: "https://fonts.googleapis.com"},
       { rel: "preconnect",href: "https://fonts.gstatic.com"},
       { rel: "stylesheet",href: "https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap"},
@@ -42,7 +42,6 @@ export default {
   // ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/event-bus.js',
     { src: '~plugins/jquery.js', ssr: false }, // Import jQuery
     { src: '~plugins/vue-owl-carousel.js', ssr: false },
   ],
@@ -55,8 +54,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    "@nuxtjs/auth-next"
-
+    "@nuxtjs/auth-next",
   ],
   auth: {
     // Options
@@ -84,8 +82,8 @@ export default {
   },
    // Axios module configuration: https://go.nuxtjs.dev/config-axios
    axios: {
-    //baseURL: "http://127.0.0.1:8000/api",
-    baseURL: "https://api.winup360.com/api",
+    baseURL: "http://127.0.0.1:8000/api",
+   // baseURL: "https://api.winup360.com/api",
     },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

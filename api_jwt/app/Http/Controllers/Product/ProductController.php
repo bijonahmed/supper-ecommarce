@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductAdditionalImg;
 use App\Models\ProductVarrient;
 use App\Models\AttributeValues;
+use App\Models\AdditionalProducts;
 use Illuminate\Support\Str;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
@@ -84,6 +85,39 @@ class ProductController extends Controller
             'status'                     => 1, //!empty($request->status) ? $request->status : "",
             'entry_by'                   => $this->userid
         );
+
+        //start additional product 
+
+        $chk = AdditionalProducts::where('product_id', $product_id)->first();
+        if (empty($chk)) {
+            //start additional product 
+            if(!empty($request->referrance_product_id)){
+                $additional_data = array(
+                    'product_id'                 => $product_id,
+                    'referrance_product_id'      => !empty($request->referrance_product_id) ? $request->referrance_product_id : "",
+                    'add_product_qty'            => !empty($request->add_product_qty) ? $request->add_product_qty : "",
+                    'add_product_price'          => !empty($request->add_product_price) ? $request->add_product_price : "",
+                    'final_price'                => !empty($request->final_price) ? $request->final_price : "",
+                );
+                AdditionalProducts::insert($additional_data);
+            }
+           
+            //end additional product 
+
+        } else {
+            //update
+            $additional_data = array(
+                'product_id'                 => $product_id,
+                'referrance_product_id'      => !empty($request->referrance_product_id) ? $request->referrance_product_id : "",
+                'add_product_qty'            => !empty($request->add_product_qty) ? $request->add_product_qty : "",
+                'add_product_price'          => !empty($request->add_product_price) ? $request->add_product_price : "",
+                'final_price'                => !empty($request->final_price) ? $request->final_price : "",
+            );
+            AdditionalProducts::where('product_id', $product_id)->update($additional_data);
+        }
+
+        //end additional product 
+
         if (!empty($request->file('files'))) {
             $files = $request->file('files');
             $fileName = Str::random(20);
@@ -140,7 +174,7 @@ class ProductController extends Controller
             'name'           => 'required',
             'category'       => 'required',
             'price'          => 'required',
-            'sku'            => 'required',
+            // 'sku'            => 'required',
             'stock_qty'      => 'required|integer',
             'stock_mini_qty' => 'required|integer',
             'shipping_days'  => 'required',
@@ -184,6 +218,7 @@ class ProductController extends Controller
             'status'                     => !empty($request->status) ? $request->status : "",
             'entry_by'                   => $this->userid
         );
+
         // dd($data);
         if (!empty($request->file('files'))) {
             $files = $request->file('files');
@@ -196,48 +231,58 @@ class ProductController extends Controller
             $file_url = $uploadPath . $path;
             $data['thumnail_img'] = $file_url;
         }
-            //INSERT PRODUCT
-            $product_id = Product::insertGetId($data);
+        //INSERT PRODUCT
+        $product_id = Product::insertGetId($data);
 
-            if(!empty($product_id)){
-                $slug                  = "$slug-$product_id";
-                DB::table('product')->where('id', $product_id)->update(['slug' => $slug]);
+        //start additional product 
+        $additional_data = array(
+            'product_id'                 => $product_id,
+            'referrance_product_id'      => !empty($request->referrance_product_id) ? $request->referrance_product_id : "",
+            'add_product_qty'            => !empty($request->add_product_qty) ? $request->add_product_qty : "",
+            'add_product_price'          => !empty($request->add_product_price) ? $request->add_product_price : "",
+            'final_price'                => !empty($request->final_price) ? $request->final_price : "",
+        );
+        AdditionalProducts::insert($additional_data);
+        //end additional product 
+
+        if (!empty($product_id)) {
+            $slug                  = "$slug-$product_id";
+            DB::table('product')->where('id', $product_id)->update(['slug' => $slug]);
+        }
+        //INSERT MULTIPLE IMAGE
+        if (!empty($request->file('images'))) {
+            foreach ($request->file('images') as $file) {
+                $name = $file->getClientOriginalName();
+                $dic_name = uniqid() . $name;
+                $uploadPath = '/backend/files/';
+                $file->move(public_path() . '/backend/files/', $dic_name);
+                // $docs[] = $name;  
+                $img_data['images']       = $uploadPath . $dic_name;
+                $img_data['product_id']   = $product_id;
+                DB::table('produc_img_history')->insert($img_data);
             }
-            //INSERT MULTIPLE IMAGE
-            if (!empty($request->file('images'))) {
-                foreach ($request->file('images') as $file) {
-                    $name = $file->getClientOriginalName();
-                    $dic_name = uniqid() . $name;
-                    $uploadPath = '/backend/files/';
-                    $file->move(public_path() . '/backend/files/', $dic_name);
-                    // $docs[] = $name;  
-                    $img_data['images']       = $uploadPath . $dic_name;
-                    $img_data['product_id']   = $product_id;
-                    DB::table('produc_img_history')->insert($img_data);
-                }
+        }
+        //INSERT MULTIPLE CATEGORY
+        $category     = $request->category;
+        $dynamicArray = explode(',', $category); // Convert the string to an array
+        $results      = Categorys::whereIn('id', $dynamicArray)->get();
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $path = [];
+            $category = $result;
+            while ($category) {
+                array_unshift($path, $category->id);
+                $category = $category->parent;
             }
-            //INSERT MULTIPLE CATEGORY
-            $category     = $request->category;
-            $dynamicArray = explode(',', $category); // Convert the string to an array
-            $results      = Categorys::whereIn('id', $dynamicArray)->get();
-            $formattedResults = [];
-            foreach ($results as $result) {
-                $path = [];
-                $category = $result;
-                while ($category) {
-                    array_unshift($path, $category->id);
-                    $category = $category->parent;
-                }
-                $formattedResults[] = [
-                    'product_id'   => $product_id,
-                    'category_id'  => $result->id,
-                    'parent_id'    => implode(',', $path)
-                ];
-            }
-            DB::table('produc_categories')->insert($formattedResults);
-            $resdata['product_id'] = $product_id;
-            return response()->json($resdata);
-        
+            $formattedResults[] = [
+                'product_id'   => $product_id,
+                'category_id'  => $result->id,
+                'parent_id'    => implode(',', $path)
+            ];
+        }
+        DB::table('produc_categories')->insert($formattedResults);
+        $resdata['product_id'] = $product_id;
+        return response()->json($resdata);
     }
 
     public function insertVarientGroup(Request $request)
@@ -451,9 +496,13 @@ class ProductController extends Controller
     public function productrow($id)
     {
 
-        $produCategory = ProductCategory::where('product_id', $id)->get();
-        $prodimages    = ProductAdditionalImg::where('product_id', $id)->select('images', 'id')->get();
-        $prodImages    = Product::find($id);
+        $produCategory     = ProductCategory::where('product_id', $id)->get();
+        $additionalProduct = AdditionalProducts::where('product_id', $id)
+            ->select('product.name as product_name', 'additional_product.referrance_product_id', 'additional_product.add_product_qty', 'additional_product.add_product_price', 'additional_product.final_price')
+            ->join('product', 'product.id', '=', 'additional_product.referrance_product_id')->first();
+
+        $prodimages        = ProductAdditionalImg::where('product_id', $id)->select('images', 'id')->get();
+        $prodImages        = Product::find($id);
         $addiImg = [];
         foreach ($prodimages as $v) {
             $addiImg[] = [
@@ -480,6 +529,7 @@ class ProductController extends Controller
         $responseData['product_cat']       = $resulting_string;
         $responseData['product_edit_cat']  = $show_edit_cat;
         $responseData['product_imgs']      = $addiImg;
+        $responseData['product_additional'] = $additionalProduct;
         //dd($responseData);
         return response()->json($responseData);
     }
@@ -514,5 +564,12 @@ class ProductController extends Controller
             ProductAdditionalImg::where('product_id', $id)->delete();
         }
         return response()->json("successfully delete product", 200);
+    }
+
+    public function autocompleteSearch(Request $request)
+    {
+        $query = $request->input('query');
+        $suggestions = Product::where('name', 'like', '%' . $query . '%')->get(['id', 'name', 'stock_qty', 'price']);
+        return response()->json($suggestions);
     }
 }

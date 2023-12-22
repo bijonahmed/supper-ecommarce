@@ -1,36 +1,6 @@
 <template>
 <div>
     <Navbar />
-    <!-- mobile header part start here  -->
-    <section class="mobile_header app_show d-none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="header_button ">
-                        <a href="index.html">
-                            <div class="creadit_ticket">
-                                <p>Win Exclusive Price</p>
-                                <h1>Lottery</h1>
-                            </div>
-                        </a>
-                        <a href="product.html" class="active">
-                            <div class="creadit_ticket">
-                                <p>Win Exclusive Price</p>
-                                <h1>PRODUCT</h1>
-                            </div>
-                        </a>
-                        <a href="winner.html">
-                            <div class="creadit_ticket">
-                                <p>Winner from last Draw</p>
-                                <h1>WINNERS</h1>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- mobile header part end here  -->
 
     <!-- product details part start here  -->
     <section class="product_details">
@@ -55,8 +25,8 @@
                     <div class="detail_part">
                         <h1>{{ pro_row.name }}</h1>
                         <div class="clr_size">
-                            <img src="/images/lottery_model.png" class="img-fluid" loading="lazy" alt="">
-                            <h2 class="mb-0">Ticket Price: BDT{{ pro_row.price }}</h2>
+                            <!-- <img src="/images/lottery_model.png" class="img-fluid" loading="lazy" alt=""> -->
+                            <h2 class="mb-0">Price: BDT{{ pro_row.price }}</h2>
                             <h2 class="mb-2">You will get a Lottery Ticket for free </h2>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="custom-select">
@@ -118,6 +88,7 @@
 </template>
 
 <script>
+import bus from '~/plugins/bus.js';
 export default {
     head: {
         title: 'Product Details',
@@ -125,10 +96,11 @@ export default {
     data() {
         return {
             cart: [],
-            itemCount: 0,
+            //  itemCount: 0,
             slider_img: [],
             choose_size: '',
             subtotal: 0,
+            itemCount: 0,
             pro_row: [],
             prodAttr: [],
             loading: false,
@@ -136,12 +108,12 @@ export default {
     },
     mounted() {
         this.fetchData();
-
     },
     computed: {
 
     },
     methods: {
+
         addtoCart(product) {
             this.loading = true;
             // const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -160,7 +132,8 @@ export default {
                 });
                 return false;
             } else {
-                const existingProduct =  this.cart.find(item => item.id === product.id && item.size === this.choose_size);
+                const existingProduct = this.cart.find(item => item.id === product.id && item.size === this.choose_size);
+
                 //this.cart.find(item => item.id === product.id);
                 if (existingProduct) {
                     existingProduct.quantity += 1;
@@ -176,6 +149,9 @@ export default {
                 const newData = [...existingData, ...this.cart];
 
                 localStorage.setItem('cart', JSON.stringify(newData));
+
+                // Emit an event to notify other components
+                bus.$emit('updateCart', newData);
 
                 setTimeout(() => {
                     this.loading = false;
@@ -196,7 +172,7 @@ export default {
         async fetchData() {
             const prosulg = this.$route.params.slug;
             const response = await this.$axios.get(`/unauthenticate/productSlug/${prosulg}`);
-          //  console.log("----" + response.data.prodAttr);
+            //  console.log("----" + response.data.prodAttr);
             this.slider_img = response.data.slider_img;
             this.prodAttr = response.data.prodAttr;
             this.pro_row = response.data.pro_row;

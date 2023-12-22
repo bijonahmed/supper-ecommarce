@@ -28,6 +28,9 @@
                     <li>
                         <Nuxt-link to="/ecommarce/product-list"><i class="bx bx-right-arrow-alt"></i>Product</Nuxt-link>
                     </li>
+                    <li>
+                        <Nuxt-link to="/orders/order-list"><i class="bx bx-right-arrow-alt"></i>Orders</Nuxt-link>
+                    </li>
 
                     <!-- <li>
                         <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Seller Product</Nuxt-link>
@@ -105,7 +108,7 @@
                 </ul>
             </li>
 
-            <li class="d-none">
+            <li>
                 <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_34" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bx bx-category"></i>
                     <div class="menu-title">Customer</div>

@@ -9,8 +9,8 @@
                     <div class="swiper cat_slider_box">
                         <div class="swiper-wrapper">
 
-                            <div class="swiper-slide cat_box" v-for="(item, index) in prouducts" :key="index">
-                                <nuxt-link :to="`/product-details/${item.slug}`">
+                            <div class="swiper-slide cat_box" v-for="(item, index) in subcategories" :key="index">
+                                <nuxt-link :to="`/categories/${item.slug}`">
                                     <img :src="item.thumnail" class="img-fluid" loading="lazy" alt="">
                                     <h4>{{ item.name }}</h4>
                                 </nuxt-link>
@@ -108,6 +108,7 @@ export default {
             prouducts: [],
             categories: [],
             catProuducts: [],
+            subcategories: [],
         }
     },
     computed: {
@@ -133,6 +134,7 @@ export default {
         this.limitedproduct();
         this.allproducts();
         this.allCategory();
+        this.allSubCategory();
 
         this.$nextTick(() => {
             this.initCarousel();
@@ -173,6 +175,11 @@ export default {
         async allCategory() {
             const response = await this.$axios.get('/unauthenticate/getCategoryList');
             this.categories = response.data;
+        },
+
+        async allSubCategory() {
+            const response = await this.$axios.get('/unauthenticate/getsubCategoryList');
+            this.subcategories = response.data;
         },
 
         initCarousel() {
