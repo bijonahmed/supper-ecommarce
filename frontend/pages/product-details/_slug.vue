@@ -119,7 +119,7 @@ export default {
             itemCount: 0,
             pro_row: [],
             prodAttr: [],
-            ticket_qty: 0,
+            ticket_qty: '',
             pro_row: {
                 price: 0, // Initial price
             },
@@ -135,9 +135,12 @@ export default {
     },
     methods: {
         updatePrice() {
+            console.log("Ticket Quantity:", this.ticket_qty);
+            console.log("Product Row Price Before:", this.pro_row.price);
             const result = this.ticket_qty * this.pro_row.price;
             this.ticketprice = result;
-            console.log("result" + result);
+            console.log("Result:", result);
+            console.log("Product Row Price After:", this.pro_row.price);
 
         },
         addtoCart(product) {
@@ -182,6 +185,7 @@ export default {
             if (existingProduct) {
                 existingProduct.quantity += 1;
             } else {
+                /*
                 this.cart.push({
                     ...product,
                     size: this.choose_size,
@@ -190,6 +194,30 @@ export default {
                     ticket_qty: this.ticket_qty,
                     quantity: 1,
                 });
+                */
+
+                if (this.category_id === 27) {
+                    this.cart.push({
+                        ...product,
+                        size: this.choose_size,
+                        category_id: this.category_id,
+                        ticketprice: this.ticketprice,
+                        ticket_qty: this.ticket_qty,
+                        quantity: 1,
+                        price: this.ticketprice,
+                    });
+                } else {
+                    // Handle the case when category_id is not 27
+                    // You can set a default price or omit the 'price' property altogether
+                    this.cart.push({
+                        ...product,
+                        size: this.choose_size,
+                        category_id: this.category_id,
+                        ticketprice: this.ticketprice,
+                        ticket_qty: this.ticket_qty,
+                        quantity: 1,
+                    });
+                }
             }
 
             // Merge with existing data if any

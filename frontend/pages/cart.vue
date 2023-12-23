@@ -234,6 +234,10 @@ export default {
                     this.clearCart();
                     console.log(response.data); // Log the API response
 
+                    const savedCart = localStorage.getItem('cart');
+                    let cartData = JSON.parse(savedCart);
+                    bus.$emit("updateCart", cartData);
+
                     Swal.fire({
                         title: "Success!",
                         text: "Your order has been submited.",
@@ -273,30 +277,8 @@ export default {
             }
         },
         formatPrice(price) {
-            // Add your price formatting logic here
-            // For example, you might want to format the price to two decimal places
             return price.toFixed(2);
         },
-        /*
-        increaseQuantity(productId) {
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) {
-                let cartData = JSON.parse(savedCart);
-                const index = cartData.findIndex(cartItem => cartItem.id === productId);
-
-                if (index !== -1) {
-
-                    cartData[index].quantity += 1;
-                    localStorage.setItem('cart', JSON.stringify(cartData));
-                    this.loadCart();
-
-                    // Call the updateQuantity method as well
-                    this.updateQuantity(cartData[index]);
-                    this.getCartTotal();
-                }
-            }
-        },
-        */
 
         increaseQuantity(productId) {
             const savedCart = localStorage.getItem('cart');
@@ -314,6 +296,7 @@ export default {
 
                     localStorage.setItem('cart', JSON.stringify(cartData));
                     this.loadCart();
+                    bus.$emit("updateCart", cartData);
 
                     // Call the updateQuantity method as well
                     this.updateQuantity(cartData[index]);
