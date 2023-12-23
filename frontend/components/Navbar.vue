@@ -162,8 +162,7 @@ export default {
             this.cart.forEach((item) => {
                 itemCount += parseInt(item.quantity);
             });
-
-            console.log("Finally get total Cart" + itemCount);
+            //console.log("Finally get total Cart" + itemCount);
             this.itemCounts = itemCount;
         },
         async logout() {

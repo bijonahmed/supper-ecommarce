@@ -98,6 +98,11 @@ class UnauthenticatedController extends Controller
         $insertimg['product_id'] = $findproductrow->id;
         $insertimg['images'] = $findproductrow->thumnail_img;
 
+
+        $chkCategory = ProductCategory::where('product_id',$findproductrow->id)->first();
+
+       
+
         $chkpoings  = ProductAdditionalImg::where('product_id', $findproductrow->id)->where('images', $findproductrow->thumnail_img)->first();
         // dd($chkpoings);
         if (empty($chkpoings)) {
@@ -118,6 +123,7 @@ class UnauthenticatedController extends Controller
         $data['slider_img']    = !empty($mul_slider_img) ? $mul_slider_img : "";
         $data['featuredImage'] = url($findproductrow->thumnail_img);
         $data['product']       = $products;
+        $data['category_id']   = $chkCategory->category_id;
         return response()->json($data, 200);
     }
 

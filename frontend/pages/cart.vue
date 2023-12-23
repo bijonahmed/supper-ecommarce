@@ -11,7 +11,7 @@
                         <span v-if="loading">
                             <Loader />
                         </span>
-                        <p class="l_alrt"  v-if="!loggedIn">Please Login for Complete this process.</p>
+                        <p class="l_alrt" v-if="!loggedIn">Please Login for Complete this process.</p>
                         <ul>
                             <li v-for="item in cart" :key="item.id">
                                 <div class="cart_item ">
@@ -24,12 +24,19 @@
                                                         <h1>BDT125</h1>
                                                     </div>
                                                 </div>
-                                                <div class="cart_title">
+                                                <div class="cart_title" v-if="item.category_id !== 27">
                                                     <h1>{{ item.name }} </h1>
-                                                    <span>{{ item.size }}</span>
+                                                    <span>{{ item.quantity }} x {{ item.price }}</span><br><span>{{ item.size }}</span>
                                                     <h6>Lottery credit</h6>
-                                                    <p>{{ formatPrice(item.price) }}</p>
+                                                    <p>{{ calculateTotalPrice(item) }}</p>
                                                     <span>You will get 1 tickets</span>
+                                                </div>
+                                                <div class="cart_title" v-else>
+                                                    <h1>{{ item.name }} </h1>
+                                                    <span>{{ item.quantity }} x {{ item.price }}</span>
+                                                    <h6>Lottery credit</h6>
+                                                    <p>{{ calculateTotalPrice(item) }}</p>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -253,9 +260,24 @@ export default {
             const cart = JSON.parse(cartData) || [];
             const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
             console.log("Total Quantity in Cart:", totalQuantity);
-            this.itemCount =  totalQuantity;
+            this.itemCount = totalQuantity;
 
         },
+        calculateTotalPrice(item) {
+            // Check if necessary properties are truthy before performing the calculation
+            if (item && item.quantity !== undefined && item.price !== undefined) {
+                const total = item.quantity * item.price;
+                return `Total: ${this.formatPrice(total)}`; // Assuming you have a formatPrice method
+            } else {
+                return "Invalid item data";
+            }
+        },
+        formatPrice(price) {
+            // Add your price formatting logic here
+            // For example, you might want to format the price to two decimal places
+            return price.toFixed(2);
+        },
+        /*
         increaseQuantity(productId) {
             const savedCart = localStorage.getItem('cart');
             if (savedCart) {
@@ -263,6 +285,7 @@ export default {
                 const index = cartData.findIndex(cartItem => cartItem.id === productId);
 
                 if (index !== -1) {
+
                     cartData[index].quantity += 1;
                     localStorage.setItem('cart', JSON.stringify(cartData));
                     this.loadCart();
@@ -273,6 +296,32 @@ export default {
                 }
             }
         },
+        */
+
+        increaseQuantity(productId) {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                let cartData = JSON.parse(savedCart);
+                const index = cartData.findIndex(cartItem => cartItem.id === productId);
+
+                if (index !== -1) {
+
+                    if (this.category_id == 27) {
+                        cartData[index].quantity += 1;
+                    } else {
+                        cartData[index].quantity += 1;
+                    }
+
+                    localStorage.setItem('cart', JSON.stringify(cartData));
+                    this.loadCart();
+
+                    // Call the updateQuantity method as well
+                    this.updateQuantity(cartData[index]);
+                    this.getCartTotal();
+                }
+            }
+        },
+
         updateQuantity(item) {
             const savedCart = localStorage.getItem('cart');
             if (savedCart) {
@@ -280,7 +329,12 @@ export default {
                 const index = cartData.findIndex(cartItem => cartItem.id === item.id);
 
                 if (index !== -1) {
-                    cartData[index].quantity = parseInt(item.quantity);
+                    if (this.category_id == 27) {
+                        cartData[index].ticket_qty = parseInt(item.quantity);
+                    } else {
+                        cartData[index].quantity = parseInt(item.quantity);
+                    }
+
                     localStorage.setItem('cart', JSON.stringify(cartData));
                     this.loadCart();
                 }
@@ -290,7 +344,7 @@ export default {
             this.loading = true;
             // Load the cart from local storage
             const savedCart = localStorage.getItem('cart');
-           // this.$store.commit('cart/setCart', savedCart);
+            // this.$store.commit('cart/setCart', savedCart);
 
             if (savedCart) {
                 const cartData = JSON.parse(savedCart);
@@ -333,16 +387,28 @@ export default {
             if (savedCart) {
                 const cartData = JSON.parse(savedCart);
                 const uniqueCart = cartData.filter((item, index, self) =>
-                    index === self.findIndex(t => t.id === item.id)
+                    index === self.findIndex((t) => t.id === item.id)
                 );
-                const totalPrice = uniqueCart.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
-                //const totalPrice = cartData.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
+
+                let totalPrice = 0; // Declare totalPrice outside the if-else blocks
+
+                if (this.category_id !== 27) {
+                    totalPrice = uniqueCart.reduce(
+                        (total, item) => total + (item.price || 0) * item.quantity,
+                        0
+                    );
+                } else {
+                    totalPrice = uniqueCart.reduce(
+                        (total, item) => total + (item.ticketprice || 0) * item.ticket_qty,
+                        0
+                    );
+                }
+
                 this.subtotal = totalPrice;
                 console.log('Total Price for Unique Items:', totalPrice);
             } else {
                 console.error('No cart data found in local storage.');
             }
-
         },
 
     }
