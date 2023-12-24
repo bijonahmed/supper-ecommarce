@@ -20,29 +20,29 @@
                                         </li>
                                         <li>
                                             <p>Status</p>
-                                            <p>Order Placed</p>
+                                            <p>{{ order_status }}</p>
                                         </li>
                                         <li>
                                             <p>Payment Type</p>
-                                            <p>Bkash</p>
+                                            <p>{{ payment_getway }}</p>
                                         </li>
                                         <li>
                                             <p>Order Id</p>
-                                            <p>4564</p>
+                                            <p>{{ orderId }}</p>
                                         </li>
                                         <li>
-                                            <p>Mobile</p>
-                                            <p> 546645654456</p>
-                                        </li>
-                                        <li>
-                                            <p>Email</p>
-                                            <p> usermail@mail.com</p>
+                                            <p>Total</p>
+                                            <p>{{ subtotal }}</p>
                                         </li>
 
                                         <li>
-                                            <p>Total</p>
-                                            <p> BDT664</p>
+                                            <p>Place On</p>
+                                            <p>{{ placeOn }}</p>
                                         </li>
+
+
+
+                                        
 
                                     </ul>
                                     <div class="row">
@@ -73,40 +73,26 @@ export default {
     },
     data() {
         return {
-
+            order_status: '',
+            payment_getway: '',
+            orderId: '',
+            subtotal: 0,
+            placeOn: ''
         }
     },
     mounted() {
+        const orderid = this.$route.params.slug;
+        this.orderHistory(orderid);
 
     },
     methods: {
-        //bkash
-        bkashPopup() {
-            $(".pop_bkash").fadeIn();
-        },
-        bkashPopupClose() {
-            $(".pop_bkash").fadeOut();
-        },
-        //nagad
-        nagadPopup() {
-            $(".pop_nogot").fadeIn();
-        },
-        nagadPopupClose() {
-            $(".pop_nogot").fadeOut();
-        },
-        //rocket 
-        rocketPopup() {
-            $(".pop_roket").fadeIn();
-        },
-        rocketPopupClose() {
-            $(".pop_roket").fadeOut();
-        },
-        //upday 
-        upayPopup() {
-            $(".pop_upay").fadeIn();
-        },
-        upayPopupClose() {
-            $(".pop_upay").fadeOut();
+        async orderHistory(orderid) {
+            const response = await this.$axios.get(`/order/getOrderhistory/${orderid}`);
+            this.order_status = response.data.order_status;
+            this.payment_getway = response.data.payment_getway;
+            this.orderId = response.data.orderId;
+            this.subtotal = response.data.subtotal;
+            this.placeOn = response.data.placeOn;
         },
     }
 }

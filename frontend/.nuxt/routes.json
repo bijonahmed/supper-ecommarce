@@ -49,13 +49,6 @@
     "_name": "_5ba6d59c"
   },
   {
-    "name": "ordersummary",
-    "path": "/ordersummary",
-    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\ordersummary.vue",
-    "chunkName": "pages/ordersummary",
-    "_name": "_1679af88"
-  },
-  {
     "name": "payment",
     "path": "/payment",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\payment.vue",
@@ -194,6 +187,13 @@
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\categories\\\\_slug.vue",
     "chunkName": "pages/categories/_slug",
     "_name": "_1d735ea4"
+  },
+  {
+    "name": "order-slug",
+    "path": "/order/:slug?",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\order\\\\_slug.vue",
+    "chunkName": "pages/order/_slug",
+    "_name": "_784ffdec"
   },
   {
     "name": "product-details-slug",

@@ -232,48 +232,7 @@ export default {
                 this.loading = false;
             }, 1000);
         },
-
-        // addtoCart(product) {
-        //     this.loading = true;
-        //     const chksizeval = this.choose_size;
-        //     if (chksizeval == "") {
-        //         this.loading = false;
-        //         Swal.fire({
-        //             position: "top-end",
-        //             icon: "warning",
-        //             title: "Please select your size!",
-        //             showConfirmButton: false,
-        //             timer: 1500
-        //         });
-        //         return false;
-        //     } else {
-        //         const existingProduct = this.cart.find(item => item.id === product.id && item.size === this.choose_size);
-        //         //this.cart.find(item => item.id === product.id);
-        //         if (existingProduct) {
-        //             existingProduct.quantity += 1;
-        //         } else {
-        //             this.cart.push({
-        //                 ...product,
-        //                 size: this.choose_size,
-        //                 category_id: this.category_id,
-        //                 ticketprice: this.ticketprice,
-        //                 quantity: 1
-        //             });
-        //         }
-        //         // Merge with existing data if any
-        //         const existingData = JSON.parse(localStorage.getItem('cart')) || [];
-        //         const newData = [...existingData, ...this.cart];
-
-        //         localStorage.setItem('cart', JSON.stringify(newData));
-
-        //         // Emit an event to notify other components
-        //         bus.$emit('updateCart', newData);
-
-        //         setTimeout(() => {
-        //             this.loading = false;
-        //         }, 1000);
-        //     }
-        // },
+        
         saveCart() {
             if (process.client) {
                 localStorage.setItem('cart', JSON.stringify(this.cart));

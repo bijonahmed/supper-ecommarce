@@ -130,6 +130,7 @@ Route::group([
     Route::get('orderStatusRow/{id}', [OrderController::class, 'orderStatusRow']);
     Route::post('save_order', [OrderController::class, 'save_order']);
     Route::get('allOrdersAdmin', [OrderController::class, 'allOrdersAdmin']);
+    Route::get('getOrderhistory/{id}', [OrderController::class, 'getOrderhistory']);
     Route::post('update_order_status', [OrderController::class, 'update_order_status']);
 });
 

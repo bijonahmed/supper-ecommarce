@@ -26,6 +26,37 @@ class OrderController extends Controller
         $this->userid = $user->id;
     }
 
+    public function getOrderhistory($id)
+    {
+        $orderRow  = Order::where('customer_id', $this->userid)->where('id', $id)->first();
+        $status    = OrderStatus::find($orderRow->order_status);
+        $paytype   = (int)$orderRow->payment_getway;
+        $ptype     = $this->paymenttype($paytype);
+        $orderstatus = !empty($status->name) ? $status->name : "";
+        $odata['orderId']   = $orderRow->orderId;
+        $odata['subtotal']  = $orderRow->subtotal;
+        $odata['payment_getway']  = $ptype;
+        $odata['order_status']  = $orderstatus;
+        $odata['placeOn'] = date_format(date_create($orderRow->created_at), "d-m-Y");
+        return response()->json($odata, 200);
+    }
+
+
+    public function paymenttype($id)
+    {
+        $name = "";
+        if ($id === 2) {
+            $name =  "Bkash";
+        } elseif ($id === 3) {
+            $name = "Nagad";
+        } elseif ($id === 4) {
+            $name = "Roket";
+        } elseif ($id === 5) {
+            $name = "Upay";
+        }
+            return $name; 
+    }
+
     public function orderStatusRow($id)
     {
         try {
@@ -234,7 +265,7 @@ class OrderController extends Controller
     public function submitOrder(Request $request)
     {
 
-       // dd($request->all());
+        // dd($request->all());
         //dd($request->all());
         $validator = Validator::make($request->all(), [
             'txtid'           => 'required',
@@ -297,6 +328,9 @@ class OrderController extends Controller
             $order_history->total           = $itemtotal;
             $order_history->save();
         }
-        return response()->json("Your order successfully done! orderID: $lastOrderId", 200);
+        $odata['orderid'] = $lastOrderId;
+        $odata['msg']     = $lastOrderId;
+
+        return response()->json($odata);
     }
 }

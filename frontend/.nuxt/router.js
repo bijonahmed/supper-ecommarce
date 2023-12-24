@@ -11,7 +11,6 @@ const _38645360 = () => interopDefault(import('..\\pages\\contact.vue' /* webpac
 const _f7323954 = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChunkName: "pages/faq" */))
 const _fd7547ae = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
 const _5ba6d59c = () => interopDefault(import('..\\pages\\offer.vue' /* webpackChunkName: "pages/offer" */))
-const _1679af88 = () => interopDefault(import('..\\pages\\ordersummary.vue' /* webpackChunkName: "pages/ordersummary" */))
 const _4bb80374 = () => interopDefault(import('..\\pages\\payment.vue' /* webpackChunkName: "pages/payment" */))
 const _15e31887 = () => interopDefault(import('..\\pages\\privacy-policy.vue' /* webpackChunkName: "pages/privacy-policy" */))
 const _6fc18b58 = () => interopDefault(import('..\\pages\\products.vue' /* webpackChunkName: "pages/products" */))
@@ -32,6 +31,7 @@ const _6b60bd34 = () => interopDefault(import('..\\pages\\user\\wallet.vue' /* w
 const _21021c40 = () => interopDefault(import('..\\pages\\user\\wishlist.vue' /* webpackChunkName: "pages/user/wishlist" */))
 const _90c48ddc = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 const _1d735ea4 = () => interopDefault(import('..\\pages\\categories\\_slug.vue' /* webpackChunkName: "pages/categories/_slug" */))
+const _784ffdec = () => interopDefault(import('..\\pages\\order\\_slug.vue' /* webpackChunkName: "pages/order/_slug" */))
 const _408f6a16 = () => interopDefault(import('..\\pages\\product-details\\_slug.vue' /* webpackChunkName: "pages/product-details/_slug" */))
 
 const emptyFn = () => {}
@@ -73,10 +73,6 @@ export const routerOptions = {
     path: "/offer",
     component: _5ba6d59c,
     name: "offer"
-  }, {
-    path: "/ordersummary",
-    component: _1679af88,
-    name: "ordersummary"
   }, {
     path: "/payment",
     component: _4bb80374,
@@ -157,6 +153,10 @@ export const routerOptions = {
     path: "/categories/:slug?",
     component: _1d735ea4,
     name: "categories-slug"
+  }, {
+    path: "/order/:slug?",
+    component: _784ffdec,
+    name: "order-slug"
   }, {
     path: "/product-details/:slug?",
     component: _408f6a16,

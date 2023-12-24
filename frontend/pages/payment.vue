@@ -8,9 +8,6 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                <h1>
-                                    <p>{{ subtotal }}</p>
-                                </h1>
                                 <div class="pay_options">
                                     <span v-if="loading">
                                         <Loader />
@@ -347,7 +344,8 @@ export default {
                 })
                 .then((res) => {
                     this.clearCart();
-                    this.$router.push('/ordersummary');
+                    const OrderID = res.data.orderid;
+                    this.$router.push(`/order/${OrderID}`);
                 })
                 .catch(error => {
                     if (error.response.status === 422) {
