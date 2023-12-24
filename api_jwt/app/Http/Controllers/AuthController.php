@@ -115,6 +115,8 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required',
             'phone_number' => 'required',
+            'address_1' => 'required',
+            'address_1' => 'required',
             //'address' => 'required',
         ]);
         if ($validator->fails()) {
@@ -125,6 +127,8 @@ class AuthController extends Controller
             'name'              => !empty($request->name) ? $request->name : "",
             'email'             => !empty($request->email) ? $request->email : "",
             'phone_number'      => !empty($request->phone_number) ? $request->phone_number : "",
+            'address_1'         => !empty($request->address_1) ? $request->address_1 : "",
+            'address_2'         => !empty($request->address_2) ? $request->address_2 : "",
             'address'           => !empty($request->address) ? $request->address : "",
             'website'           => !empty($request->website) ? $request->website : "",
             'github'            => !empty($request->github) ? $request->github : "",

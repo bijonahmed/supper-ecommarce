@@ -30,7 +30,7 @@
                                         <div class="col-md-12">
                                             <div class="input-container">
                                                 <input placeholder="Email" class="input-field" type="text" v-model="login.email">
-                                                <label for="input-field" class="input-label">User name </label>
+                                                <label for="input-field" class="input-label">Email </label>
                                                 <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
                                                 <span class="input-highlight"></span>
                                             </div>

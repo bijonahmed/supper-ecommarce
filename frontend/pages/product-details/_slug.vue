@@ -195,7 +195,6 @@ export default {
                     quantity: 1,
                 });
                 */
-
                 if (this.category_id === 27) {
                     this.cart.push({
                         ...product,

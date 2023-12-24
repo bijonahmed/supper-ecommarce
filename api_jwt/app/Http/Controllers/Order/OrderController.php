@@ -99,7 +99,7 @@ class OrderController extends Controller
 
     function allWishList()
     {
-        $rows = WishList::join('product', 'product.id', '=', 'wishlist.id')->select('wishlist.id as wishid', 'product.thumnail_img', 'product.slug', 'product.name', 'price', 'product.id')->get();
+        $rows = WishList::join('product', 'product.id', '=', 'wishlist.product_id')->select('wishlist.id as wishid', 'product.thumnail_img', 'product.slug', 'product.name', 'price', 'product.id')->get();
         $products = [];
         foreach ($rows as $key => $v) {
             $products[] = [

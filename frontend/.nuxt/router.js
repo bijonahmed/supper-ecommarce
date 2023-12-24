@@ -11,8 +11,11 @@ const _38645360 = () => interopDefault(import('..\\pages\\contact.vue' /* webpac
 const _f7323954 = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChunkName: "pages/faq" */))
 const _fd7547ae = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
 const _5ba6d59c = () => interopDefault(import('..\\pages\\offer.vue' /* webpackChunkName: "pages/offer" */))
+const _1679af88 = () => interopDefault(import('..\\pages\\ordersummary.vue' /* webpackChunkName: "pages/ordersummary" */))
+const _4bb80374 = () => interopDefault(import('..\\pages\\payment.vue' /* webpackChunkName: "pages/payment" */))
 const _15e31887 = () => interopDefault(import('..\\pages\\privacy-policy.vue' /* webpackChunkName: "pages/privacy-policy" */))
 const _6fc18b58 = () => interopDefault(import('..\\pages\\products.vue' /* webpackChunkName: "pages/products" */))
+const _24d0e013 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages/register" */))
 const _e2861408 = () => interopDefault(import('..\\pages\\ticket.vue' /* webpackChunkName: "pages/ticket" */))
 const _c333c558 = () => interopDefault(import('..\\pages\\winners.vue' /* webpackChunkName: "pages/winners" */))
 const _d439fa34 = () => interopDefault(import('..\\pages\\user\\notification.vue' /* webpackChunkName: "pages/user/notification" */))
@@ -71,6 +74,14 @@ export const routerOptions = {
     component: _5ba6d59c,
     name: "offer"
   }, {
+    path: "/ordersummary",
+    component: _1679af88,
+    name: "ordersummary"
+  }, {
+    path: "/payment",
+    component: _4bb80374,
+    name: "payment"
+  }, {
     path: "/privacy-policy",
     component: _15e31887,
     name: "privacy-policy"
@@ -78,6 +89,10 @@ export const routerOptions = {
     path: "/products",
     component: _6fc18b58,
     name: "products"
+  }, {
+    path: "/register",
+    component: _24d0e013,
+    name: "register"
   }, {
     path: "/ticket",
     component: _e2861408,

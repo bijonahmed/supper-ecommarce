@@ -216,6 +216,8 @@ Route::group([
     Route::get('get-paginated-products', [UnauthenticatedController::class, 'getPaginatedData']);
     Route::get('defaultShowingProduct', [UnauthenticatedController::class, 'defaultShowingProduct']);
     Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
+    Route::get('countrys/', [UnauthenticatedController::class, 'getCountrys']);
+    Route::get('setting/', [UnauthenticatedController::class, 'preSetting']);
     //Route::get('defaultShowingMovies', [UnauthenticatedController::class, 'defaultShowingMovies']);
 
     Route::get('defaultShowingMoviesHome', [UnauthenticatedController::class, 'defaultShowingMoviesHome']);

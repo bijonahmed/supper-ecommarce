@@ -28,7 +28,7 @@
                                             <div class="c_campain_left">
                                                 <div class="camp_count">
                                                     <!-- <div id="timer" class=" c_timer" data-endtime="25 october 2024 10:00:00 GMT+01:00"></div> -->
-                                                    <div>BDT{{ item.price }}</div>
+                                                    <div>BDT&nbsp;{{ item.price }}</div>
                                                 </div>
                                                 <div class="campain_image">
                                                     <!-- Swiper -->
@@ -52,14 +52,15 @@
                                         <div class="col-md-7">
                                             <div class="c_content_right">
                                                 <div class="c_content_box">
-                                                    <h1>{{ item.name }}</h1>
+                                                    <h1>Win</h1>
+                                                    <h2>{{ item.name }}</h2>
                                                     <!-- <span>BDT{{ item.price }}</span> -->
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="d-flex">
                                                                 <nuxt-link :to="`/product-details/${item.slug}`">View Details</nuxt-link>
                                                                 <!-- <a href="javascript:" class="btn_details show_details" @click="viewDetails(item.slug)">View Details</a> -->
-                                                                <!-- <button type="button" @click="addtoCart(item)">add to cart</button> -->
+                                                                <button type="button" @click="addtoCart(item)">add to cart</button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -68,7 +69,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="button_">
-                                                    <button type="button" class="btn_share active" @click="wishlist(item.slug)"><i class="fa-solid fa-heart"></i></button>
+
+                                                    <span v-if="loggedIn">
+                                                        <button type="button" class="btn_share active" @click="wishlist(item.slug)"><i class="fa-solid fa-heart"></i></button>
+                                                    </span>
+                                                    <span v-else>
+                                                        <button type="button" class="btn_share active" @click="loginPopup"><i class="fa-solid fa-heart"></i></button>
+                                                    </span>
+
                                                     <button type="button" class="btn_share share_btn" @click="shareBtn"><i class="fa-solid fa-share"></i></button>
 
                                                 </div>
@@ -105,7 +113,62 @@
             </div>
         </div>
     </div>
+    <!-- Login  -->
+    <div class="login_modal">
+        <div class="main_content">
+            <div class="log_regi">
+                <button class="cls_mdal" @click="closePopup"><i class="fa-solid fa-x"></i></button>
+                <div class="login_section">
+                    <center><span class="text-danger text-center">{{ invaliderror }}</span></center>
+                    <form @submit.prevent="userLogin()" id="formrest_login" class="forms-sample" enctype="multipart/form-data">
+                        <h5 class="text-center">Login</h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-container">
+                                    <input placeholder="Email" class="input-field" type="text" v-model="login.email">
+                                    <label for="input-field" class="input-label">Email </label>
+                                    <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
+                                    <span class="input-highlight"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-container">
+                                    <input placeholder="Password" class="input-field" id="password-field" type="password" v-model="login.password">
+                                    <label for="input-field" class="input-label">Password </label>
+                                    <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
+                                    <span class="input-highlight"></span>
+                                    <i toggle="#password-field" class="fa-solid fa-eye toggle-password"></i>
+                                </div>
+                            </div>
+                            <div class="row pe-0">
+                                <div class="col-6">
+                                    <div class="input-container">
+                                        <a href="javascript:" class="f_link"><small>
+                                                <p style="color:white;">Forget Password?</p>
+                                            </small></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-container">
+                                        <nuxt-link to="/register" class="f_link" style="text-align: right;">
+                                                        <div> <small style="color:white;">Register</small></div>
+                                                    </nuxt-link>
+                                    </div>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <div class="input-container text-end">
+                                        <input class="btn_submit w-100" value="Login" type="submit"><br/><br/>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
+            </div>
+        </div>
+    </div>
     <!-- END  -->
     <!-- share popup  -->
     <div class="modal_share">
@@ -144,10 +207,25 @@ export default {
             prouducts: [],
             itemCount: 0,
             updatedQuantity: 0,
+
+            login: {
+                email: '',
+                password: '',
+            },
+            invaliderror: '',
+            notifmsg: '',
+            errors: {},
         }
+
     },
     mounted() {
         this.onlyloadingTicket();
+    },
+    computed: {
+        loggedIn() {
+            return this.$auth.loggedIn;
+        },
+
     },
     methods: {
         async wishlist(slug) {
@@ -182,15 +260,11 @@ export default {
 
         },
 
-
         async onlyloadingTicket() {
             const response = await this.$axios.get('/unauthenticate/getTickets');
             this.prouducts = response.data;
             //console.log("tickets: " +  response.data);
         },
-
-
-
 
         addtoCart(product) {
             this.loading = true;
@@ -227,6 +301,49 @@ export default {
 
             $(".details_modal").fadeIn();
         },
+
+        async userLogin() {
+            try {
+
+                const postData = {
+                    email: this.login.email,
+                    password: this.login.password,
+                    // Add other parameters as needed
+                };
+
+                let {
+                    data
+                } = await this.$axios.post('/auth/login', postData); //await this.login.post('/auth/login');
+                await this.$auth.setUserToken(data.access_token);
+                this.closePopup();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully"
+                });
+                this.$router.push('/');
+
+            } catch (err) {
+
+                if (err.response.status === 422) {
+                    this.errors = err.response.data.errors;
+                    this.errorHandler(err);
+                }
+
+                console.log(err)
+            }
+        },
+
         hideDetails() {
             $(".details_modal").fadeOut();
         },
@@ -235,7 +352,13 @@ export default {
         },
         shareBtnCls() {
             $(".modal_share").fadeOut();
-        }
+        },
+        loginPopup() {
+            $(".login_modal").fadeIn();
+        },
+        closePopup() {
+            $(".login_modal").fadeOut();
+        },
 
     }
 }

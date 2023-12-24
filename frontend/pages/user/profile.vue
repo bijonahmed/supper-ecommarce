@@ -68,22 +68,41 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 d-none">
+                            <div class="col-md-6">
                                 <div class="input_group input-container">
                                     <label for="nationality" class="s_label">Nationality</label>
                                     <select v-model="insertdata.nationality_id" class="form-control input-field" id="nationality">
                                         <option value="" disabled>Select Nationality</option>
-                                        <option v-for="country in countries" :value="country.id" :key="country.id">{{ country.countryname }}</option>
+                                        <option v-for="country in countries" :value="country.id" :key="country.id" :selected="insertdata.nationality_id === 23" disabled>{{ country.countryname }}</option>
                                     </select>
+
                                 </div>
                             </div>
-                            <div class="col-md-6  d-none">
+                            <div class="col-md-6">
                                 <div class="input_group input-container">
-                                    <label for="residence" class="s_label">Country Of Residence</label>
-                                    <select v-model="insertdata.country_residence" class="form-control input-field" id="country_residence">
-                                        <option value="" disabled>Select Nationality</option>
-                                        <option v-for="country in countries" :value="country.id" :key="country.id">{{ country.countryname }}</option>
-                                    </select>
+                                    <label for="residence" class="s_label">City</label>
+                                    <input placeholder="1700000000" id="mobile_code" class="input-field" type="text" v-model="insertdata.phone_number">
+                                    <span class="text-danger" v-if="errors.phone_number">{{ errors.phone_number[0] }}</span>
+                                    <span class="input-highlight"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="input_group input-container">
+                                    <label for="residence" class="s_label">Address 1</label>
+                                    <input placeholder="Address 1" id="mobile_code" class="input-field" type="text" v-model="insertdata.address_1">
+                                    <span class="text-danger" v-if="errors.address_1">{{ errors.address_1[0] }}</span>
+                                    <span class="input-highlight"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input_group input-container">
+                                    <label for="residence" class="s_label">Address 2</label>
+                                    <input placeholder="Address 2" id="mobile_code" class="input-field" type="text" v-model="insertdata.address_2">
+                                    <span class="text-danger" v-if="errors.address_2">{{ errors.address_2[0] }}</span>
+                                    <span class="input-highlight"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -118,8 +137,10 @@ export default {
                 fname: '',
                 lname: '',
                 name: '',
-                nationality_id: '',
+                nationality_id: 23,
                 date_of_birth: '',
+                address_1:'',
+                address_2:'',
                 email: '',
                 phone_number: '',
                 country_residence: '',
@@ -130,7 +151,8 @@ export default {
         }
     },
     mounted() {
-       // this.countrys();
+        this.countrys();
+        //$("#nationality").val(23);
         this.defaultLoadingData();
     },
     methods: {
@@ -143,6 +165,8 @@ export default {
             formData.append('email', this.insertdata.email);
             formData.append('phone_number', this.insertdata.phone_number);
             formData.append('nationality_id', this.insertdata.nationality_id);
+            formData.append('address_1', this.insertdata.address_1);
+            formData.append('address_2', this.insertdata.address_2);
             formData.append('date_of_birth', this.insertdata.date_of_birth);
             formData.append('country_residence', this.insertdata.country_residence);
             formData.append('gender', this.insertdata.gender);
@@ -178,10 +202,11 @@ export default {
                 this.insertdata.name = response.data.data.name;
                 this.insertdata.email = response.data.data.email;
                 this.insertdata.phone_number = response.data.data.phone_number;
-                this.insertdata.nationality_id = response.data.data.nationality_id;
+               // this.insertdata.nationality_id = response.data.data.nationality_id;
                 this.insertdata.country_residence = response.data.data.country_residence;
                 this.insertdata.gender = response.data.data.gender;
-                this.insertdata.address = response.data.data.address;
+                this.insertdata.address_1 = response.data.data.address_1;
+                this.insertdata.address_2 = response.data.data.address_2;
                 this.insertdata.website = response.data.data.website;
                 this.insertdata.github = response.data.data.github;
                 this.insertdata.twitter = response.data.data.twitter;

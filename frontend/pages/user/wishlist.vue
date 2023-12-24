@@ -37,9 +37,9 @@
                                                 </div>
                                                 <div class="cart_title">
                                                     <h1>{{ item.product_name }}</h1>
-                                                    <h6>Lottery credit</h6>
+                                                    <!-- <h6>Lottery credit</h6> -->
                                                     <p>BDT{{ item.price }}</p>
-                                                    <div class="sell_progress">
+                                                    <div class="sell_progress d-none">
                                                         <div class="d-none">
                                                             <span id="timer" class="end_date" data-date="29 April 2028 23:59:00 GMT+01:00">
                                                                 Closing:
@@ -62,7 +62,7 @@
                                         <div class="col-md-6">
                                             <div class="value_change">
                                                 <div class="value_box">
-                                                    <nuxt-link :to="`/product-details/${item.slug}`"  class="btn_submit" style="display: block; text-decoration: none;">View Details</nuxt-link>
+                                                    <nuxt-link :to="`/product-details/${item.slug}`" class="btn_submit" style="display: block; text-decoration: none;">View Details</nuxt-link>
                                                     <!-- <button type="button" class="btn_submit" style="display: block;" @click="addtoCart(item)">Add To cart</button> -->
 
                                                     <button type="button" class="btn_submit rm_w" @click="remove(item.wishid)">Remove from wishlist</button>
@@ -168,7 +168,6 @@ export default {
                 this.loading = false; // Hide loader after response or error
             }
         },
-       
 
     }
 }

@@ -55,7 +55,7 @@
 
                                     <li class="nav-item">
                                         <nuxt-link class="nav-link mobile_ position-relative" to="/cart">
-                                            cart
+                                            Cart
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                                 {{ itemCounts }}
                                             </span>

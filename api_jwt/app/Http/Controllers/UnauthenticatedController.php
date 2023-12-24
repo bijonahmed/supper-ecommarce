@@ -14,9 +14,11 @@ use App\Models\ProductAdditionalImg;
 use App\Models\ProductCategory;
 use App\Models\Categorys;
 use App\Models\ProductAttributes;
+use App\Models\Setting;
 use Illuminate\Support\Str;
 use App\Rules\MatchOldPassword;
 use App\Models\Attribute;
+use App\Models\Countrys;
 use Illuminate\Support\Facades\Hash;
 use DB;
 use File;
@@ -33,6 +35,20 @@ class UnauthenticatedController extends Controller
         $categories = Categorys::with('children.children.children.children.children')->where('parent_id', 0)->get();
         return response()->json($categories);
     }
+
+    public function getCountrys(Request $request)
+    {
+        $categories = Countrys::where('status', 1)->get();
+        return response()->json($categories);
+    }
+
+    public function preSetting()
+    {
+
+        $response = Setting::find(1);
+        return response()->json($response);
+    }
+
 
     public function limitedProducts()
     {
@@ -98,10 +114,7 @@ class UnauthenticatedController extends Controller
         $insertimg['product_id'] = $findproductrow->id;
         $insertimg['images'] = $findproductrow->thumnail_img;
 
-
-        $chkCategory = ProductCategory::where('product_id',$findproductrow->id)->first();
-
-       
+        $chkCategory = ProductCategory::where('product_id', $findproductrow->id)->first();
 
         $chkpoings  = ProductAdditionalImg::where('product_id', $findproductrow->id)->where('images', $findproductrow->thumnail_img)->first();
         // dd($chkpoings);
@@ -133,12 +146,12 @@ class UnauthenticatedController extends Controller
 
         $category_id = 27; //for tickets categoryies id 27. 
         $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
-                ->where('produc_categories.category_id', '!=', $category_id)
-                ->orderBy('product.id', 'desc')
-                ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
-                ->limit(12)
-                ->groupby('product.id')
-                ->get();
+            ->where('produc_categories.category_id', '!=', $category_id)
+            ->orderBy('product.id', 'desc')
+            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
+            ->limit(12)
+            ->groupby('product.id')
+            ->get();
 
         foreach ($data as $v) {
             $result[] = [
@@ -153,14 +166,14 @@ class UnauthenticatedController extends Controller
 
     public function getTickets()
     {
-       
+
         $category_id = 27; //for tickets categoryies id 27. 
         $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
-                ->where('produc_categories.category_id',$category_id)
-                ->orderBy('product.id', 'desc')
-                ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
-                //->limit(12)
-                ->get();
+            ->where('produc_categories.category_id', $category_id)
+            ->orderBy('product.id', 'desc')
+            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
+            //->limit(12)
+            ->get();
 
         foreach ($data as $v) {
             $result[] = [
