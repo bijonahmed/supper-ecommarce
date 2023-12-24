@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2023 at 09:39 AM
+-- Generation Time: Dec 24, 2023 at 10:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -427,264 +427,265 @@ CREATE TABLE `country` (
   `id` int(11) NOT NULL,
   `countrycode` char(3) NOT NULL,
   `countryname` varchar(200) NOT NULL,
-  `code` char(2) DEFAULT NULL
+  `code` char(2) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `country`
 --
 
-INSERT INTO `country` (`id`, `countrycode`, `countryname`, `code`) VALUES
-(1, 'ABW', 'Aruba', 'AW'),
-(2, 'AFG', 'Afghanistan', 'AF'),
-(3, 'AGO', 'Angola', 'AO'),
-(4, 'AIA', 'Anguilla', 'AI'),
-(5, 'ALA', 'Åland', 'AX'),
-(6, 'ALB', 'Albania', 'AL'),
-(7, 'AND', 'Andorra', 'AD'),
-(8, 'ARE', 'United Arab Emirates', 'AE'),
-(9, 'ARG', 'Argentina', 'AR'),
-(10, 'ARM', 'Armenia', 'AM'),
-(11, 'ASM', 'American Samoa', 'AS'),
-(12, 'ATA', 'Antarctica', 'AQ'),
-(13, 'ATF', 'French Southern Territories', 'TF'),
-(14, 'ATG', 'Antigua and Barbuda', 'AG'),
-(15, 'AUS', 'Australia', 'AU'),
-(16, 'AUT', 'Austria', 'AT'),
-(17, 'AZE', 'Azerbaijan', 'AZ'),
-(18, 'BDI', 'Burundi', 'BI'),
-(19, 'BEL', 'Belgium', 'BE'),
-(20, 'BEN', 'Benin', 'BJ'),
-(21, 'BES', 'Bonaire', 'BQ'),
-(22, 'BFA', 'Burkina Faso', 'BF'),
-(23, 'BGD', 'Bangladesh', 'BD'),
-(24, 'BGR', 'Bulgaria', 'BG'),
-(25, 'BHR', 'Bahrain', 'BH'),
-(26, 'BHS', 'Bahamas', 'BS'),
-(27, 'BIH', 'Bosnia and Herzegovina', 'BA'),
-(28, 'BLM', 'Saint Barthélemy', 'BL'),
-(29, 'BLR', 'Belarus', 'BY'),
-(30, 'BLZ', 'Belize', 'BZ'),
-(31, 'BMU', 'Bermuda', 'BM'),
-(32, 'BOL', 'Bolivia', 'BO'),
-(33, 'BRA', 'Brazil', 'BR'),
-(34, 'BRB', 'Barbados', 'BB'),
-(35, 'BRN', 'Brunei', 'BN'),
-(36, 'BTN', 'Bhutan', 'BT'),
-(37, 'BVT', 'Bouvet Island', 'BV'),
-(38, 'BWA', 'Botswana', 'BW'),
-(39, 'CAF', 'Central African Republic', 'CF'),
-(40, 'CAN', 'Canada', 'CA'),
-(41, 'CCK', 'Cocos [Keeling] Islands', 'CC'),
-(42, 'CHE', 'Switzerland', 'CH'),
-(43, 'CHL', 'Chile', 'CL'),
-(44, 'CHN', 'China', 'CN'),
-(45, 'CIV', 'Ivory Coast', 'CI'),
-(46, 'CMR', 'Cameroon', 'CM'),
-(47, 'COD', 'Democratic Republic of the Congo', 'CD'),
-(48, 'COG', 'Republic of the Congo', 'CG'),
-(49, 'COK', 'Cook Islands', 'CK'),
-(50, 'COL', 'Colombia', 'CO'),
-(51, 'COM', 'Comoros', 'KM'),
-(52, 'CPV', 'Cape Verde', 'CV'),
-(53, 'CRI', 'Costa Rica', 'CR'),
-(54, 'CUB', 'Cuba', 'CU'),
-(55, 'CUW', 'Curacao', 'CW'),
-(56, 'CXR', 'Christmas Island', 'CX'),
-(57, 'CYM', 'Cayman Islands', 'KY'),
-(58, 'CYP', 'Cyprus', 'CY'),
-(59, 'CZE', 'Czech Republic', 'CZ'),
-(60, 'DEU', 'Germany', 'DE'),
-(61, 'DJI', 'Djibouti', 'DJ'),
-(62, 'DMA', 'Dominica', 'DM'),
-(63, 'DNK', 'Denmark', 'DK'),
-(64, 'DOM', 'Dominican Republic', 'DO'),
-(65, 'DZA', 'Algeria', 'DZ'),
-(66, 'ECU', 'Ecuador', 'EC'),
-(67, 'EGY', 'Egypt', 'EG'),
-(68, 'ERI', 'Eritrea', 'ER'),
-(69, 'ESH', 'Western Sahara', 'EH'),
-(70, 'ESP', 'Spain', 'ES'),
-(71, 'EST', 'Estonia', 'EE'),
-(72, 'ETH', 'Ethiopia', 'ET'),
-(73, 'FIN', 'Finland', 'FI'),
-(74, 'FJI', 'Fiji', 'FJ'),
-(75, 'FLK', 'Falkland Islands', 'FK'),
-(76, 'FRA', 'France', 'FR'),
-(77, 'FRO', 'Faroe Islands', 'FO'),
-(78, 'FSM', 'Micronesia', 'FM'),
-(79, 'GAB', 'Gabon', 'GA'),
-(80, 'GBR', 'United Kingdom', 'GB'),
-(81, 'GEO', 'Georgia', 'GE'),
-(82, 'GGY', 'Guernsey', 'GG'),
-(83, 'GHA', 'Ghana', 'GH'),
-(84, 'GIB', 'Gibraltar', 'GI'),
-(85, 'GIN', 'Guinea', 'GN'),
-(86, 'GLP', 'Guadeloupe', 'GP'),
-(87, 'GMB', 'Gambia', 'GM'),
-(88, 'GNB', 'Guinea-Bissau', 'GW'),
-(89, 'GNQ', 'Equatorial Guinea', 'GQ'),
-(90, 'GRC', 'Greece', 'GR'),
-(91, 'GRD', 'Grenada', 'GD'),
-(92, 'GRL', 'Greenland', 'GL'),
-(93, 'GTM', 'Guatemala', 'GT'),
-(94, 'GUF', 'French Guiana', 'GF'),
-(95, 'GUM', 'Guam', 'GU'),
-(96, 'GUY', 'Guyana', 'GY'),
-(97, 'HKG', 'Hong Kong', 'HK'),
-(98, 'HMD', 'Heard Island and McDonald Islands', 'HM'),
-(99, 'HND', 'Honduras', 'HN'),
-(100, 'HRV', 'Croatia', 'HR'),
-(101, 'HTI', 'Haiti', 'HT'),
-(102, 'HUN', 'Hungary', 'HU'),
-(103, 'IDN', 'Indonesia', 'ID'),
-(104, 'IMN', 'Isle of Man', 'IM'),
-(105, 'IND', 'India', 'IN'),
-(106, 'IOT', 'British Indian Ocean Territory', 'IO'),
-(107, 'IRL', 'Ireland', 'IE'),
-(108, 'IRN', 'Iran', 'IR'),
-(109, 'IRQ', 'Iraq', 'IQ'),
-(110, 'ISL', 'Iceland', 'IS'),
-(111, 'ISR', 'Israel', 'IL'),
-(112, 'ITA', 'Italy', 'IT'),
-(113, 'JAM', 'Jamaica', 'JM'),
-(114, 'JEY', 'Jersey', 'JE'),
-(115, 'JOR', 'Jordan', 'JO'),
-(116, 'JPN', 'Japan', 'JP'),
-(117, 'KAZ', 'Kazakhstan', 'KZ'),
-(118, 'KEN', 'Kenya', 'KE'),
-(119, 'KGZ', 'Kyrgyzstan', 'KG'),
-(120, 'KHM', 'Cambodia', 'KH'),
-(121, 'KIR', 'Kiribati', 'KI'),
-(122, 'KNA', 'Saint Kitts and Nevis', 'KN'),
-(123, 'KOR', 'South Korea', 'KR'),
-(124, 'KWT', 'Kuwait', 'KW'),
-(125, 'LAO', 'Laos', 'LA'),
-(126, 'LBN', 'Lebanon', 'LB'),
-(127, 'LBR', 'Liberia', 'LR'),
-(128, 'LBY', 'Libya', 'LY'),
-(129, 'LCA', 'Saint Lucia', 'LC'),
-(130, 'LIE', 'Liechtenstein', 'LI'),
-(131, 'LKA', 'Sri Lanka', 'LK'),
-(132, 'LSO', 'Lesotho', 'LS'),
-(133, 'LTU', 'Lithuania', 'LT'),
-(134, 'LUX', 'Luxembourg', 'LU'),
-(135, 'LVA', 'Latvia', 'LV'),
-(136, 'MAC', 'Macao', 'MO'),
-(137, 'MAF', 'Saint Martin', 'MF'),
-(138, 'MAR', 'Morocco', 'MA'),
-(139, 'MCO', 'Monaco', 'MC'),
-(140, 'MDA', 'Moldova', 'MD'),
-(141, 'MDG', 'Madagascar', 'MG'),
-(142, 'MDV', 'Maldives', 'MV'),
-(143, 'MEX', 'Mexico', 'MX'),
-(144, 'MHL', 'Marshall Islands', 'MH'),
-(145, 'MKD', 'Macedonia', 'MK'),
-(146, 'MLI', 'Mali', 'ML'),
-(147, 'MLT', 'Malta', 'MT'),
-(148, 'MMR', 'Myanmar [Burma]', 'MM'),
-(149, 'MNE', 'Montenegro', 'ME'),
-(150, 'MNG', 'Mongolia', 'MN'),
-(151, 'MNP', 'Northern Mariana Islands', 'MP'),
-(152, 'MOZ', 'Mozambique', 'MZ'),
-(153, 'MRT', 'Mauritania', 'MR'),
-(154, 'MSR', 'Montserrat', 'MS'),
-(155, 'MTQ', 'Martinique', 'MQ'),
-(156, 'MUS', 'Mauritius', 'MU'),
-(157, 'MWI', 'Malawi', 'MW'),
-(158, 'MYS', 'Malaysia', 'MY'),
-(159, 'MYT', 'Mayotte', 'YT'),
-(160, 'NAM', 'Namibia', 'NA'),
-(161, 'NCL', 'New Caledonia', 'NC'),
-(162, 'NER', 'Niger', 'NE'),
-(163, 'NFK', 'Norfolk Island', 'NF'),
-(164, 'NGA', 'Nigeria', 'NG'),
-(165, 'NIC', 'Nicaragua', 'NI'),
-(166, 'NIU', 'Niue', 'NU'),
-(167, 'NLD', 'Netherlands', 'NL'),
-(168, 'NOR', 'Norway', 'NO'),
-(169, 'NPL', 'Nepal', 'NP'),
-(170, 'NRU', 'Nauru', 'NR'),
-(171, 'NZL', 'New Zealand', 'NZ'),
-(172, 'OMN', 'Oman', 'OM'),
-(173, 'PAK', 'Pakistan', 'PK'),
-(174, 'PAN', 'Panama', 'PA'),
-(175, 'PCN', 'Pitcairn Islands', 'PN'),
-(176, 'PER', 'Peru', 'PE'),
-(177, 'PHL', 'Philippines', 'PH'),
-(178, 'PLW', 'Palau', 'PW'),
-(179, 'PNG', 'Papua New Guinea', 'PG'),
-(180, 'POL', 'Poland', 'PL'),
-(181, 'PRI', 'Puerto Rico', 'PR'),
-(182, 'PRK', 'North Korea', 'KP'),
-(183, 'PRT', 'Portugal', 'PT'),
-(184, 'PRY', 'Paraguay', 'PY'),
-(185, 'PSE', 'Palestine', 'PS'),
-(186, 'PYF', 'French Polynesia', 'PF'),
-(187, 'QAT', 'Qatar', 'QA'),
-(188, 'REU', 'Réunion', 'RE'),
-(189, 'ROU', 'Romania', 'RO'),
-(190, 'RUS', 'Russia', 'RU'),
-(191, 'RWA', 'Rwanda', 'RW'),
-(192, 'SAU', 'Saudi Arabia', 'SA'),
-(193, 'SDN', 'Sudan', 'SD'),
-(194, 'SEN', 'Senegal', 'SN'),
-(195, 'SGP', 'Singapore', 'SG'),
-(196, 'SGS', 'South Georgia and the South Sandwich Islands', 'GS'),
-(197, 'SHN', 'Saint Helena', 'SH'),
-(198, 'SJM', 'Svalbard and Jan Mayen', 'SJ'),
-(199, 'SLB', 'Solomon Islands', 'SB'),
-(200, 'SLE', 'Sierra Leone', 'SL'),
-(201, 'SLV', 'El Salvador', 'SV'),
-(202, 'SMR', 'San Marino', 'SM'),
-(203, 'SOM', 'Somalia', 'SO'),
-(204, 'SPM', 'Saint Pierre and Miquelon', 'PM'),
-(205, 'SRB', 'Serbia', 'RS'),
-(206, 'SSD', 'South Sudan', 'SS'),
-(207, 'STP', 'São Tomé and Príncipe', 'ST'),
-(208, 'SUR', 'Suriname', 'SR'),
-(209, 'SVK', 'Slovakia', 'SK'),
-(210, 'SVN', 'Slovenia', 'SI'),
-(211, 'SWE', 'Sweden', 'SE'),
-(212, 'SWZ', 'Swaziland', 'SZ'),
-(213, 'SXM', 'Sint Maarten', 'SX'),
-(214, 'SYC', 'Seychelles', 'SC'),
-(215, 'SYR', 'Syria', 'SY'),
-(216, 'TCA', 'Turks and Caicos Islands', 'TC'),
-(217, 'TCD', 'Chad', 'TD'),
-(218, 'TGO', 'Togo', 'TG'),
-(219, 'THA', 'Thailand', 'TH'),
-(220, 'TJK', 'Tajikistan', 'TJ'),
-(221, 'TKL', 'Tokelau', 'TK'),
-(222, 'TKM', 'Turkmenistan', 'TM'),
-(223, 'TLS', 'East Timor', 'TL'),
-(224, 'TON', 'Tonga', 'TO'),
-(225, 'TTO', 'Trinidad and Tobago', 'TT'),
-(226, 'TUN', 'Tunisia', 'TN'),
-(227, 'TUR', 'Turkey', 'TR'),
-(228, 'TUV', 'Tuvalu', 'TV'),
-(229, 'TWN', 'Taiwan', 'TW'),
-(230, 'TZA', 'Tanzania', 'TZ'),
-(231, 'UGA', 'Uganda', 'UG'),
-(232, 'UKR', 'Ukraine', 'UA'),
-(233, 'UMI', 'U.S. Minor Outlying Islands', 'UM'),
-(234, 'URY', 'Uruguay', 'UY'),
-(235, 'USA', 'United States', 'US'),
-(236, 'UZB', 'Uzbekistan', 'UZ'),
-(237, 'VAT', 'Vatican City', 'VA'),
-(238, 'VCT', 'Saint Vincent and the Grenadines', 'VC'),
-(239, 'VEN', 'Venezuela', 'VE'),
-(240, 'VGB', 'British Virgin Islands', 'VG'),
-(241, 'VIR', 'U.S. Virgin Islands', 'VI'),
-(242, 'VNM', 'Vietnam', 'VN'),
-(243, 'VUT', 'Vanuatu', 'VU'),
-(244, 'WLF', 'Wallis and Futuna', 'WF'),
-(245, 'WSM', 'Samoa', 'WS'),
-(246, 'XKX', 'Kosovo', 'XK'),
-(247, 'YEM', 'Yemen', 'YE'),
-(248, 'ZAF', 'South Africa', 'ZA'),
-(249, 'ZMB', 'Zambia', 'ZM'),
-(250, 'ZWE', 'Zimbabwe', 'ZW');
+INSERT INTO `country` (`id`, `countrycode`, `countryname`, `code`, `status`) VALUES
+(1, 'ABW', 'Aruba', 'AW', 1),
+(2, 'AFG', 'Afghanistan', 'AF', 1),
+(3, 'AGO', 'Angola', 'AO', 1),
+(4, 'AIA', 'Anguilla', 'AI', 1),
+(5, 'ALA', 'Åland', 'AX', 1),
+(6, 'ALB', 'Albania', 'AL', 1),
+(7, 'AND', 'Andorra', 'AD', 1),
+(8, 'ARE', 'United Arab Emirates', 'AE', 1),
+(9, 'ARG', 'Argentina', 'AR', 1),
+(10, 'ARM', 'Armenia', 'AM', 1),
+(11, 'ASM', 'American Samoa', 'AS', 1),
+(12, 'ATA', 'Antarctica', 'AQ', 1),
+(13, 'ATF', 'French Southern Territories', 'TF', 1),
+(14, 'ATG', 'Antigua and Barbuda', 'AG', 1),
+(15, 'AUS', 'Australia', 'AU', 1),
+(16, 'AUT', 'Austria', 'AT', 1),
+(17, 'AZE', 'Azerbaijan', 'AZ', 1),
+(18, 'BDI', 'Burundi', 'BI', 1),
+(19, 'BEL', 'Belgium', 'BE', 1),
+(20, 'BEN', 'Benin', 'BJ', 1),
+(21, 'BES', 'Bonaire', 'BQ', 1),
+(22, 'BFA', 'Burkina Faso', 'BF', 1),
+(23, 'BGD', 'Bangladesh', 'BD', 1),
+(24, 'BGR', 'Bulgaria', 'BG', 1),
+(25, 'BHR', 'Bahrain', 'BH', 1),
+(26, 'BHS', 'Bahamas', 'BS', 1),
+(27, 'BIH', 'Bosnia and Herzegovina', 'BA', 1),
+(28, 'BLM', 'Saint Barthélemy', 'BL', 1),
+(29, 'BLR', 'Belarus', 'BY', 1),
+(30, 'BLZ', 'Belize', 'BZ', 1),
+(31, 'BMU', 'Bermuda', 'BM', 1),
+(32, 'BOL', 'Bolivia', 'BO', 1),
+(33, 'BRA', 'Brazil', 'BR', 1),
+(34, 'BRB', 'Barbados', 'BB', 1),
+(35, 'BRN', 'Brunei', 'BN', 1),
+(36, 'BTN', 'Bhutan', 'BT', 1),
+(37, 'BVT', 'Bouvet Island', 'BV', 1),
+(38, 'BWA', 'Botswana', 'BW', 1),
+(39, 'CAF', 'Central African Republic', 'CF', 1),
+(40, 'CAN', 'Canada', 'CA', 1),
+(41, 'CCK', 'Cocos [Keeling] Islands', 'CC', 1),
+(42, 'CHE', 'Switzerland', 'CH', 1),
+(43, 'CHL', 'Chile', 'CL', 1),
+(44, 'CHN', 'China', 'CN', 1),
+(45, 'CIV', 'Ivory Coast', 'CI', 1),
+(46, 'CMR', 'Cameroon', 'CM', 1),
+(47, 'COD', 'Democratic Republic of the Congo', 'CD', 1),
+(48, 'COG', 'Republic of the Congo', 'CG', 1),
+(49, 'COK', 'Cook Islands', 'CK', 1),
+(50, 'COL', 'Colombia', 'CO', 1),
+(51, 'COM', 'Comoros', 'KM', 1),
+(52, 'CPV', 'Cape Verde', 'CV', 1),
+(53, 'CRI', 'Costa Rica', 'CR', 1),
+(54, 'CUB', 'Cuba', 'CU', 1),
+(55, 'CUW', 'Curacao', 'CW', 1),
+(56, 'CXR', 'Christmas Island', 'CX', 1),
+(57, 'CYM', 'Cayman Islands', 'KY', 1),
+(58, 'CYP', 'Cyprus', 'CY', 1),
+(59, 'CZE', 'Czech Republic', 'CZ', 1),
+(60, 'DEU', 'Germany', 'DE', 1),
+(61, 'DJI', 'Djibouti', 'DJ', 1),
+(62, 'DMA', 'Dominica', 'DM', 1),
+(63, 'DNK', 'Denmark', 'DK', 1),
+(64, 'DOM', 'Dominican Republic', 'DO', 1),
+(65, 'DZA', 'Algeria', 'DZ', 1),
+(66, 'ECU', 'Ecuador', 'EC', 1),
+(67, 'EGY', 'Egypt', 'EG', 1),
+(68, 'ERI', 'Eritrea', 'ER', 1),
+(69, 'ESH', 'Western Sahara', 'EH', 1),
+(70, 'ESP', 'Spain', 'ES', 1),
+(71, 'EST', 'Estonia', 'EE', 1),
+(72, 'ETH', 'Ethiopia', 'ET', 1),
+(73, 'FIN', 'Finland', 'FI', 1),
+(74, 'FJI', 'Fiji', 'FJ', 1),
+(75, 'FLK', 'Falkland Islands', 'FK', 1),
+(76, 'FRA', 'France', 'FR', 1),
+(77, 'FRO', 'Faroe Islands', 'FO', 1),
+(78, 'FSM', 'Micronesia', 'FM', 1),
+(79, 'GAB', 'Gabon', 'GA', 1),
+(80, 'GBR', 'United Kingdom', 'GB', 1),
+(81, 'GEO', 'Georgia', 'GE', 1),
+(82, 'GGY', 'Guernsey', 'GG', 1),
+(83, 'GHA', 'Ghana', 'GH', 1),
+(84, 'GIB', 'Gibraltar', 'GI', 1),
+(85, 'GIN', 'Guinea', 'GN', 1),
+(86, 'GLP', 'Guadeloupe', 'GP', 1),
+(87, 'GMB', 'Gambia', 'GM', 1),
+(88, 'GNB', 'Guinea-Bissau', 'GW', 1),
+(89, 'GNQ', 'Equatorial Guinea', 'GQ', 1),
+(90, 'GRC', 'Greece', 'GR', 1),
+(91, 'GRD', 'Grenada', 'GD', 1),
+(92, 'GRL', 'Greenland', 'GL', 1),
+(93, 'GTM', 'Guatemala', 'GT', 1),
+(94, 'GUF', 'French Guiana', 'GF', 1),
+(95, 'GUM', 'Guam', 'GU', 1),
+(96, 'GUY', 'Guyana', 'GY', 1),
+(97, 'HKG', 'Hong Kong', 'HK', 1),
+(98, 'HMD', 'Heard Island and McDonald Islands', 'HM', 1),
+(99, 'HND', 'Honduras', 'HN', 1),
+(100, 'HRV', 'Croatia', 'HR', 1),
+(101, 'HTI', 'Haiti', 'HT', 1),
+(102, 'HUN', 'Hungary', 'HU', 1),
+(103, 'IDN', 'Indonesia', 'ID', 1),
+(104, 'IMN', 'Isle of Man', 'IM', 1),
+(105, 'IND', 'India', 'IN', 1),
+(106, 'IOT', 'British Indian Ocean Territory', 'IO', 1),
+(107, 'IRL', 'Ireland', 'IE', 1),
+(108, 'IRN', 'Iran', 'IR', 1),
+(109, 'IRQ', 'Iraq', 'IQ', 1),
+(110, 'ISL', 'Iceland', 'IS', 1),
+(111, 'ISR', 'Israel', 'IL', 1),
+(112, 'ITA', 'Italy', 'IT', 1),
+(113, 'JAM', 'Jamaica', 'JM', 1),
+(114, 'JEY', 'Jersey', 'JE', 1),
+(115, 'JOR', 'Jordan', 'JO', 1),
+(116, 'JPN', 'Japan', 'JP', 1),
+(117, 'KAZ', 'Kazakhstan', 'KZ', 1),
+(118, 'KEN', 'Kenya', 'KE', 1),
+(119, 'KGZ', 'Kyrgyzstan', 'KG', 1),
+(120, 'KHM', 'Cambodia', 'KH', 1),
+(121, 'KIR', 'Kiribati', 'KI', 1),
+(122, 'KNA', 'Saint Kitts and Nevis', 'KN', 1),
+(123, 'KOR', 'South Korea', 'KR', 1),
+(124, 'KWT', 'Kuwait', 'KW', 1),
+(125, 'LAO', 'Laos', 'LA', 1),
+(126, 'LBN', 'Lebanon', 'LB', 1),
+(127, 'LBR', 'Liberia', 'LR', 1),
+(128, 'LBY', 'Libya', 'LY', 1),
+(129, 'LCA', 'Saint Lucia', 'LC', 1),
+(130, 'LIE', 'Liechtenstein', 'LI', 1),
+(131, 'LKA', 'Sri Lanka', 'LK', 1),
+(132, 'LSO', 'Lesotho', 'LS', 1),
+(133, 'LTU', 'Lithuania', 'LT', 1),
+(134, 'LUX', 'Luxembourg', 'LU', 1),
+(135, 'LVA', 'Latvia', 'LV', 1),
+(136, 'MAC', 'Macao', 'MO', 1),
+(137, 'MAF', 'Saint Martin', 'MF', 1),
+(138, 'MAR', 'Morocco', 'MA', 1),
+(139, 'MCO', 'Monaco', 'MC', 1),
+(140, 'MDA', 'Moldova', 'MD', 1),
+(141, 'MDG', 'Madagascar', 'MG', 1),
+(142, 'MDV', 'Maldives', 'MV', 1),
+(143, 'MEX', 'Mexico', 'MX', 1),
+(144, 'MHL', 'Marshall Islands', 'MH', 1),
+(145, 'MKD', 'Macedonia', 'MK', 1),
+(146, 'MLI', 'Mali', 'ML', 1),
+(147, 'MLT', 'Malta', 'MT', 1),
+(148, 'MMR', 'Myanmar [Burma]', 'MM', 1),
+(149, 'MNE', 'Montenegro', 'ME', 1),
+(150, 'MNG', 'Mongolia', 'MN', 1),
+(151, 'MNP', 'Northern Mariana Islands', 'MP', 1),
+(152, 'MOZ', 'Mozambique', 'MZ', 1),
+(153, 'MRT', 'Mauritania', 'MR', 1),
+(154, 'MSR', 'Montserrat', 'MS', 1),
+(155, 'MTQ', 'Martinique', 'MQ', 1),
+(156, 'MUS', 'Mauritius', 'MU', 1),
+(157, 'MWI', 'Malawi', 'MW', 1),
+(158, 'MYS', 'Malaysia', 'MY', 1),
+(159, 'MYT', 'Mayotte', 'YT', 1),
+(160, 'NAM', 'Namibia', 'NA', 1),
+(161, 'NCL', 'New Caledonia', 'NC', 1),
+(162, 'NER', 'Niger', 'NE', 1),
+(163, 'NFK', 'Norfolk Island', 'NF', 1),
+(164, 'NGA', 'Nigeria', 'NG', 1),
+(165, 'NIC', 'Nicaragua', 'NI', 1),
+(166, 'NIU', 'Niue', 'NU', 1),
+(167, 'NLD', 'Netherlands', 'NL', 1),
+(168, 'NOR', 'Norway', 'NO', 1),
+(169, 'NPL', 'Nepal', 'NP', 1),
+(170, 'NRU', 'Nauru', 'NR', 1),
+(171, 'NZL', 'New Zealand', 'NZ', 1),
+(172, 'OMN', 'Oman', 'OM', 1),
+(173, 'PAK', 'Pakistan', 'PK', 1),
+(174, 'PAN', 'Panama', 'PA', 1),
+(175, 'PCN', 'Pitcairn Islands', 'PN', 1),
+(176, 'PER', 'Peru', 'PE', 1),
+(177, 'PHL', 'Philippines', 'PH', 1),
+(178, 'PLW', 'Palau', 'PW', 1),
+(179, 'PNG', 'Papua New Guinea', 'PG', 1),
+(180, 'POL', 'Poland', 'PL', 1),
+(181, 'PRI', 'Puerto Rico', 'PR', 1),
+(182, 'PRK', 'North Korea', 'KP', 1),
+(183, 'PRT', 'Portugal', 'PT', 1),
+(184, 'PRY', 'Paraguay', 'PY', 1),
+(185, 'PSE', 'Palestine', 'PS', 1),
+(186, 'PYF', 'French Polynesia', 'PF', 1),
+(187, 'QAT', 'Qatar', 'QA', 1),
+(188, 'REU', 'Réunion', 'RE', 1),
+(189, 'ROU', 'Romania', 'RO', 1),
+(190, 'RUS', 'Russia', 'RU', 1),
+(191, 'RWA', 'Rwanda', 'RW', 1),
+(192, 'SAU', 'Saudi Arabia', 'SA', 1),
+(193, 'SDN', 'Sudan', 'SD', 1),
+(194, 'SEN', 'Senegal', 'SN', 1),
+(195, 'SGP', 'Singapore', 'SG', 1),
+(196, 'SGS', 'South Georgia and the South Sandwich Islands', 'GS', 1),
+(197, 'SHN', 'Saint Helena', 'SH', 1),
+(198, 'SJM', 'Svalbard and Jan Mayen', 'SJ', 1),
+(199, 'SLB', 'Solomon Islands', 'SB', 1),
+(200, 'SLE', 'Sierra Leone', 'SL', 1),
+(201, 'SLV', 'El Salvador', 'SV', 1),
+(202, 'SMR', 'San Marino', 'SM', 1),
+(203, 'SOM', 'Somalia', 'SO', 1),
+(204, 'SPM', 'Saint Pierre and Miquelon', 'PM', 1),
+(205, 'SRB', 'Serbia', 'RS', 1),
+(206, 'SSD', 'South Sudan', 'SS', 1),
+(207, 'STP', 'São Tomé and Príncipe', 'ST', 1),
+(208, 'SUR', 'Suriname', 'SR', 1),
+(209, 'SVK', 'Slovakia', 'SK', 1),
+(210, 'SVN', 'Slovenia', 'SI', 1),
+(211, 'SWE', 'Sweden', 'SE', 1),
+(212, 'SWZ', 'Swaziland', 'SZ', 1),
+(213, 'SXM', 'Sint Maarten', 'SX', 1),
+(214, 'SYC', 'Seychelles', 'SC', 1),
+(215, 'SYR', 'Syria', 'SY', 1),
+(216, 'TCA', 'Turks and Caicos Islands', 'TC', 1),
+(217, 'TCD', 'Chad', 'TD', 1),
+(218, 'TGO', 'Togo', 'TG', 1),
+(219, 'THA', 'Thailand', 'TH', 1),
+(220, 'TJK', 'Tajikistan', 'TJ', 1),
+(221, 'TKL', 'Tokelau', 'TK', 1),
+(222, 'TKM', 'Turkmenistan', 'TM', 1),
+(223, 'TLS', 'East Timor', 'TL', 1),
+(224, 'TON', 'Tonga', 'TO', 1),
+(225, 'TTO', 'Trinidad and Tobago', 'TT', 1),
+(226, 'TUN', 'Tunisia', 'TN', 1),
+(227, 'TUR', 'Turkey', 'TR', 1),
+(228, 'TUV', 'Tuvalu', 'TV', 1),
+(229, 'TWN', 'Taiwan', 'TW', 1),
+(230, 'TZA', 'Tanzania', 'TZ', 1),
+(231, 'UGA', 'Uganda', 'UG', 1),
+(232, 'UKR', 'Ukraine', 'UA', 1),
+(233, 'UMI', 'U.S. Minor Outlying Islands', 'UM', 1),
+(234, 'URY', 'Uruguay', 'UY', 1),
+(235, 'USA', 'United States', 'US', 1),
+(236, 'UZB', 'Uzbekistan', 'UZ', 1),
+(237, 'VAT', 'Vatican City', 'VA', 1),
+(238, 'VCT', 'Saint Vincent and the Grenadines', 'VC', 1),
+(239, 'VEN', 'Venezuela', 'VE', 1),
+(240, 'VGB', 'British Virgin Islands', 'VG', 1),
+(241, 'VIR', 'U.S. Virgin Islands', 'VI', 1),
+(242, 'VNM', 'Vietnam', 'VN', 1),
+(243, 'VUT', 'Vanuatu', 'VU', 1),
+(244, 'WLF', 'Wallis and Futuna', 'WF', 1),
+(245, 'WSM', 'Samoa', 'WS', 1),
+(246, 'XKX', 'Kosovo', 'XK', 1),
+(247, 'YEM', 'Yemen', 'YE', 1),
+(248, 'ZAF', 'South Africa', 'ZA', 1),
+(249, 'ZMB', 'Zambia', 'ZM', 1),
+(250, 'ZWE', 'Zimbabwe', 'ZW', 1);
 
 -- --------------------------------------------------------
 
@@ -1247,8 +1248,10 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `orderId` varchar(255) NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
+  `txtid` varchar(255) DEFAULT NULL,
   `total` decimal(10,2) NOT NULL,
   `subtotal` decimal(10,2) NOT NULL,
+  `payment_getway` varchar(255) DEFAULT NULL COMMENT '2.bkash \r\n3.nogot\r\n4.roket\r\n5.upay',
   `order_status` int(11) NOT NULL DEFAULT 1 COMMENT 'Order Placed=1,Payment Processing=2,Order Confirmed=3,Item Shipped=4,In Transit=5,Out for Delivery=6,Delivered=7,Order Completed=8,Cancelled or Returned=9',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
@@ -1258,13 +1261,20 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `orderId`, `customer_id`, `total`, `subtotal`, `order_status`, `created_at`, `updated_at`) VALUES
-(1, '1111152-23', 11, 7149.00, 7149.00, 1, '2023-12-11 02:20:49', '2023-12-11 08:20:49'),
-(2, '237879-23', 2, 2233.00, 2233.00, 3, '2023-12-22 03:49:41', '2023-12-22 10:09:22'),
-(3, '270934-23', 2, 1633.00, 1633.00, 1, '2023-12-22 15:39:01', '2023-12-22 21:39:01'),
-(4, '255148-23', 2, 2183.00, 2183.00, 1, '2023-12-22 15:40:49', '2023-12-22 21:40:49'),
-(5, '216920-23', 2, 10177.00, 10177.00, 1, '2023-12-23 01:43:40', '2023-12-23 07:43:40'),
-(6, '219783-23', 2, 6200.00, 6200.00, 1, '2023-12-23 01:48:19', '2023-12-23 07:48:19');
+INSERT INTO `orders` (`id`, `orderId`, `customer_id`, `txtid`, `total`, `subtotal`, `payment_getway`, `order_status`, `created_at`, `updated_at`) VALUES
+(1, '1111152-23', 11, NULL, 7149.00, 7149.00, NULL, 1, '2023-12-11 02:20:49', '2023-12-11 08:20:49'),
+(2, '237879-23', 2, NULL, 2233.00, 2233.00, NULL, 3, '2023-12-22 03:49:41', '2023-12-22 10:09:22'),
+(3, '270934-23', 2, NULL, 1633.00, 1633.00, NULL, 1, '2023-12-22 15:39:01', '2023-12-22 21:39:01'),
+(4, '255148-23', 2, NULL, 2183.00, 2183.00, NULL, 1, '2023-12-22 15:40:49', '2023-12-22 21:40:49'),
+(5, '216920-23', 2, NULL, 10177.00, 10177.00, NULL, 1, '2023-12-23 01:43:40', '2023-12-23 07:43:40'),
+(6, '219783-23', 2, NULL, 6200.00, 6200.00, NULL, 1, '2023-12-23 01:48:19', '2023-12-23 07:48:19'),
+(7, '210885-23', 2, '3343434', 3832.00, 3832.00, NULL, 1, '2023-12-24 15:14:07', '2023-12-24 21:14:07'),
+(8, '280472-23', 2, '34343434', 3832.00, 3832.00, NULL, 1, '2023-12-24 15:17:10', '2023-12-24 21:17:10'),
+(9, '229693-23', 2, '66666', 2833.00, 2833.00, NULL, 1, '2023-12-24 15:18:36', '2023-12-24 21:18:36'),
+(10, '231775-23', 2, '34343434', 1183.00, 1183.00, '2', 1, '2023-12-24 15:37:52', '2023-12-24 21:37:52'),
+(11, '293883-23', 2, '98999', 1183.00, 1183.00, '3', 1, '2023-12-24 15:42:52', '2023-12-24 21:42:52'),
+(12, '274979-23', 2, '966666', 1183.00, 1183.00, '4', 1, '2023-12-24 15:45:26', '2023-12-24 21:45:26'),
+(13, '228628-23', 2, '48488', 11649.00, 11649.00, '5', 1, '2023-12-24 15:48:10', '2023-12-24 21:48:10');
 
 -- --------------------------------------------------------
 
@@ -1301,7 +1311,24 @@ INSERT INTO `order_history` (`id`, `order_id`, `product_id`, `quantity`, `price`
 (11, 5, 161, 19, 133, 2527.00, '2023-12-23 07:43:40', '2023-12-23 01:43:40'),
 (12, 5, 168, 17, 450, 10177.00, '2023-12-23 07:43:40', '2023-12-23 01:43:40'),
 (13, 6, 160, 4, 1050, 4200.00, '2023-12-23 07:48:19', '2023-12-23 01:48:19'),
-(14, 6, 167, 4, 500, 6200.00, '2023-12-23 07:48:19', '2023-12-23 01:48:19');
+(14, 6, 167, 4, 500, 6200.00, '2023-12-23 07:48:19', '2023-12-23 01:48:19'),
+(15, 7, 161, 4, 133, 532.00, '2023-12-24 21:14:07', '2023-12-24 15:14:07'),
+(16, 7, 160, 1, 1050, 1582.00, '2023-12-24 21:14:07', '2023-12-24 15:14:07'),
+(17, 7, 168, 1, 2250, 3832.00, '2023-12-24 21:14:07', '2023-12-24 15:14:07'),
+(18, 8, 161, 4, 133, 532.00, '2023-12-24 21:17:10', '2023-12-24 15:17:10'),
+(19, 8, 160, 1, 1050, 1582.00, '2023-12-24 21:17:10', '2023-12-24 15:17:10'),
+(20, 8, 168, 1, 2250, 3832.00, '2023-12-24 21:17:10', '2023-12-24 15:17:10'),
+(21, 9, 161, 1, 133, 133.00, '2023-12-24 21:18:36', '2023-12-24 15:18:36'),
+(22, 9, 168, 1, 2700, 2833.00, '2023-12-24 21:18:36', '2023-12-24 15:18:36'),
+(23, 10, 161, 1, 133, 133.00, '2023-12-24 21:37:52', '2023-12-24 15:37:52'),
+(24, 10, 159, 1, 1050, 1183.00, '2023-12-24 21:37:52', '2023-12-24 15:37:52'),
+(25, 11, 161, 1, 133, 133.00, '2023-12-24 21:42:52', '2023-12-24 15:42:52'),
+(26, 11, 160, 1, 1050, 1183.00, '2023-12-24 21:42:52', '2023-12-24 15:42:52'),
+(27, 12, 161, 1, 133, 133.00, '2023-12-24 21:45:26', '2023-12-24 15:45:26'),
+(28, 12, 158, 1, 1050, 1183.00, '2023-12-24 21:45:26', '2023-12-24 15:45:26'),
+(29, 13, 161, 3, 133, 399.00, '2023-12-24 21:48:10', '2023-12-24 15:48:10'),
+(30, 13, 159, 3, 1050, 3549.00, '2023-12-24 21:48:10', '2023-12-24 15:48:10'),
+(31, 13, 168, 3, 2700, 11649.00, '2023-12-24 21:48:10', '2023-12-24 15:48:10');
 
 -- --------------------------------------------------------
 
@@ -2394,7 +2421,10 @@ INSERT INTO `produc_img_history` (`id`, `product_id`, `images`, `created_at`, `u
 (179, 149, '/backend/files/t3BDhnsmJsuBRRMRFuo2.png', '2023-12-22 12:37:44', '2023-12-22 12:37:44'),
 (180, 151, '/backend/files/bsTD4k14djSZ2sQlWsXq.png', '2023-12-22 18:02:35', '2023-12-22 18:02:35'),
 (181, 92, '/backend/files/YKVIv7jksVUToccSHKfv.png', '2023-12-22 18:24:21', '2023-12-22 18:24:21'),
-(182, 165, '/backend/files/JxuTEVixUK8yR0f8SDBv.jpg', '2023-12-22 21:16:50', '2023-12-22 21:16:50');
+(182, 165, '/backend/files/JxuTEVixUK8yR0f8SDBv.jpg', '2023-12-22 21:16:50', '2023-12-22 21:16:50'),
+(183, 145, '/backend/files/M8SO9wfPB69Glny3eISq.png', '2023-12-24 06:13:21', '2023-12-24 06:13:21'),
+(184, 3, '/backend/files/tNnaalwae3QKOo8T8fcV.png', '2023-12-24 08:35:11', '2023-12-24 08:35:11'),
+(185, 4, '/backend/files/6i17OQ1oSjJFhFuvNHrq.png', '2023-12-24 08:35:14', '2023-12-24 08:35:14');
 
 -- --------------------------------------------------------
 
@@ -2477,6 +2507,71 @@ INSERT INTO `send_message` (`id`, `candidate_name`, `candidate_email`, `subject`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `setting`
+--
+
+CREATE TABLE `setting` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `deposit_service_charge` int(11) DEFAULT NULL COMMENT '%',
+  `convert_php_amt` float DEFAULT NULL,
+  `withdraw_service_charge` int(10) DEFAULT NULL COMMENT '%',
+  `withdraw_minimum_amount` int(11) DEFAULT NULL,
+  `minimum_trade_amount` int(11) DEFAULT NULL,
+  `minimum_deposit_amount` int(11) DEFAULT NULL,
+  `trade_fee` int(11) DEFAULT NULL COMMENT '%',
+  `first_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
+  `second_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
+  `third_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
+  `trade_percent` int(11) DEFAULT NULL COMMENT '%',
+  `tel` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `whatsApp` varchar(255) NOT NULL,
+  `emergency` varchar(255) NOT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `description` text NOT NULL,
+  `copyright` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `admin_photo` varchar(244) NOT NULL,
+  `admin_name` varchar(255) NOT NULL,
+  `admin_email` varchar(255) NOT NULL,
+  `admin_phone` varchar(255) NOT NULL,
+  `meta_keywords` text DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `pphoto` varchar(255) NOT NULL,
+  `bg_color` varchar(255) DEFAULT NULL,
+  `currency` varchar(150) DEFAULT NULL,
+  `openinig_balance_date` date DEFAULT NULL,
+  `reffer_bonus` int(11) DEFAULT NULL,
+  `openinig_balance_comments` text DEFAULT NULL,
+  `fblink` varchar(255) DEFAULT NULL,
+  `twitterlink` varchar(255) DEFAULT NULL,
+  `linkdinlink` varchar(255) DEFAULT NULL,
+  `instragramlink` varchar(255) DEFAULT NULL,
+  `store_policy` longtext DEFAULT NULL,
+  `crypto_wallet_address` varchar(255) DEFAULT NULL,
+  `master_pass_acc_no` varchar(255) DEFAULT NULL,
+  `bkash_number` varchar(255) DEFAULT NULL COMMENT '2.bkash',
+  `bkash_fee` decimal(10,2) DEFAULT NULL COMMENT '%',
+  `nagad_number` varchar(255) DEFAULT NULL COMMENT '3.nogot',
+  `nagad_fee` decimal(10,2) DEFAULT NULL COMMENT '%',
+  `rocket_number` varchar(255) DEFAULT NULL COMMENT '4.roket',
+  `rocket_fee` decimal(10,2) DEFAULT NULL COMMENT '%',
+  `upay_number` varchar(255) DEFAULT NULL COMMENT '5.upay',
+  `upay_fee` decimal(10,2) DEFAULT NULL COMMENT '%'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `setting`
+--
+
+INSERT INTO `setting` (`id`, `name`, `deposit_service_charge`, `convert_php_amt`, `withdraw_service_charge`, `withdraw_minimum_amount`, `minimum_trade_amount`, `minimum_deposit_amount`, `trade_fee`, `first_up_lin_com`, `second_up_lin_com`, `third_up_lin_com`, `trade_percent`, `tel`, `email`, `address`, `whatsApp`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `bkash_number`, `bkash_fee`, `nagad_number`, `nagad_fee`, `rocket_number`, `rocket_fee`, `upay_number`, `upay_fee`) VALUES
+(1, 'Winup360', 0, 64, 6, 10, 5, 10, 6, 9, 4, 3, 10, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', 'BDT', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '<p><strong>Cancellation / Return / Exchange Policy.</strong></p><p>We offer a minimum of 18 day returns guarantee on all our items and 30 day return on eligible items. If you are not completely satisfied with your item you may return the items to the seller, within the stipulated return period for a refund (&ldquo;money back guaranteed&rdquo;). Please, ensure you obtain a proof of return postage as items being returned are the responsibility of the customer until the items reach the seller. Refunds will take approximately 5 &ndash; 7 working days for the process once the goods have arrived to the seller. Sometimes it might take up to 30 days but in rare cases if you paid using credit card but in exceptional cases. We always advise payments are made through PayPal. Returned Items must be in their original packaging, and intact to avoid breakage in transit. . In the interest of hygiene, returns on earrings, cosmetics and underwear may not be accepted at any time. Swimwear may not be returned if the hygiene seal is broken. We guarantee to refund unworn or unwashed items when you return it in re-sellable condition,.</p><p><strong>Non-Returnable Items</strong></p><p>We don&rsquo;t accept returns for items such as food unless of course they&rsquo;re faulty. Our website and catalogue clearly show which items are excluded. If you&rsquo;re returning an electrical item, it must be unused and in its original sealed packaging.</p>', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', '01915728988', 1.49, '01915728989', 1.50, '01915728981', 1.80, '01915728985', 1.00);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sliders`
 --
 
@@ -2542,6 +2637,8 @@ CREATE TABLE `users` (
   `image` varchar(225) DEFAULT NULL,
   `phone_number` varchar(225) DEFAULT NULL,
   `address` varchar(225) DEFAULT NULL,
+  `address_1` varchar(255) DEFAULT NULL,
+  `address_2` varchar(255) DEFAULT NULL,
   `website` varchar(225) DEFAULT NULL,
   `github` varchar(225) DEFAULT NULL,
   `gender` varchar(50) DEFAULT NULL,
@@ -2563,9 +2660,31 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `employee_id`, `name`, `email`, `image`, `phone_number`, `address`, `website`, `github`, `gender`, `date_of_birth`, `twitter`, `instagram`, `facebook`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`) VALUES
-(1, 1, 4, 'Admin', 'admin@gmail.com', '/backend/files/Gj1CClu5li9lnBa8bqxx.jpg', '343434', 'Dhaka', 'http://localhost:3000/profile', 'http://localhost:3000/profile', NULL, NULL, 'http://localhost:3000/profile', 'http://localhost:3000/profile', 'http://localhost:3000/profile', 'admin', NULL, '$2a$12$KTM4o4shushdJtyHggJOEuoVzhTde88F2M2VZ1B89egoavVyQOycG', NULL, 1, '2023-06-22 03:20:43', '2023-07-14 04:47:21', 1),
-(2, 2, NULL, 'Bijon', 'mdbijon@gmail.com', NULL, '01915728982', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'mdbijon@gmail.com', NULL, '$2y$10$Rik3XEAlWoxLqm/3XlSVXOlUwavrHCkS1akzzq3HtPKed205hmeQ.', NULL, NULL, '2023-12-22 03:48:14', '2023-12-22 03:48:14', NULL);
+INSERT INTO `users` (`id`, `role_id`, `employee_id`, `name`, `email`, `image`, `phone_number`, `address`, `address_1`, `address_2`, `website`, `github`, `gender`, `date_of_birth`, `twitter`, `instagram`, `facebook`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`) VALUES
+(1, 1, 4, 'Admin', 'admin@gmail.com', '/backend/files/Gj1CClu5li9lnBa8bqxx.jpg', '343434', 'Dhaka', NULL, NULL, 'http://localhost:3000/profile', 'http://localhost:3000/profile', NULL, NULL, 'http://localhost:3000/profile', 'http://localhost:3000/profile', 'http://localhost:3000/profile', 'admin', NULL, '$2a$12$KTM4o4shushdJtyHggJOEuoVzhTde88F2M2VZ1B89egoavVyQOycG', NULL, 1, '2023-06-22 03:20:43', '2023-07-14 04:47:21', 1),
+(2, 2, NULL, 'Bijon', 'mdbijon@gmail.com', NULL, '01915728982', '', 'Mirpur-1', 'Dhaka, Bangladesh', '', '', 'null', '2023-12-11', '', '', '', 'mdbijon@gmail.com', NULL, '$2y$10$Rik3XEAlWoxLqm/3XlSVXOlUwavrHCkS1akzzq3HtPKed205hmeQ.', NULL, NULL, '2023-12-22 03:48:14', '2023-12-22 03:48:14', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlist`
+--
+
+CREATE TABLE `wishlist` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `customer_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(7, 2, 162, '2023-12-24 08:31:41', '2023-12-24 08:31:41'),
+(8, 2, 163, '2023-12-24 08:41:56', '2023-12-24 08:41:56');
 
 --
 -- Indexes for dumped tables
@@ -2858,6 +2977,12 @@ ALTER TABLE `send_message`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `setting`
+--
+ALTER TABLE `setting`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sliders`
 --
 ALTER TABLE `sliders`
@@ -2873,6 +2998,12 @@ ALTER TABLE `tasks`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `wishlist`
+--
+ALTER TABLE `wishlist`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3051,13 +3182,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `order_history`
 --
 ALTER TABLE `order_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `order_status`
@@ -3135,7 +3266,7 @@ ALTER TABLE `produc_categories`
 -- AUTO_INCREMENT for table `produc_img_history`
 --
 ALTER TABLE `produc_img_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -3156,6 +3287,12 @@ ALTER TABLE `send_message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `setting`
+--
+ALTER TABLE `setting`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `sliders`
 --
 ALTER TABLE `sliders`
@@ -3172,6 +3309,12 @@ ALTER TABLE `tasks`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

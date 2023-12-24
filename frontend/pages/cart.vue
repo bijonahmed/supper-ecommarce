@@ -261,7 +261,7 @@ export default {
             cart: [],
             itemCount: 0,
             subtotal: 0,
-            loading: false,
+            loading: true,
 
             login: {
                 email: '',
@@ -273,6 +273,7 @@ export default {
         }
     },
     mounted() {
+        this.loadingCart();
         this.getCartTotal();
         this.loadCart();
         this.calculateTotalQuantity();
@@ -283,7 +284,14 @@ export default {
             return this.$auth.loggedIn;
         },
     },
+
     methods: {
+        loadingCart() {
+            setTimeout(() => {
+                this.loading = false;
+            }, 1000); // 5000 milliseconds = 5 seconds
+        },
+
         async userLogin() {
             try {
 

@@ -11,7 +11,7 @@ class Order extends Model
     use HasFactory;
    
     public $table = "orders";
-    protected $fillable = ['orderId', 'total', 'subtotal','order_status'];
+    protected $fillable = ['orderId', 'total', 'subtotal','order_status','txtid','payment_getway'];
     
 }
 

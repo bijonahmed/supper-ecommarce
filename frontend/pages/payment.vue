@@ -8,31 +8,36 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-
+                                <h1>
+                                    <p>{{ subtotal }}</p>
+                                </h1>
                                 <div class="pay_options">
+                                    <span v-if="loading">
+                                        <Loader />
+                                    </span>
                                     <div class="pay_option">
-                                        <a href="javascript:">
+                                        <a href="javascript:" @click="loadingPopup(1)">
                                             <h6>Credit/Debit Cards</h6>
                                             <img src="/images/cards.png" class="cards_pic img-fulid" loading="lazy" alt="">
                                         </a>
                                     </div>
                                     <div class="pay_method_img">
-                                        <a href="javascript:" class="bkash_op" @click="bkashPopup">
+                                        <a href="javascript:" class="bkash_op" @click="loadingPopup(2)">
                                             <img src="/images/Bkash.png" class="cards_pic img-fulid" loading="lazy" alt="">
                                         </a>
                                     </div>
                                     <div class="pay_method_img">
-                                        <a href="javascript:" class="nogot_pop" @click="nagadPopup">
+                                        <a href="javascript:" class="nogot_pop" @click="loadingPopup(3)">
                                             <img src="/images/nogot.png" class="cards_pic img-fulid" loading="lazy" alt="">
                                         </a>
                                     </div>
                                     <div class="pay_method_img">
-                                        <a href="javascript:" class="roket_pop" @click="rocketPopup">
+                                        <a href="javascript:" class="roket_pop" @click="loadingPopup(4)">
                                             <img src="/images/Roket.png" class="cards_pic img-fulid" loading="lazy" alt="">
                                         </a>
                                     </div>
                                     <div class="pay_method_img">
-                                        <a href="javascript:" class="upay_pop" @click="upayPopup">
+                                        <a href="javascript:" class="upay_pop" @click="loadingPopup(5)">
                                             <img src="/images/Upay.png" class="cards_pic img-fulid" loading="lazy" alt="">
                                         </a>
                                     </div>
@@ -45,7 +50,23 @@
             </div>
         </div>
 
-        <!-- bkash popup -->
+        <!-- pop_cards -->
+        <div class="pop_cards pay_pop">
+            <div class="content_section">
+                <div class="pop_head">
+                    <button class="btn-close px-3 ms-auto" @click="loadingclosePopup(1)"></button>
+                </div>
+                <div class="">
+                    <h1 class="text-center" style="color:black">Upcoming.....</h1>
+                </div>
+
+                <div class="pop_footer">
+                    <img src="images/logo.png" class="img-fluid" loading="lazy" alt="">
+                </div>
+            </div>
+        </div>
+
+        <!-- 1/bkash popup -->
         <div class="pop_bkash pay_pop">
             <div class="content_section">
                 <div class="text-end" style="background-color: #ecf9ff;">
@@ -53,10 +74,10 @@
                 </div>
                 <div class="pop_head">
                     <img src="images/Bkash.png" class="img-fluid logo_img" loading="lazy" alt="">
-                    <button class="btn-close px-3 ms-auto" @click="bkashPopupClose"></button>
+                    <button class="btn-close px-3 ms-auto" @click="loadingclosePopup(2)"></button>
                 </div>
                 <div class="a_details">
-                    <form action="">
+                    <form @submit.prevent="submitOrder()" id="userSubmitFrm" class="forms-sample" enctype="multipart/form-data">
                         <ul>
                             <li>
                                 <h6>Account Number:</h6>
@@ -65,12 +86,12 @@
                                         <p class="" id="copyText1">{{ bkash_number }}</p>
                                         <p class="c_txt position-absolute">Copy</p>
                                     </div>
-                                    <button type="button" @click="copyBkashMobileNumber" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
+                                    <button type="button" @click="copyNumber(1)" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
                                 </div>
                             </li>
                             <li>
-                                <h6>Total Payable Ammount: </h6>
-                                <h1><strong style="color: #aded28;">667.28</strong>TK </h1>
+                                <h6>Total Payable Amount: </h6>
+                                <h1><strong style="color: #aded28;">{{ payableamount }}</strong>TK </h1>
                             </li>
                             <div class="trx_img">
                                 <p>How to get Trx Id?</p>
@@ -80,12 +101,15 @@
                                 <h6>Trx ID: </h6>
                                 <div>
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
-                                    <div class="d-flex align-items-center"><input type="text" id="inputField" placeholder="Enter Transection Id"> <button class="btn_submit" id="pasteBtn" type="button">paste</button>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
+                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
                                     </div>
+                                    <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
                             </li>
                             <div class="text-center">
-                                <button class="btn_submit" @click="ordersummary" type="button">Confirm Order</button>
+                                <button class="btn_submit" type="submit">Confirm Order</button>
                             </div>
                         </ul>
                     </form>
@@ -95,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <!-- Nogot popup -->
+        <!-- 2.Nogot popup -->
         <div class="pop_nogot pay_pop">
             <div class="content_section">
                 <div class="text-end" style="background-color: #ecf9ff;">
@@ -103,10 +127,10 @@
                 </div>
                 <div class="pop_head">
                     <img src="images/nogot.png" class="img-fluid logo_img" loading="lazy" alt="">
-                    <button class="btn-close px-3 ms-auto" @click="nagadPopupClose"></button>
+                    <button class="btn-close px-3 ms-auto" @click="loadingclosePopup(3)"></button>
                 </div>
                 <div class="a_details">
-                    <form action="">
+                    <form @submit.prevent="submitOrder()" id="userSubmitFrm" class="forms-sample" enctype="multipart/form-data">
                         <ul>
                             <li>
                                 <h6>Account Number:</h6>
@@ -115,12 +139,12 @@
                                         <p class="" id="copyText2">{{ nagad_number }}</p>
                                         <p class="c_txt position-absolute">Copy</p>
                                     </div>
-                                    <button type="button" @click="copyNagadMobileNumber" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
+                                    <button type="button" @click="copyNumber(2)" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
                                 </div>
                             </li>
                             <li>
                                 <h6>Total Payable Ammount: </h6>
-                                <h1><strong style="color: #aded28;">667.28</strong>TK </h1>
+                                <h1><strong style="color: #aded28;">{{ payableamount }}</strong>TK </h1>
                             </li>
                             <div class="trx_img">
                                 How to get Trx Id?
@@ -130,12 +154,15 @@
                                 <h6>Trx ID: </h6>
                                 <div>
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
-                                    <div class="d-flex align-items-center"><input type="text" id="inputField2" placeholder="Enter Transection Id"> <button class="btn_submit" id="pasteBtn2" type="button">paste</button>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
+                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
                                     </div>
+                                    <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
                             </li>
                             <div class="text-center">
-                                <button class="btn_submit">Confirm Order</button>
+                                <button class="btn_submit" type="submit">Confirm Order</button>
                             </div>
                         </ul>
                     </form>
@@ -145,7 +172,7 @@
                 </div>
             </div>
         </div>
-        <!-- Roket popup -->
+        <!-- 3.Roket popup -->
         <div class="pop_roket pay_pop">
             <div class="content_section">
                 <div class="text-end" style="background-color: #ecf9ff;">
@@ -153,10 +180,10 @@
                 </div>
                 <div class="pop_head">
                     <img src="images/Roket.png" class="img-fluid logo_img" loading="lazy" alt="">
-                    <button class="btn-close px-3 ms-auto" @click="rocketPopupClose"></button>
+                    <button class="btn-close px-3 ms-auto" @click="loadingclosePopup(4)"></button>
                 </div>
                 <div class="a_details">
-                    <form action="">
+                    <form @submit.prevent="submitOrder()" id="userSubmitFrm" class="forms-sample" enctype="multipart/form-data">
                         <ul>
                             <li>
                                 <h6>Account Number:</h6>
@@ -165,12 +192,12 @@
                                         <p class="" id="copyText3">{{ rocket_number }}</p>
                                         <p class="c_txt position-absolute">Copy</p>
                                     </div>
-                                    <button type="button" @click="copyRocketMobileNumber" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
+                                    <button type="button" @click="copyNumber(3)" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
                                 </div>
                             </li>
                             <li>
                                 <h6>Total Payable Ammount: </h6>
-                                <h1><strong style="color: #aded28;">667.28</strong>TK </h1>
+                                <h1><strong style="color: #aded28;">{{ payableamount }}</strong>TK </h1>
                             </li>
                             <div class="trx_img">
                                 <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How to get Trx Id?</a>
@@ -182,12 +209,15 @@
                                 <h6>Trx ID: </h6>
                                 <div>
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
-                                    <div class="d-flex align-items-center"><input type="text" id="inputField3" placeholder="Enter Transection Id"> <button class="btn_submit" id="pasteBtn3" type="button">paste</button>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
+                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
                                     </div>
+                                    <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
                             </li>
                             <div class="text-center">
-                                <button class="btn_submit">Submit</button>
+                                <button class="btn_submit" type="submit">Confirm Order</button>
                             </div>
                         </ul>
                     </form>
@@ -197,7 +227,7 @@
                 </div>
             </div>
         </div>
-        <!-- Upay popup -->
+        <!-- 4.Upay popup -->
         <div class="pop_upay pay_pop">
             <div class="content_section">
                 <div class="text-end" style="background-color: #ecf9ff;">
@@ -205,10 +235,10 @@
                 </div>
                 <div class="pop_head">
                     <img src="images/Upay.png" class="img-fluid logo_img" loading="lazy" alt="">
-                    <button class="btn-close px-3 ms-auto" @click="upayPopupClose"></button>
+                    <button class="btn-close px-3 ms-auto" @click="loadingclosePopup(5)"></button>
                 </div>
                 <div class="a_details">
-                    <form action="">
+                    <form @submit.prevent="submitOrder()" id="userSubmitFrm" class="forms-sample" enctype="multipart/form-data">
                         <ul>
                             <li>
                                 <h6>Account Number:</h6>
@@ -217,12 +247,12 @@
                                         <p class="" id="copyText4">{{ upay_number }}</p>
                                         <p class="c_txt position-absolute">Copy</p>
                                     </div>
-                                    <button type="button" @click="copyupayMobileNumber" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
+                                    <button type="button" @click="copyNumber(4)" class="btn_copy"> <i class="fa-regular fa-copy"></i></button>
                                 </div>
                             </li>
                             <li>
                                 <h6>Total Payable Ammount: </h6>
-                                <h1><strong style="color: #aded28;">667.28</strong>TK </h1>
+                                <h1><strong style="color: #aded28;">{{ payableamount }}</strong>TK </h1>
                             </li>
                             <div class="trx_img">
                                 <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How to get Trx Id?</a>
@@ -234,12 +264,15 @@
                                 <h6>Trx ID: </h6>
                                 <div>
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
-                                    <div class="d-flex align-items-center"><input type="text" id="inputField4" placeholder="Enter Transection Id"> <button class="btn_submit" id="pasteBtn4" type="button">paste</button>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
+                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
                                     </div>
+                                    <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
                             </li>
                             <div class="text-center">
-                                <button class="btn_submit">Submit</button>
+                                <button class="btn_submit" type="submit">Confirm Order</button>
                             </div>
                         </ul>
                     </form>
@@ -264,87 +297,136 @@ export default {
     data() {
         return {
 
+            orderData: {
+                txtid: '',
+            },
+            cart: [],
+            payableamount: 0,
+            subtotal: 0,
             nagad_number: '',
+            nagad_fee: 0,
             bkash_number: '',
+            bkas_fee: 0,
             rocket_number: '',
+            rocket_fee: 0,
             upay_number: '',
-
+            upay_fee: 0,
+            select_pay_type: '',
+            loading: true,
+            errors: {},
         }
     },
     mounted() {
-
+        this.getCartTotal();
         this.setting();
-
+        // Use setTimeout to delay hiding the loader after 5 seconds
+        setTimeout(() => {
+            this.loading = false;
+        }, 1000); // 5000 milliseconds = 5 seconds
     },
     methods: {
 
-        copyNagadMobileNumber() {
-            const el = document.createElement('textarea');
-            el.value = this.nagad_number;
-            this.commonCopy(el);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Nagad number copied!"
-            });
+        async submitOrder() {
+            const payment_getway = this.select_pay_type;
+            //console.log("submit order : " + this.orderData.txtid);
+            this.loading = true;
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            const savedCart = localStorage.getItem('cart');
+            let cartData = JSON.parse(savedCart);
+            const requestData = {
+                cart: cartData,
+                payment_getway: payment_getway,
+                txtid: this.orderData.txtid
+            };
+
+            await this.$axios.post('/order/submitOrder', requestData, {
+                    headers
+                })
+                .then((res) => {
+                    this.clearCart();
+                    this.$router.push('/ordersummary');
+                })
+                .catch(error => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                })
+                .finally(() => {
+                    this.loading = false; // Hide loader after response
+                });
 
         },
-        copyBkashMobileNumber() {
-            const el = document.createElement('textarea');
-            el.value = this.bkash_number;
-            this.commonCopy(el);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Bkash number copied!"
-            });
-            //alert('Mobile number copied to clipboard!');
+
+        errorHandler(error) {
+            // Check for specific error messages
+            if (error.response && error.response.data.errors && error.response.data.errors.account) {
+                // Display the specific error message to the user
+                console.log("error : " + error.response.data.errors.account[0]);
+                this.invaliderror = error.response.data.errors.account[0];
+                //this.$toast.error(error.response.data.errors.account[0]);
+            } else {
+                console.log("An error occurred. Please try again later.");
+                // Display a generic error message for other types of errors
+                //  this.$toast.error('An error occurred. Please try again later.');
+            }
         },
 
-        copyRocketMobileNumber() {
-            const el = document.createElement('textarea');
-            el.value = this.rocket_number;
-            this.commonCopy(el);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Rocket number copied!"
-            });
-        },
+        clearCart() {
+            this.loading = true;
+            localStorage.removeItem('cart');
+            this.cart = [];
+            setTimeout(() => {
+                this.loading = false;
+            }, 2000);
 
-        copyupayMobileNumber() {
+        },
+        getCartTotal() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                const cartData = JSON.parse(savedCart);
+                const uniqueCart = cartData.filter((item, index, self) =>
+                    index === self.findIndex((t) => t.id === item.id)
+                );
+
+                let totalPrice = 0; // Declare totalPrice outside the if-else blocks
+
+                if (this.category_id !== 27) {
+                    totalPrice = uniqueCart.reduce(
+                        (total, item) => total + (item.price || 0) * item.quantity,
+                        0
+                    );
+                } else {
+                    totalPrice = uniqueCart.reduce(
+                        (total, item) => total + (item.ticketprice || 0) * item.ticket_qty,
+                        0
+                    );
+                }
+
+                this.subtotal = totalPrice;
+                console.log('Total Price for Unique Items:', totalPrice);
+            } else {
+                console.error('No cart data found in local storage.');
+            }
+        },
+        copyNumber(number) {
             const el = document.createElement('textarea');
-            el.value = this.upay_number;
+            let msg = "";
+            if (number === 1) {
+                el.value = this.bkash_number;
+                msg = "Bkash";
+            } else if (number === 2) {
+                el.value = this.nagad_number;
+                msg = "Nagad";
+            } else if (number === 3) {
+                el.value = this.rocket_number;
+                msg = "Rocket";
+            } else if (number === 4) {
+                el.value = this.upay_number;
+                msg = "Upay";
+            }
             this.commonCopy(el);
             const Toast = Swal.mixin({
                 toast: true,
@@ -359,8 +441,9 @@ export default {
             });
             Toast.fire({
                 icon: "success",
-                title: "Upay number copied!"
+                title: `${msg} number copied!`
             });
+
         },
 
         commonCopy(el) {
@@ -371,45 +454,76 @@ export default {
         },
 
         async setting() {
-
             const response = await this.$axios.get('/unauthenticate/setting');
-
             this.nagad_number = response.data.nagad_number;
             this.bkash_number = response.data.bkash_number;
             this.rocket_number = response.data.rocket_number;
             this.upay_number = response.data.upay_number;
-            //console.log("country" + response.data);
+            //fee
+            this.nagad_fee = response.data.nagad_fee;
+            this.bkas_fee = response.data.bkash_fee;
+            this.rocket_fee = response.data.rocket_fee;
+            this.upay_fee = response.data.upay_fee;
+            console.log("setting: bkash fee" + response.data.bkash_fee);
 
         },
-        //bkash
-        bkashPopup() {
-            $(".pop_bkash").fadeIn();
-        },
-        bkashPopupClose() {
-            $(".pop_bkash").fadeOut();
-        },
-        //nagad
-        nagadPopup() {
-            $(".pop_nogot").fadeIn();
-        },
-        nagadPopupClose() {
-            $(".pop_nogot").fadeOut();
-        },
-        //rocket 
-        rocketPopup() {
-            $(".pop_roket").fadeIn();
-        },
-        rocketPopupClose() {
-            $(".pop_roket").fadeOut();
-        },
-        //upday 
-        upayPopup() {
-            $(".pop_upay").fadeIn();
-        },
-        upayPopupClose() {
-            $(".pop_upay").fadeOut();
+
+        loadingPopup(number) {
+            if (number === 1) {
+                $(".pop_cards").fadeIn();
+            } else if (number === 2) {
+                console.log("bkash fee: :" + this.bkas_fee);
+                const totalamount = parseFloat(this.subtotal);
+                const fee = parseFloat(this.bkas_fee);
+                const result = (totalamount * fee) / 100;
+                const subtotal = (totalamount + result).toFixed(2);
+                this.payableamount = subtotal;
+                console.log("total payable amount: " + subtotal);
+                $(".pop_bkash").fadeIn();
+            } else if (number === 3) {
+                console.log("nagod fee: :" + this.nagad_fee);
+                const totalamount = parseFloat(this.subtotal);
+                const fee = parseFloat(this.nagad_fee);
+                const result = (totalamount * fee) / 100;
+                const subtotal = (totalamount + result).toFixed(2);
+                this.payableamount = subtotal;
+                console.log("total payable amount: " + subtotal);
+                $(".pop_nogot").fadeIn();
+            } else if (number === 4) {
+                console.log("roket fee: :" + this.rocket_fee);
+                const totalamount = parseFloat(this.subtotal);
+                const fee = parseFloat(this.rocket_fee);
+                const result = (totalamount * fee) / 100;
+                const subtotal = (totalamount + result).toFixed(2);
+                this.payableamount = subtotal;
+                console.log("total payable amount: " + subtotal);
+                $(".pop_roket").fadeIn();
+            } else if (number === 5) {
+                console.log("upay fee: :" + this.upay_fee);
+                const totalamount = parseFloat(this.subtotal);
+                const fee = parseFloat(this.upay_fee);
+                const result = (totalamount * fee) / 100;
+                const subtotal = (totalamount + result).toFixed(2);
+                this.payableamount = subtotal;
+                console.log("total payable amount: " + subtotal);
+                $(".pop_upay").fadeIn();
+            }
+            this.select_pay_type = number;
         },
 
+        loadingclosePopup(number) {
+            if (number === 1) {
+                $(".pop_cards").fadeOut();
+            } else if (number === 2) {
+                $(".pop_bkash").fadeOut();
+            } else if (number === 3) {
+                $(".pop_nogot").fadeOut();
+            } else if (number === 4) {
+                $(".pop_roket").fadeOut();
+            } else if (number === 5) {
+                $(".pop_upay").fadeOut();
+            }
+        },
         ordersummary() {
             this.$router.push('/ordersummary');
 

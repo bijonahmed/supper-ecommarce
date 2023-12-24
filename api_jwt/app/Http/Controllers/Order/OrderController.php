@@ -45,7 +45,7 @@ class OrderController extends Controller
 
     public function save_order(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name'           => 'required',
         ]);
@@ -234,12 +234,21 @@ class OrderController extends Controller
     public function submitOrder(Request $request)
     {
 
+       // dd($request->all());
         //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'txtid'           => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
 
         $cartData = $request->input('cart');
-        // dd($cartData);
+        $txtid    = $request->input('txtid');
+        $payment_getway    = $request->input('payment_getway');
+        ///dd($cartData);
         $total = 0;
         foreach ($cartData as $cartItem) {
             $productid = $cartItem['id'];
@@ -257,9 +266,10 @@ class OrderController extends Controller
             $total += $subtotal;
             //echo "Product ID: {$productid} - Quantity: {$quantity} - Price: {$price} - Subtotal: {$subtotal} - Total: {$total}<br/>";
         }
-
         $order                  = new Order();
         $order->orderId         = $randomNum;
+        $order->txtid           = $txtid;
+        $order->payment_getway  = $payment_getway;
         $order->total           = $total;
         $order->subtotal        = $total;
         $order->customer_id     = $this->userid;
@@ -273,7 +283,7 @@ class OrderController extends Controller
         foreach ($cartData as $cartItem) {
             $productid = $cartItem['id'];
             $quantity  = $cartItem['quantity'];
-            $price     = $cartItem['price'];//str_replace(',', '', $cartItem['price']); // Remove commas
+            $price     = $cartItem['price']; //str_replace(',', '', $cartItem['price']); // Remove commas
             $price     = floatval($price); // Convert to float
 
             $subtotal = $quantity * $price;
@@ -287,6 +297,6 @@ class OrderController extends Controller
             $order_history->total           = $itemtotal;
             $order_history->save();
         }
-        return response()->json("Your order successfully done!", 200);
+        return response()->json("Your order successfully done! orderID: $lastOrderId", 200);
     }
 }
