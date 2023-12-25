@@ -88,11 +88,10 @@
                     <div class="col-md-6">
                         <div class="we_accept">
                             <p>We Accept: </p>
-                            <img src="/images/pay.png" class="img-fulid" loading="lazy" alt="">
-                            <img src="/images/Mastercard.png" class="img-fulid" loading="lazy" alt="">
-                            <img src="/images/Visa.png" class="img-fulid" loading="lazy" alt="">
-                            <img src="/images/American-express.png" class="img-fulid" loading="lazy" alt="">
-                            <img src="/images/gpay.png" class="img-fulid" loading="lazy" alt="">
+                            <img src="/images/Bkash.png" class="img-fulid" loading="lazy" alt="">
+                            <img src="/images/Roket.png" class="img-fulid" loading="lazy" alt="">
+                            <img src="/images/nogot.png" class="img-fulid" loading="lazy" alt="">
+                            <img src="/images/Upay.png" class="img-fulid" loading="lazy" alt="">
                         </div>
                     </div>
                 </div>

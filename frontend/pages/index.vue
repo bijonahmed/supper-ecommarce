@@ -5,22 +5,18 @@
     <SellingFastSlider />
     <Banner />
     <ExploreCampain />
-    <SoldOut />
-    <Winner />
+    <!-- <SoldOut />
+    <Winner /> -->
     <Footer />
 
-    <div class="cart_link" @click="cartLink">
-        <nuxt-link to="/cart">
-            <p>Shopping Cart</p> <i class="fa-solid fa-cart-shopping"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {{ itemCounts }}
+    <span v-if="loggedIn">
+        <nuxt-link to="/user/message" class="bell_message ">
+            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
             </span>
+            <i class="fa-solid fa-bell"></i>
         </nuxt-link>
-    </div>
-    <div class="spinner">
-        <div class="dot1"></div>
-        <div class="dot2"></div>
-    </div>
+
+    </span>
 
     <!-- share popup  -->
     <div class="modal_share">

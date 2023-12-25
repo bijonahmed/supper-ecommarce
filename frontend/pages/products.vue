@@ -45,10 +45,22 @@
                             <div class="product_gview" v-for="(item, index) in category" :key="index">
                                 <button type="button"><i class="fa-solid fa-heart"></i></button>
                                 <nuxt-link :to="`/product-details/${item.slug}`">
-                                    <img :src="item.thumnail" class="img-fluid" loading="lazy" alt="">
+                                    <div class="product_image">
+                                        <img :src="item.thumnail" class="img-fluid" loading="lazy" alt="">
+                                        <div class="p_tag" v-if="item.addi_pname !== '' && item.addi_thumnail !== ''">
+                                            <img :src="item.addi_thumnail" class="img-fluid" loading="lazy" alt="">
+                                            <h6>{{ item.addi_pname }}</h6>
+                                        </div>
+
+                                    </div>
                                     <h5>{{ item.name }}</h5>
                                     <p>TK{{ item.price }}</p>
                                 </nuxt-link>
+                                <!-- <nuxt-link :to="`/product-details/${item.slug}`">
+                                    <img :src="item.thumnail" class="img-fluid" loading="lazy" alt="">
+                                    <h5>{{ item.name }}</h5>
+                                    <p>TK{{ item.price }}</p>
+                                </nuxt-link> -->
                             </div>
                         </div>
                     </div>

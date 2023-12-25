@@ -19,6 +19,33 @@
                                         <div class="col-md-6">
                                             <div class="cart_left">
                                                 <div class="c_price" style="position: unset;">
+                                                    <!-- <img :src="`${$axios.defaults.baseURL}${item.thumnail_img}`" class="img-fluid" loading="lazy" alt=""> -->
+                                                    <!-- <img :src="`${$axios.defaults.baseURL}${item.thumnail_img}`.replace('/api', '')" class="img-fluid" loading="lazy" alt=""> -->
+                                                    <img :src="item.thumnail_img" class="img-fluid" loading="lazy" alt="">
+                                                    <!-- :src="item.thumnail_img" -->
+                                                </div>
+                                                <div class="cart_title">
+                                                    <h1>{{ item.name }}</h1>
+                                                    <ul class="mb-3">
+                                                        <li>
+                                                            <strong class="text-light me-2">+</strong>
+                                                            <div class="t_img">
+                                                                <img :src="item.addi_thumnail_img" class="img-fluid" loading="lazy" alt="">
+                                                            </div>
+                                                            <h6>{{ item.addi_pname }}</h6>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div v-if="item.category_id !== 27">
+                                                        <p>{{ item.quantity }} x {{ item.price }}<br>Size:{{ item.size }}<span>+1 Free Ticket</span></p>
+                                                        <span>You will get 1 tickets</span>
+                                                    </div>
+                                                    <div v-else>
+                                                        <p>{{ item.quantity }} x {{ item.price }}</p>
+                                                    </div>
+
+                                                </div>
+                                                <!-- <div class="c_price" style="position: unset;">
                                                     <div class="creadit_ticket">
                                                         <p>Lottery Creadit</p>
                                                         <h1>BDT125</h1>
@@ -36,8 +63,7 @@
                                                     <span>{{ item.quantity }} x {{ item.price }}</span>
                                                     <h6>Lottery credit</h6>
                                                     <p>{{ calculateTotalPrice(item) }}</p>
-
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -273,6 +299,7 @@ export default {
         }
     },
     mounted() {
+
         this.loadingCart();
         this.getCartTotal();
         this.loadCart();
@@ -280,6 +307,7 @@ export default {
 
     },
     computed: {
+
         loggedIn() {
             return this.$auth.loggedIn;
         },

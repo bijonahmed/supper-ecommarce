@@ -48,7 +48,7 @@
                                 <!-- Content for category_id === 27 (Quantity) -->
                                 <div class="custom-select">
                                     <select v-model="ticket_qty" @change="updatePrice">
-                                        <option value="">Select Ticket Quantity</option>
+                                        <option value="">Select</option>
                                         <option v-for="number in 150" :key="number">{{ number }}</option>
                                     </select>
                                     <span class="custom-arrow"></span>
@@ -69,16 +69,29 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                        size Details
+                                        Description
                                     </button>
                                 </h2>
                                 <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
-                                        <p class="productdetails" style="color: white;"></p>
+                                        <p class="productdetails" style="color: white; text-align: justify;"></p>
                                     </div>
                                 </div>
                             </div>
 
+                        </div>
+                        
+                        <div class="ticket_details" v-if="addi_pname !== '' && addi_thumnail !== ''">
+                            <h2>Free Ticket Description</h2>
+                            <hr>
+                            <h1>{{ addi_pname }}</h1>
+                            <div class="des_img_t">
+
+                                <p class="addi_description" style="color: white; text-align: justify;">{{ getPlainText(addi_description) }}</p>
+                                <div>
+                                    <img :src="addi_thumnail" class="img-fluid" loading="lazy" alt="">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,6 +138,14 @@ export default {
             },
             ticketprice: '',
             loading: false,
+            description:'',
+            addi_pname: '',
+            addi_thumnail: '',
+            addi_product_price: '',
+            addi_pname: '',
+            add_product_qty: '',
+            addi_description: '',
+
         }
     },
     mounted() {
@@ -134,6 +155,12 @@ export default {
 
     },
     methods: {
+        getPlainText(htmlString) {
+            const parser = new DOMParser();
+            const parsedDocument = parser.parseFromString(htmlString, 'text/html');
+            const plainText = parsedDocument.body.textContent || '';
+            return plainText;
+        },
         updatePrice() {
             console.log("Ticket Quantity:", this.ticket_qty);
             console.log("Product Row Price Before:", this.pro_row.price);
@@ -232,7 +259,7 @@ export default {
                 this.loading = false;
             }, 1000);
         },
-        
+
         saveCart() {
             if (process.client) {
                 localStorage.setItem('cart', JSON.stringify(this.cart));
@@ -247,11 +274,18 @@ export default {
         async fetchData() {
             const prosulg = this.$route.params.slug;
             const response = await this.$axios.get(`/unauthenticate/productSlug/${prosulg}`);
-            //  console.log("----" + response.data.prodAttr);
+            //console.log("----" +  response.data.additional.addi_description);
             this.slider_img = response.data.slider_img;
             this.prodAttr = response.data.prodAttr;
             this.pro_row = response.data.pro_row;
             this.category_id = response.data.category_id;
+
+            this.addi_pname = response.data.additional.addi_pname;
+            this.addi_thumnail = response.data.additional.addi_thumnail;
+            this.addi_product_price = response.data.additional.addi_product_price;
+            this.add_product_qty = response.data.additional.add_product_qty;
+            this.addi_description = response.data.additional.addi_description;
+            this.description     = response.data.pro_row.description;
             $(".productdetails").html(response.data.pro_row.description);
         },
 

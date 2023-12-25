@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdditionalProducts;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Auth;
@@ -32,7 +33,7 @@ class UnauthenticatedController extends Controller
 
     public function allCategory(Request $request)
     {
-        $categories = Categorys::with('children.children.children.children.children')->where('parent_id', 0)->get();
+        $categories = Categorys::with('children.children.children.children.children')->where('parent_id', 0)->where('id', '!=', 27)->get();
         return response()->json($categories);
     }
 
@@ -89,15 +90,55 @@ class UnauthenticatedController extends Controller
 
         $data['prodAttr'] = Attribute::where('status', 1)->get();
 
-        $data['pro_row']  = Product::where('product.slug', $slug)
+        $pro_row  =  Product::where('product.slug', $slug)
             ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
             ->first();
+
+        $additionalProducts  = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
+            ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'description as addi_description', 'referrance_product_id', 'add_product_qty', 'add_product_price')
+            ->where('product_id', $pro_row->id)->first();
+
+        // Combine data using the + operator
+        //$combinedData = (array)$pro_row + (array)$additionalProducts;
+
+        // Add the 'attributes' key
+        $data['pro_row'] = [
+            'id' => $pro_row->id,
+            'product_id' => $pro_row->product_id,
+            'name' => $pro_row->name,
+            'pro_slug' => $pro_row->pro_slug,
+            'thumnail_img' => url($pro_row->thumnail_img),
+            'description' => $pro_row->description,
+            'price' => $pro_row->price,
+            'discount' => $pro_row->discount,
+            'stock_qty' => $pro_row->stock_qty,
+            'stock_mini_qty' => $pro_row->stock_mini_qty,
+            'addi_pname' => $additionalProducts->addi_pname,
+            'addi_thumnail_img' => url($additionalProducts->addi_thumnail_img),
+            'addi_description' => $additionalProducts->addi_description,
+            'referrance_product_id' => $additionalProducts->referrance_product_id,
+        ];
+        //dd($data['pro_row']);
+
+        $ref         = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
+                    ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'description as addi_description', 'referrance_product_id', 'add_product_qty', 'add_product_price')
+                    ->where('product_id', $pro_row->id)->first();
+
+        $data['additional'] = [
+            'addi_pname'          => !empty($ref->addi_pname) ? $ref->addi_pname : "",
+            'addi_thumnail'       => !empty($ref->addi_thumnail_img) ? url($ref->addi_thumnail_img) : "",
+            'addi_ref_id'         => !empty($ref->referrance_product_id) ? $ref->referrance_product_id : "",
+            'addi_product_price'  => !empty($ref->add_product_price) ? $ref->add_product_price : "",
+            'add_product_qty'     => !empty($ref->add_product_qty) ? $ref->add_product_qty : "",
+            'addi_description'    => !empty($ref->addi_description) ? $ref->addi_description : "",
+        ];
 
         $product_chk       = Product::where('product.slug', $slug)
             ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
             ->get();
         $products = [];
         foreach ($product_chk as $key => $v) {
+
             $products[] = [
                 'id'           => $v->id,
                 'product_id'   => $v->product_id,
@@ -110,19 +151,21 @@ class UnauthenticatedController extends Controller
             ];
         }
         $findproductrow   = $data['pro_row'];
+        //dd($findproductrow);
 
-        $insertimg['product_id'] = $findproductrow->id;
-        $insertimg['images'] = $findproductrow->thumnail_img;
+        $insertimg['product_id'] = $findproductrow['id'];
+        $insertimg['images'] = $findproductrow['thumnail_img'];
+        //dd($insertimg);
 
-        $chkCategory = ProductCategory::where('product_id', $findproductrow->id)->first();
+        $chkCategory = ProductCategory::where('product_id', $findproductrow['id'])->first();
 
-        $chkpoings  = ProductAdditionalImg::where('product_id', $findproductrow->id)->where('images', $findproductrow->thumnail_img)->first();
+        $chkpoings  = ProductAdditionalImg::where('product_id', $findproductrow['id'])->where('images', $findproductrow['thumnail_img'])->first();
         // dd($chkpoings);
         if (empty($chkpoings)) {
             ProductAdditionalImg::create($insertimg);
         }
 
-        $data['att_img']   = ProductAdditionalImg::orderBy('id', 'desc')->where('product_id', $findproductrow->id)->get();
+        $data['att_img']   = ProductAdditionalImg::orderBy('id', 'desc')->where('product_id', $findproductrow['id'])->get();
 
         $mul_slider_img = [];
         foreach ($data['att_img'] as $v) {
@@ -134,7 +177,7 @@ class UnauthenticatedController extends Controller
 
         //  dd($mul_slider_img);
         $data['slider_img']    = !empty($mul_slider_img) ? $mul_slider_img : "";
-        $data['featuredImage'] = url($findproductrow->thumnail_img);
+        $data['featuredImage'] = url($findproductrow['thumnail_img']);
         $data['product']       = $products;
         $data['category_id']   = $chkCategory->category_id;
         return response()->json($data, 200);
@@ -154,11 +197,20 @@ class UnauthenticatedController extends Controller
             ->get();
 
         foreach ($data as $v) {
+
+            $ref = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
+                ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'referrance_product_id', 'add_product_qty', 'add_product_price')
+                ->where('product_id', $v->id)->first();
+
             $result[] = [
                 'id'   => $v->id,
                 'name' => substr($v->name, 0, 50) . '...',
                 'thumnail'  => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
                 'slug'     => $v->slug,
+                'addi_pname'          => !empty($ref->addi_pname) ? $ref->addi_pname : "",
+                'addi_thumnail'       => !empty($ref->addi_thumnail_img) ? url($ref->addi_thumnail_img) : "",
+                'addi_ref_id'         => !empty($ref->referrance_product_id) ? $ref->referrance_product_id : "",
+                'addi_product_price'  => !empty($ref->add_product_price) ? $ref->add_product_price : "",
             ];
         }
         return response()->json($result, 200);
@@ -227,21 +279,29 @@ class UnauthenticatedController extends Controller
             // Logic to fetch all products without the whereIn clause
             $categorys = ProductCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
                 ->join('categorys', 'categorys.id', '=', 'produc_categories.category_id')
+
                 ->select('categorys.name as categoryname', 'produc_categories.product_id', 'product.name', 'product.price', 'product.slug', 'product.thumnail_img')
                 ->orderByDesc('product.id')
                 ->groupby('product.id') // Add this line to remove duplicate products
                 ->get();
         }
 
-        //dd($categorys);
         $result = [];
         foreach ($categorys as $v) {
+            $ref = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
+                ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'referrance_product_id', 'add_product_qty', 'add_product_price')
+                ->where('product_id', $v->product_id)->first();
+
             $result[] = [
                 'product_id'   => $v->product_id,
                 'price'        => $v->price,
                 'name'         => substr($v->name, 0, 12) . '...',
                 'thumnail'     => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
                 'slug'         => $v->slug,
+                'addi_pname'          => !empty($ref->addi_pname) ? $ref->addi_pname : "",
+                'addi_thumnail'       => !empty($ref->addi_thumnail_img) ? url($ref->addi_thumnail_img) : "",
+                'addi_ref_id'         => !empty($ref->referrance_product_id) ? $ref->referrance_product_id : "",
+                'addi_product_price'  => !empty($ref->add_product_price) ? $ref->add_product_price : "",
                 'category_name' => $v->categoryname,
             ];
         }

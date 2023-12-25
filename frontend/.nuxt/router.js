@@ -17,6 +17,7 @@ const _6fc18b58 = () => interopDefault(import('..\\pages\\products.vue' /* webpa
 const _24d0e013 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages/register" */))
 const _e2861408 = () => interopDefault(import('..\\pages\\ticket.vue' /* webpackChunkName: "pages/ticket" */))
 const _c333c558 = () => interopDefault(import('..\\pages\\winners.vue' /* webpackChunkName: "pages/winners" */))
+const _01d93f48 = () => interopDefault(import('..\\pages\\user\\message.vue' /* webpackChunkName: "pages/user/message" */))
 const _d439fa34 = () => interopDefault(import('..\\pages\\user\\notification.vue' /* webpackChunkName: "pages/user/notification" */))
 const _38c07371 = () => interopDefault(import('..\\pages\\user\\offer.vue' /* webpackChunkName: "pages/user/offer" */))
 const _410e2f58 = () => interopDefault(import('..\\pages\\user\\order-details.vue' /* webpackChunkName: "pages/user/order-details" */))
@@ -97,6 +98,10 @@ export const routerOptions = {
     path: "/winners",
     component: _c333c558,
     name: "winners"
+  }, {
+    path: "/user/message",
+    component: _01d93f48,
+    name: "user-message"
   }, {
     path: "/user/notification",
     component: _d439fa34,

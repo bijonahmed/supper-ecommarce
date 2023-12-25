@@ -91,7 +91,7 @@ class ProductController extends Controller
         $chk = AdditionalProducts::where('product_id', $product_id)->first();
         if (empty($chk)) {
             //start additional product 
-            if(!empty($request->referrance_product_id)){
+            if (!empty($request->referrance_product_id)) {
                 $additional_data = array(
                     'product_id'                 => $product_id,
                     'referrance_product_id'      => !empty($request->referrance_product_id) ? $request->referrance_product_id : "",
@@ -101,7 +101,7 @@ class ProductController extends Controller
                 );
                 AdditionalProducts::insert($additional_data);
             }
-           
+
             //end additional product 
 
         } else {
@@ -536,18 +536,25 @@ class ProductController extends Controller
 
     public function getProductList()
     {
-        $data = Product::orderBy('id', 'desc')->get();
-        $collection = collect($data);
-        $modifiedCollection = $collection->map(function ($item) {
-            return [
-                'id'        => $item['id'],
-                'name'      => substr($item['name'], 0, 250),
-                'download_link' => $item['download_link'],
-                'status'    => $item['status'],
+        $data = Product::orderBy('id', 'desc')
+            ->select('product.id', 'product.name', 'product.stock_qty', 'product.sell_qty', 'product.status', 'produc_categories.category_id')
+            ->join('produc_categories', 'produc_categories.product_id', '=', 'product.id')
+            ->get();
 
+        $collection = collect($data);
+        $groupedCollection = $collection->groupBy('id');
+        $modifiedCollection = $groupedCollection->map(function ($group) {
+        $firstItem = $group->first();
+
+            return [
+                'id'         => $firstItem['id'],
+                'name'       => substr($firstItem['name'], 0, 250),
+                'stock_qty'  => $firstItem['stock_qty'],
+                'sell_qty'   => $firstItem['sell_qty'],
+                'category_id' => $firstItem['category_id'],
+                'status'     => $firstItem['status'],
             ];
-        });
-        //dd($modifiedCollection);
+        })->values(); // Use values() to reset keys if needed
         return response()->json($modifiedCollection, 200);
     }
 

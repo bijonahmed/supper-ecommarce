@@ -34,7 +34,10 @@
 
                         <div class="col-md-2">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control sku" placeholder="SKU" v-model="searchQuery.sku" @input="handleSearch">
+                                <select class="form-select form-select-solid status" v-model="searchQuery.category_id" @change="handleSearch">
+                                    <option value="">All Categories</option>
+                                    <option v-for="category in categries" :key="category.id" :value="category.id">{{ category.name }}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -66,7 +69,8 @@
                                 <tr>
                                     <th>SL#</th>
                                     <th>Title</th>
-                                    <th class="text-center">Total Download</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Total Sell</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -77,10 +81,14 @@
                                         {{ (currentPage - 1) * perPage + index + 1 }}
                                     </td>
                                     <td>{{ item.name }}</td>
-                                   
+
                                     <td>
-                                        <center>-</center>
+                                        <center>{{ item.stock_qty }}</center>
                                     </td>
+                                    <td>
+                                        <center>{{ item.sell_qty }}</center>
+                                    </td>
+
                                     <td class="text-center">
                                         <span v-if="(item.status == 1)"> Active </span>
                                         <span v-else> Inactive </span>
@@ -132,9 +140,10 @@ export default {
             notifmsg: '',
             errors: {},
             data: [],
+            categries: [],
             searchQuery: {
                 name: '',
-                sku: '',
+                category_id: '',
                 status: 1
             },
             searchQueryPhone: '',
@@ -144,6 +153,7 @@ export default {
     },
     async mounted() {
         await this.fetchData();
+        await this.fetchCategoryData();
     },
     computed: {
 
@@ -158,10 +168,11 @@ export default {
                 );
             }
 
-            if (this.searchQuery.sku) {
+            if (this.searchQuery.category_id) {
                 result = result.filter(item =>
-                    item.sku.toLowerCase().includes(this.searchQuery.sku.toLowerCase())
+                    item.category_id == this.searchQuery.category_id
                 );
+
             }
 
             if (this.searchQuery.status) {
@@ -194,6 +205,17 @@ export default {
             try {
                 const response = await this.$axios.get(`/product/getProductList`);
                 this.data = response.data;
+                $(".customerSpinner").hide();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
+        async fetchCategoryData() {
+            $(".customerSpinner").show();
+            try {
+                const response = await this.$axios.get(`/unauthenticate/filterCategorys`);
+                this.categries = response.data;
                 $(".customerSpinner").hide();
             } catch (error) {
                 console.error(error);
