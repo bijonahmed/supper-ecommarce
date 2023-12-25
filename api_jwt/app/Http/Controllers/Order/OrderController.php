@@ -32,12 +32,12 @@ class OrderController extends Controller
         $status    = OrderStatus::find($orderRow->order_status);
         $paytype   = (int)$orderRow->payment_getway;
         $ptype     = $this->paymenttype($paytype);
-        $orderstatus = !empty($status->name) ? $status->name : "";
-        $odata['orderId']   = $orderRow->orderId;
-        $odata['subtotal']  = $orderRow->subtotal;
+        $orderstatus              = !empty($status->name) ? $status->name : "";
+        $odata['orderId']         = $orderRow->orderId;
+        $odata['subtotal']        = $orderRow->subtotal;
         $odata['payment_getway']  = $ptype;
-        $odata['order_status']  = $orderstatus;
-        $odata['placeOn'] = date_format(date_create($orderRow->created_at), "d-m-Y");
+        $odata['order_status']    = $orderstatus;
+        $odata['placeOn']         = date_format(date_create($orderRow->created_at), "d-m-Y");
         return response()->json($odata, 200);
     }
 
@@ -198,7 +198,10 @@ class OrderController extends Controller
         $findorder       = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')->select('orders.*', 'order_status.name as orderstatus', 'order_status.id as orderstatus_id')->where('orderId', $order_id)->first();
         $data['orders']  = OrderHistory::join('product', 'product.id', '=', 'order_history.product_id')
             ->select('product.name as product_name', 'product.thumnail_img', 'order_history.*')
+          //  ->groupBy('order_history.order_id')
             ->where('order_id', $findorder->id)->get();
+
+
         foreach ($data['orders'] as $v) {
             $orders[] = [
                 'product_name'    => $v->product_name,
@@ -208,6 +211,8 @@ class OrderController extends Controller
                 'total'           => $v->quantity * $v->price,
             ];
         }
+
+       // dd($orders);
 
         $findCustomer = User::where('id', $findorder->customer_id)->first();
         $order['customername']  = !empty($findCustomer->name) ? $findCustomer->name : "";
@@ -225,6 +230,8 @@ class OrderController extends Controller
         $data['orders']  = Order::join('order_status', 'orders.order_status', '=', 'order_status.id')
             ->select('orders.*', 'order_status.name')
             ->where('orders.customer_id', $this->userid)
+            ->orderBy('orders.id', 'DESC')
+            //
             ->get(); //Order::where('customer_id', $this->userid)->get();
         foreach ($data['orders'] as $v) {
             $orders[] = [
@@ -277,6 +284,7 @@ class OrderController extends Controller
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
 
         $cartData = $request->input('cart');
+        $cart     = $request->input('cart');
         $txtid    = $request->input('txtid');
         $payment_getway    = $request->input('payment_getway');
         ///dd($cartData);
@@ -311,7 +319,7 @@ class OrderController extends Controller
         // Update orderId with the last inserted order ID
 
         $itemtotal = 0;
-        foreach ($cartData as $cartItem) {
+        foreach ($cart as $cartItem) {
             $productid = $cartItem['id'];
             $quantity  = $cartItem['quantity'];
             $price     = $cartItem['price']; //str_replace(',', '', $cartItem['price']); // Remove commas

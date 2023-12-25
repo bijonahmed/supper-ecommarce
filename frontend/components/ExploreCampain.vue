@@ -58,9 +58,9 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="d-flex">
-                                                                <nuxt-link :to="`/product-details/${item.slug}`">View Details</nuxt-link>
+                                                                <nuxt-link :to="`/product-details/${item.slug}`" class="w-100">View Details</nuxt-link>
                                                                 <!-- <a href="javascript:" class="btn_details show_details" @click="viewDetails(item.slug)">View Details</a> -->
-                                                                <button type="button" @click="addtoCart(item)">add to cart</button>
+                                                                <button type="button" class="d-none" @click="addtoCart(item)">add to cart</button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -199,6 +199,7 @@
 </template>
 
 <script>
+import bus from '~/plugins/bus.js';
 export default {
     data() {
         return {
@@ -283,6 +284,8 @@ export default {
             const newData = [...existingData, ...this.cart];
 
             localStorage.setItem('cart', JSON.stringify(newData));
+
+            bus.$emit("updateCart", newData);
 
             setTimeout(() => {
                 this.loading = false;

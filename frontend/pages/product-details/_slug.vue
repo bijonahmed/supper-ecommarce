@@ -202,7 +202,7 @@ export default {
                         category_id: this.category_id,
                         ticketprice: this.ticketprice,
                         ticket_qty: this.ticket_qty,
-                        quantity: 1,
+                        quantity: this.ticket_qty,
                         price: this.ticketprice,
                     });
                 } else {

@@ -392,7 +392,7 @@ export default {
             // Get the cart data from local storage
             const cartData = localStorage.getItem('cart');
             const cart = JSON.parse(cartData) || [];
-            const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+            const totalQuantity = cart.reduce((total, item) => total + parseInt(item.quantity, 10), 0);
             console.log("Total Quantity in Cart:", totalQuantity);
             this.itemCount = totalQuantity;
 
@@ -415,15 +415,13 @@ export default {
             if (savedCart) {
                 let cartData = JSON.parse(savedCart);
                 const index = cartData.findIndex(cartItem => cartItem.id === productId);
-
                 if (index !== -1) {
 
-                    if (this.category_id == 27) {
-                        cartData[index].quantity += 1;
-                    } else {
-                        cartData[index].quantity += 1;
-                    }
-
+                    cartData[index].quantity = (parseInt(cartData[index].quantity, 10) + 1).toString();
+                    const totalQuantity = this.cart.reduce((total, item) => total + parseInt(item.quantity, 10), 0);
+                    console.log("cart qty:" + totalQuantity);
+                    console.log("cart qty:" + cartData[index].quantity);
+                    //return false;
                     localStorage.setItem('cart', JSON.stringify(cartData));
                     this.loadCart();
                     bus.$emit("updateCart", cartData);
