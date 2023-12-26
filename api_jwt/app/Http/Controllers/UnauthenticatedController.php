@@ -98,25 +98,22 @@ class UnauthenticatedController extends Controller
             ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'description as addi_description', 'referrance_product_id', 'add_product_qty', 'add_product_price')
             ->where('product_id', $pro_row->id)->first();
 
-        // Combine data using the + operator
-        //$combinedData = (array)$pro_row + (array)$additionalProducts;
-
         // Add the 'attributes' key
         $data['pro_row'] = [
-            'id' => $pro_row->id,
-            'product_id' => $pro_row->product_id,
-            'name' => $pro_row->name,
-            'pro_slug' => $pro_row->pro_slug,
-            'thumnail_img' => url($pro_row->thumnail_img),
-            'description' => $pro_row->description,
-            'price' => $pro_row->price,
-            'discount' => $pro_row->discount,
-            'stock_qty' => $pro_row->stock_qty,
-            'stock_mini_qty' => $pro_row->stock_mini_qty,
-            'addi_pname' => $additionalProducts->addi_pname,
-            'addi_thumnail_img' => url($additionalProducts->addi_thumnail_img),
-            'addi_description' => $additionalProducts->addi_description,
-            'referrance_product_id' => $additionalProducts->referrance_product_id,
+            'id'                => $pro_row->id,
+            'product_id'        => $pro_row->product_id,
+            'name'              => $pro_row->name,
+            'pro_slug'          => $pro_row->pro_slug,
+            'thumnail_img'      => url($pro_row->thumnail_img),
+            'description'       => $pro_row->description,
+            'price'             => $pro_row->price,
+            'discount'          => $pro_row->discount,
+            'stock_qty'         => $pro_row->stock_qty,
+            'stock_mini_qty'    => $pro_row->stock_mini_qty,
+            'addi_pname'                => !empty($additionalProducts->addi_pname) ? $additionalProducts->addi_pname : "",
+            'addi_thumnail_img'         => !empty($additionalProducts->addi_thumnail_img) ? url($additionalProducts->addi_thumnail_img) : "",
+            'addi_description'          => !empty($additionalProducts->addi_description) ? $additionalProducts->addi_description : "",
+            'referrance_product_id'     => !empty($additionalProducts->referrance_product_id) ? $additionalProducts->referrance_product_id : "",
         ];
         //dd($data['pro_row']);
 
@@ -223,21 +220,24 @@ class UnauthenticatedController extends Controller
         $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
             ->where('produc_categories.category_id', $category_id)
             ->orderBy('product.id', 'desc')
-            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
+            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty','produc_categories.category_id')
             //->limit(12)
             ->get();
 
         foreach ($data as $v) {
             $result[] = [
-                'id'        => $v->id,
-                'name'      => substr($v->name, 0, 350) . '...',
-                'thumnail'  => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
-                'slug'      => $v->slug,
-                'price'     => $v->price,
-                'stock_qty' => $v->stock_qty,
+                'id'          => $v->id,
+                'name'        => substr($v->name, 0, 350) . '...',
+                'thumnail'    => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
+                'slug'        => $v->slug,
+                'price'       => $v->price,
+                'stock_qty'   => $v->stock_qty,
+                'category_id' => $v->category_id,
             ];
         }
-        return response()->json($result, 200);
+        $tdata['tickets']     = $result;
+        $tdata['category_id'] = $category_id;
+        return response()->json($tdata, 200);
     }
 
     public function slidersImages()

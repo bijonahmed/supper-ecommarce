@@ -1,279 +1,294 @@
 <template>
-<div>
+    <div>
 
-    <Navbar />
-    <section class="cart">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="cart_list">
-                        <h6 class="mb-0">Cart</h6>
-                        <span v-if="loading">
-                            <Loader />
-                        </span>
-                        <p class="l_alrt" v-if="!loggedIn">Please Login for Complete this process.</p>
-                        <ul>
-                            <li v-for="item in cart" :key="item.id">
-                                <div class="cart_item ">
-                                    <div class="row" style="width: 100%;">
-                                        <div class="col-md-6">
-                                            <div class="cart_left">
-                                                <div class="c_price" style="position: unset;">
-                                                    <!-- <img :src="`${$axios.defaults.baseURL}${item.thumnail_img}`" class="img-fluid" loading="lazy" alt=""> -->
-                                                    <!-- <img :src="`${$axios.defaults.baseURL}${item.thumnail_img}`.replace('/api', '')" class="img-fluid" loading="lazy" alt=""> -->
-                                                    <img :src="item.thumnail_img" class="img-fluid" loading="lazy" alt="">
-                                                    <!-- :src="item.thumnail_img" -->
-                                                </div>
-                                                <div class="cart_title">
-                                                    <h1>{{ item.name }}</h1>
-                                                    <ul class="mb-3">
-                                                        <li>
-                                                            <strong class="text-light me-2">+</strong>
-                                                            <div class="t_img">
-                                                                <img :src="item.addi_thumnail_img" class="img-fluid" loading="lazy" alt="">
+        <Navbar />
+        <section class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="cart_list mt-0">
+                            <h6 class="mb-0">Cart</h6>
+                            <span v-if="loading">
+                                <Loader />
+                            </span>
+                            <p class="l_alrt" v-if="!loggedIn">Please Login for Complete this process.</p>
+                            <ul>
+                                <li v-for="item in cart" :key="item.id">
+                                    <div class="cart_item ">
+                                        <div class="row" style="width: 100%;">
+                                            <div class="col-md-6">
+                                                <div class="cart_left">
+                                                    <div class="c_price" style="position: unset;">
+                                                        <img :src="item.thumnail_img" class="img-fluid" loading="lazy"
+                                                            alt="">
+                                                    </div>
+                                                    <div class="cart_title">
+                                                        <h1>{{ item.name }}</h1>
+                                                        <ul class="mb-0" style="margin: 0 !important;"
+                                                            v-if="item.addi_pname !== ''">
+                                                            <li>
+                                                                <strong class="text-light me-2">+</strong>
+                                                                <div class="t_img">
+                                                                    <img :src="item.addi_thumnail_img" class="img-fluid"
+                                                                        loading="lazy" alt="">
+                                                                </div>
+                                                                <h6>{{ item.addi_pname }}</h6>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div v-if="item.category_id !== 27">
+                                                            <span>{{ item.quantity }} x {{ item.price }}</span> &nbsp;
+                                                            <span>Size:{{ item.size }}</span>
+
+                                                            <div v-if="item.addi_pname !== ''">
+                                                                <p>{{ calculateTotalPrice(item) }}<span>+1 Free
+                                                                        Ticket</span></p>
+                                                                <span>You will get 1 tickets</span>
                                                             </div>
-                                                            <h6>{{ item.addi_pname }}</h6>
-                                                        </li>
-                                                    </ul>
+                                                            <div v-else>
+                                                                <p>{{ calculateTotalPrice(item) }}</p>
+                                                            </div>
 
-                                                    <div v-if="item.category_id !== 27">
-                                                        <p>{{ item.quantity }} x {{ item.price }}<br>Size:{{ item.size }}<span>+1 Free Ticket</span></p>
-                                                        <span>You will get 1 tickets</span>
-                                                    </div>
-                                                    <div v-else>
-                                                        <p>{{ item.quantity }} x {{ item.price }}</p>
-                                                    </div>
+                                                        </div>
+                                                        <div v-else>
+                                                            <span>{{ item.quantity }} x {{ item.price }}</span>
+                                                            <p>{{ calculateTotalPrice(item) }}</p>
 
-                                                </div>
-                                                <!-- <div class="c_price" style="position: unset;">
-                                                    <div class="creadit_ticket">
-                                                        <p>Lottery Creadit</p>
-                                                        <h1>BDT125</h1>
+                                                        </div>
+
                                                     </div>
+                                                   
                                                 </div>
-                                                <div class="cart_title" v-if="item.category_id !== 27">
-                                                    <h1>{{ item.name }} </h1>
-                                                    <span>{{ item.quantity }} x {{ item.price }}</span><br><span>{{ item.size }}</span>
-                                                    <h6>Lottery credit</h6>
-                                                    <p>{{ calculateTotalPrice(item) }}</p>
-                                                    <span>You will get 1 tickets</span>
-                                                </div>
-                                                <div class="cart_title" v-else>
-                                                    <h1>{{ item.name }} </h1>
-                                                    <span>{{ item.quantity }} x {{ item.price }}</span>
-                                                    <h6>Lottery credit</h6>
-                                                    <p>{{ calculateTotalPrice(item) }}</p>
-                                                </div> -->
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="value_change">
-                                                <div class="value_box">
-                                                    <button type="button" value="-" class="val_minus cart-qty-minus" @click="removefromCart(item.id)"> <i class="fa-solid fa-minus"></i></button>
-                                                    <input type="text" class="val_input qty" v-model="item.quantity" @input="updateQuantity(item)">
-                                                    <button type="button" class="val_add cart-qty-plus" value="+" @click="increaseQuantity(item.id)">Add more</button>
+                                            <div class="col-md-6">
+                                                <div class="value_change">
+                                                    <div class="value_box">
+                                                        <button type="button" value="-" class="val_minus cart-qty-minus"
+                                                            @click="removefromCart(item.id)"> <i
+                                                                class="fa-solid fa-minus"></i></button>
+                                                        <input type="text" class="val_input qty" v-model="item.quantity"
+                                                            @input="updateQuantity(item)">
+                                                        <button type="button" class="val_add cart-qty-plus" value="+"
+                                                            @click="increaseQuantity(item.id)">Add more</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="total_amt">
-                        <ul>
-                            <li>
-                                <h1>Win BDT10,000 weekly by adding only BDT1.00</h1>
-                                <div class="checkboxes__item">
-                                    <label class="checkbox style-e">
-                                        <input type="checkbox" />
-                                        <div class="checkbox__checkmark"></div>
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <h6>Total</h6>
-                                    <p>Inclusive of VAT</p>
-                                </div>
-                                <div>
-                                    <h2>${{ subtotal }}</h2>
-                                </div>
-                            </li>
-                            <li>
-                                <p>Subtotal</p>
-                                <p> ${{ subtotal }}</p>
-                            </li>
-                            <li>
-                                <p>VAT</p>
-                                <p> BDT42.86</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="offer_box">
-                        <div class="checkboxes__item">
-                            <label class="checkbox style-e">
-                                <input type="checkbox">
-                                <div class="checkbox__checkmark"></div>
-                            </label>
-                        </div>
-                        <div>
-                            <h6>Lottery Wallet</h6>
-                            <h6>available balance: BDT5.00</h6>
+                            </ul>
                         </div>
                     </div>
-                    <div class="promo_box offer_box">
-                        <div class="input_box">
-                            <form action="">
-                                <input type="text" placeholder="Promo Code ">
-                                <button class="btn_apply" type="button">Apply</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="promo_box offer_box">
-                        <!-- add "disabled" class to link disabled  -->
+                    <div class="col-md-3">
 
-                        <div v-if="loggedIn" class="w-100" style="width: 100%;">
-                            <nuxt-link to="/payment" style="display: block;" class="btn_submit btn_checkout txtformat">Checkout</nuxt-link>
-                            <!-- <button @click="orderConfirm" style="display: block;" class="btn_submit btn_checkout txtformat">Order Confirm</button> -->
-                        </div>
-
-                        <div v-else style="width: 100%;">
-                            <button style="display: block;" class="btn_submit btn_checkout txtformat" @click="loginpopup">Checkout</button>
-                        </div>
-
-                    </div>
-                    <div class="payment_section ">
-                        <h2>Payment method</h2>
-                        <!-- choose payment  -->
-                        <div class="choose_method">
-                            <h6 class="" id="output"></h6>
-                            <div class="row">
-                                <div class="col-xl-6 mb-2">
-                                    <div class="pay_option">
-                                        <input type="radio" class="checkbox" name="pay_method" id="api_m">
-                                        <label for="api_m">
-                                            <img src="/images/gpay_logo.png" class="img-fulid" loading="lazy" alt="">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="pay_option">
-                                        <input type="radio" class="checkbox2" name="pay_method" id="card">
-                                        <label for="card">
-                                            <div>
-                                                <h6>Credit/Debit Cards</h6>
-                                                <img src="/images/cards.png" class="cards_pic img-fulid" loading="lazy" alt="">
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-
+                        <div class="offer_box">
+                            <div class="checkboxes__item">
+                                <label class="checkbox style-e">
+                                    <input type="checkbox">
+                                    <div class="checkbox__checkmark"></div>
+                                </label>
+                            </div>
+                            <div>
+                                <h6>Lottery Wallet</h6>
+                                <h6>available balance: BDT5.00</h6>
                             </div>
                         </div>
+                        <div class="promo_box offer_box">
+                            <div class="input_box">
+                                <form action="">
+                                    <input type="text" placeholder="Promo Code ">
+                                    <button class="btn_apply" type="button">Apply</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="total_amt">
+                            <ul>
 
-                        <!-- payment here  -->
-                        <div class="card_form">
-                            <form action="">
-                                <h5>Add card</h5>
-                                <div class="card_input">
-                                    <input type="text" placeholder="Creadit or Debit card Number " class="img-fulid">
-                                </div>
+                                <li>
+                                    <p>Item Subtotal</p>
+                                    <p>BDT&nbsp;{{ subtotal }}</p>
+                                </li>
+
+                                <li>
+                                    <div>
+                                        <p>Shipping</p>
+                                        <span style="font-size: 10px;color: red;">Condition Apply</span>
+                                    </div>
+                                    <p>BDT&nbsp;60.00</p>
+                                </li>
+                                <li>
+                                    <p>VAT&nbsp;<span style="font-size: 10px;">(15%)</span></p>
+                                    <p>BDT&nbsp;90.00</p>
+                                </li>
+                                <li>
+                                    <p>Wallet Balance</p>
+                                    <p>BDT&nbsp;-10.00</p>
+                                </li>
+                                <li>
+                                    <p>Promo DCF</p>
+                                    <p>BDT&nbsp;-16.00</p>
+                                </li>
+                                <li>
+                                    <div>
+                                        <h6>Total</h6>
+                                        <p>Inclusive of VAT</p>
+                                    </div>
+                                    <div>
+                                        <h2>${{ subtotal }}</h2>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="promo_box offer_box">
+                            <!-- add "disabled" class to link disabled  -->
+
+                            <div v-if="loggedIn" class="w-100" style="width: 100%;">
+                                <nuxt-link to="/payment" style="display: block;"
+                                    class="btn_submit btn_checkout txtformat">Checkout</nuxt-link>
+                                <!-- <button @click="orderConfirm" style="display: block;" class="btn_submit btn_checkout txtformat">Order Confirm</button> -->
+                            </div>
+
+                            <div v-else style="width: 100%;">
+                                <button style="display: block;" class="btn_submit btn_checkout txtformat"
+                                    @click="loginpopup">Checkout</button>
+                            </div>
+
+                        </div>
+                        <div class="payment_section ">
+                            <h2>Payment method</h2>
+                            <!-- choose payment  -->
+                            <div class="choose_method">
+                                <h6 class="" id="output"></h6>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <div class="card_input">
-                                            <input type="text" placeholder="Expiry Date MM/YY" class="img-fulid">
+                                    <div class="col-xl-6 mb-2">
+                                        <div class="pay_option">
+                                            <input type="radio" class="checkbox" name="pay_method" id="api_m">
+                                            <label for="api_m">
+                                                <img src="/images/gpay_logo.png" class="img-fulid" loading="lazy" alt="">
+                                            </label>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="card_input">
-                                            <input type="text" placeholder="Secutiy Code" class="img-fulid">
+                                    <div class="col-xl-6">
+                                        <div class="pay_option">
+                                            <input type="radio" class="checkbox2" name="pay_method" id="card">
+                                            <label for="card">
+                                                <div>
+                                                    <h6>Credit/Debit Cards</h6>
+                                                    <img src="/images/cards.png" class="cards_pic img-fulid" loading="lazy"
+                                                        alt="">
+                                                </div>
+                                            </label>
                                         </div>
                                     </div>
+
                                 </div>
-                                <div class="card_payment">
-                                    <input type="checkbox" name="save" id="">
-                                    <label for="save">Save Card to Account</label>
-                                </div>
-                                <button class="btn_pay" type="button">Pay Now </button>
-                            </form>
-                        </div>
+                            </div>
 
-                        <!-- payment button  -->
-                        <div class="pay_form">
-                            <a href="javascript:" class="btn_pay payment_api">Buy with Pay </a>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- <button @click="loginpopup">Login</button> -->
-                <div class="login_modal">
-                    <div class="main_content">
-                        <div class="log_regi">
-                            <button class="cls_mdal" @click="closePopup"><i class="fa-solid fa-x"></i></button>
-                            <div class="login_section">
-                                <form @submit.prevent="userLogin()" id="formrest_login" class="forms-sample" enctype="multipart/form-data">
-                                    <h5 class="text-center">Login</h5>
+                            <!-- payment here  -->
+                            <div class="card_form">
+                                <form action="">
+                                    <h5>Add card</h5>
+                                    <div class="card_input">
+                                        <input type="text" placeholder="Creadit or Debit card Number " class="img-fulid">
+                                    </div>
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-container">
-                                                <input placeholder="Email" class="input-field" type="text" v-model="login.email">
-                                                <label for="input-field" class="input-label">Email </label>
-                                                <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
-                                                <span class="input-highlight"></span>
+                                        <div class="col-6">
+                                            <div class="card_input">
+                                                <input type="text" placeholder="Expiry Date MM/YY" class="img-fulid">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="input-container">
-                                                <input placeholder="Password" class="input-field" id="password-field" type="password" v-model="login.password">
-                                                <label for="input-field" class="input-label">Password </label>
-                                                <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
-                                                <span class="input-highlight"></span>
-                                                <i toggle="#password-field" class="fa-solid fa-eye toggle-password"></i>
-                                            </div>
-                                        </div>
-                                        <div class="row pe-0">
-                                            <div class="col-6">
-                                                <div class="input-container">
-                                                    <a href="javascript:" class="f_link"><small>
-                                                            <p style="color:white;">Forget Password?</p>
-                                                        </small></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="input-container">
-                                                    <nuxt-link to="/register" class="f_link" style="text-align: right;">
-                                                        <div> <small style="color:white;">Register</small></div>
-                                                    </nuxt-link>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 px-0">
-                                                <div class="input-container text-end">
-                                                    <input class="btn_submit w-100" value="Login" type="submit">
-                                                </div>
+                                        <div class="col-6">
+                                            <div class="card_input">
+                                                <input type="text" placeholder="Secutiy Code" class="img-fulid">
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="card_payment">
+                                        <input type="checkbox" name="save" id="">
+                                        <label for="save">Save Card to Account</label>
+                                    </div>
+                                    <button class="btn_pay" type="button">Pay Now </button>
                                 </form>
                             </div>
 
+                            <!-- payment button  -->
+                            <div class="pay_form">
+                                <a href="javascript:" class="btn_pay payment_api">Buy with Pay </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- <button @click="loginpopup">Login</button> -->
+                    <div class="login_modal">
+                        <div class="main_content">
+                            <div class="log_regi">
+                                <button class="cls_mdal" @click="closePopup"><i class="fa-solid fa-x"></i></button>
+                                <div class="login_section">
+                                    <form @submit.prevent="userLogin()" id="formrest_login" class="forms-sample"
+                                        enctype="multipart/form-data">
+                                        <h5 class="text-center">Login</h5>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="input-container">
+                                                    <input placeholder="Email" class="input-field" type="text"
+                                                        v-model="login.email">
+                                                    <label for="input-field" class="input-label">Email </label>
+                                                    <span class="text-danger" v-if="errors.email">{{ errors.email[0]
+                                                    }}</span>
+                                                    <span class="input-highlight"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="input-container">
+                                                    <input placeholder="Password" class="input-field" id="password-field"
+                                                        type="password" v-model="login.password">
+                                                    <label for="input-field" class="input-label">Password </label>
+                                                    <span class="text-danger" v-if="errors.password">{{ errors.password[0]
+                                                    }}</span>
+                                                    <span class="input-highlight"></span>
+                                                    <i toggle="#password-field" class="fa-solid fa-eye toggle-password"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row pe-0">
+                                                <div class="col-6">
+                                                    <div class="input-container">
+                                                        <a href="javascript:" class="f_link"><small>
+                                                                <p style="color:white;">Forget Password?</p>
+                                                            </small></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="input-container">
+                                                        <nuxt-link to="/register" class="f_link" style="text-align: right;">
+                                                            <div> <small style="color:white;">Register</small></div>
+                                                        </nuxt-link>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 px-0">
+                                                    <div class="input-container text-end">
+                                                        <input class="btn_submit w-100" value="Login" type="submit">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- login popup  -->
+            <!-- login popup  -->
 
-    </section>
+        </section>
 
-    <Footer />
+        <Footer />
 
-</div>
+    </div>
 </template>
 
 <script>
@@ -429,7 +444,7 @@ export default {
             // Check if necessary properties are truthy before performing the calculation
             if (item && item.quantity !== undefined && item.price !== undefined) {
                 const total = item.quantity * item.price;
-                return `Total: ${this.formatPrice(total)}`; // Assuming you have a formatPrice method
+                return `BDT: ${this.formatPrice(total)}`; // Assuming you have a formatPrice method
             } else {
                 return "Invalid item data";
             }

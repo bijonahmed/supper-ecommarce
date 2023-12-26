@@ -682,8 +682,8 @@ body::after {
 
 .c_price {
     padding: 10px;
-    height: 102px;
-    width: 129px;
+    height: auto;
+    max-width: 140px;
     border-radius: 12px;
     border: 1px solid #e1e1e1;
     background: #ffffff9e;
@@ -2991,7 +2991,7 @@ header .close:hover {
     }
 
     .c_price {
-        height: 65px;
+        height: 90px;
     }
 
     .camp_count {

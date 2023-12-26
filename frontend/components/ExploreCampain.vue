@@ -58,9 +58,9 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="d-flex">
-                                                                <nuxt-link :to="`/product-details/${item.slug}`" class="w-100">View Details</nuxt-link>
+                                                                <nuxt-link :to="`/product-details/${item.slug}`">View Details</nuxt-link>
                                                                 <!-- <a href="javascript:" class="btn_details show_details" @click="viewDetails(item.slug)">View Details</a> -->
-                                                                <button type="button" class="d-none" @click="addtoCart(item)">add to cart</button>
+                                                                <button type="button" @click="addtoCart(item)">add to cart</button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -151,16 +151,16 @@
                                 <div class="col-6">
                                     <div class="input-container">
                                         <nuxt-link to="/register" class="f_link" style="text-align: right;">
-                                                        <div> <small style="color:white;">Register</small></div>
-                                                    </nuxt-link>
+                                            <div> <small style="color:white;">Register</small></div>
+                                        </nuxt-link>
                                     </div>
                                 </div>
                                 <div class="col-12 px-0">
                                     <div class="input-container text-end">
-                                        <input class="btn_submit w-100" value="Login" type="submit"><br/><br/>
+                                        <input class="btn_submit w-100" value="Login" type="submit"><br /><br />
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </form>
@@ -203,6 +203,7 @@ import bus from '~/plugins/bus.js';
 export default {
     data() {
         return {
+            category_id: '',
             loading: false,
             cart: [],
             prouducts: [],
@@ -263,21 +264,42 @@ export default {
 
         async onlyloadingTicket() {
             const response = await this.$axios.get('/unauthenticate/getTickets');
-            this.prouducts = response.data;
+            this.prouducts = response.data.tickets;
+            this.category_id = response.data.category_id;
             //console.log("tickets: " +  response.data);
         },
 
         addtoCart(product) {
+ 
             this.loading = true;
             // const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const existingProduct = this.cart.find(item => item.id === product.id);
             if (existingProduct) {
                 existingProduct.quantity += 1;
             } else {
-                this.cart.push({
-                    ...product,
-                    quantity: 1
-                });
+                // this.cart.push({
+                //     ...product,
+                //     quantity: 1
+                // });
+                if (this.category_id === 27) {
+                    this.cart.push({
+                        ...product,
+                        category_id: this.category_id,
+                        ticketprice: product.price,
+                        thumnail_img: product.thumnail,
+                        addi_pname :'',
+                        addi_thumnail :'',
+                        ticket_qty: 1,
+                        quantity: 1,
+                    });
+                } else {
+                    this.cart.push({
+                        ...product,
+                        size: this.choose_size,
+                        category_id: this.category_id,
+                        quantity: 1,
+                    });
+                }
             }
             // Merge with existing data if any
             const existingData = JSON.parse(localStorage.getItem('cart')) || [];
