@@ -24,27 +24,44 @@
                 <span v-if="loading">
                     <Loader />
                 </span>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Place On </th>
-                                <th>Total </th>
-                                <th>Status </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="order in orders" :key="order.id">
-                                <td>{{ order.orderId }}</td>
-                                <td>{{ order.placeOn }}</td>
-                                <td>{{ order.total }}</td>
-                                <td>{{ order.name }}</td>
-                                <td><button class="btn btn-primary btn-sm" @click="orderDetails(order.orderId)"><i class="fas fa-search-plus"></i></button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="order_list">
+                    <ul>
+                        <li>
+                            <div>
+                                <h6>Order ID</h6>
+                            </div>
+                            <div>
+                                <h6>Date</h6>
+                            </div>
+                            <div>
+                                <h6>Ammount</h6>
+                            </div>
+                            <div>
+                                <h6>Status</h6>
+                            </div>
+                            <div>
+                                <h6>Action</h6>
+                            </div>
+                        </li>
+                        <li v-for="order in orders" :key="order.id">
+                            <div>
+                                <p>{{ order.orderId }}</p>
+                            </div>
+                            <div>
+                                <p>{{ order.placeOn }}</p>
+                            </div>
+                            <div>
+                                <p>{{ order.total }} TK.</p>
+                            </div>
+                            <div>
+                                <p>{{ order.name }}</p>
+                            </div>
+                            <div>
+                                <a href="#" class="btn-submit" @click="orderDetails(order.orderId)"><i class="fa-solid fa-file-invoice"></i></a>
+                            </div>
+                        </li>
+                        
+                    </ul>
                 </div>
             </div>
         </div>

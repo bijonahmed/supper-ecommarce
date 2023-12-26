@@ -219,6 +219,7 @@ Route::group([
     Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
     Route::get('countrys/', [UnauthenticatedController::class, 'getCountrys']);
     Route::get('setting/', [UnauthenticatedController::class, 'preSetting']);
+    Route::post('check-coupon/', [UnauthenticatedController::class, 'checkCoupon']);
     //Route::get('defaultShowingMovies', [UnauthenticatedController::class, 'defaultShowingMovies']);
 
     Route::get('defaultShowingMoviesHome', [UnauthenticatedController::class, 'defaultShowingMoviesHome']);

@@ -197,10 +197,7 @@
                                 <h1><strong style="color: #aded28;">{{ payableamount }}</strong>TK </h1>
                             </li>
                             <div class="trx_img">
-                                <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How to get Trx Id?</a>
-                                <div class="collapse" id="collapseExample">
-                                    <img src="images/transection_image.png" class="img-fluid" loading="lazy" alt="">
-                                </div>
+                                <img src="images/transection_image.png" class="img-fluid" loading="lazy" alt="">
                             </div>
                             <li>
                                 <h6>Trx ID: </h6>
@@ -332,10 +329,14 @@ export default {
             };
 
             const savedCart = localStorage.getItem('cart');
+            const subtotal = localStorage.getItem('subtotal');
+
             let cartData = JSON.parse(savedCart);
+            let subtotal_amt = JSON.parse(subtotal);
             const requestData = {
                 cart: cartData,
                 payment_getway: payment_getway,
+                subtotal_amt: subtotal_amt,
                 txtid: this.orderData.txtid
             };
 
@@ -375,7 +376,9 @@ export default {
         clearCart() {
             this.loading = true;
             localStorage.removeItem('cart');
+            localStorage.removeItem('subtotal');
             this.cart = [];
+            this.subtotal = 0;
             setTimeout(() => {
                 this.loading = false;
             }, 2000);
@@ -389,22 +392,11 @@ export default {
                     index === self.findIndex((t) => t.id === item.id)
                 );
 
-                let totalPrice = 0; // Declare totalPrice outside the if-else blocks
-
-                if (this.category_id !== 27) {
-                    totalPrice = uniqueCart.reduce(
-                        (total, item) => total + (item.price || 0) * item.quantity,
-                        0
-                    );
-                } else {
-                    totalPrice = uniqueCart.reduce(
-                        (total, item) => total + (item.ticketprice || 0) * item.ticket_qty,
-                        0
-                    );
-                }
-
-                this.subtotal = totalPrice;
-                console.log('Total Price for Unique Items:', totalPrice);
+                const subtotal = localStorage.getItem('subtotal');
+                let subtotal_amt = JSON.parse(subtotal)
+                console.log(subtotal_amt);
+                this.subtotal = subtotal_amt; //totalPrice;
+                console.log('Total Price for Unique Items:', subtotal_amt);
             } else {
                 console.error('No cart data found in local storage.');
             }

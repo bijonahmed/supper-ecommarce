@@ -30,8 +30,10 @@ export default {
       { src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js" },
       { src: "/js/countdown.js" },
       { src: "/js/share_modal.js" },
+      { src: "/js/html2canvas.js" },
       { src: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/intlTelInput.min.js" },
       { src: "https://cdn.jsdelivr.net/npm/sweetalert2@11" },
+
    
     ],
   },

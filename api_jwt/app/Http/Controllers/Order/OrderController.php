@@ -272,7 +272,7 @@ class OrderController extends Controller
     public function submitOrder(Request $request)
     {
 
-        // dd($request->all());
+        //dd($request->all());
         //dd($request->all());
         $validator = Validator::make($request->all(), [
             'txtid'           => 'required',
@@ -286,6 +286,7 @@ class OrderController extends Controller
         $cartData = $request->input('cart');
         $cart     = $request->input('cart');
         $txtid    = $request->input('txtid');
+        $subtotal_amt    = floatval($request->input('subtotal_amt'));
         $payment_getway    = $request->input('payment_getway');
         ///dd($cartData);
         $total = 0;
@@ -300,7 +301,7 @@ class OrderController extends Controller
                 continue;  // Skip the current iteration and move to the next item
             }
             // Calculate the subtotal for the current item
-            $subtotal = $quantity * $price;
+            $subtotal = $subtotal_amt; //$quantity * $price;
             // Add the subtotal to the total
             $total += $subtotal;
             //echo "Product ID: {$productid} - Quantity: {$quantity} - Price: {$price} - Subtotal: {$subtotal} - Total: {$total}<br/>";

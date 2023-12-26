@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Models\Sliders;
 use App\Models\ProductAdditionalImg;
 use App\Models\ProductCategory;
+use App\Models\PromoCode;
 use App\Models\Categorys;
 use App\Models\ProductAttributes;
 use App\Models\Setting;
@@ -49,7 +50,6 @@ class UnauthenticatedController extends Controller
         $response = Setting::find(1);
         return response()->json($response);
     }
-
 
     public function limitedProducts()
     {
@@ -118,8 +118,8 @@ class UnauthenticatedController extends Controller
         //dd($data['pro_row']);
 
         $ref         = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
-                    ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'description as addi_description', 'referrance_product_id', 'add_product_qty', 'add_product_price')
-                    ->where('product_id', $pro_row->id)->first();
+            ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'description as addi_description', 'referrance_product_id', 'add_product_qty', 'add_product_price')
+            ->where('product_id', $pro_row->id)->first();
 
         $data['additional'] = [
             'addi_pname'          => !empty($ref->addi_pname) ? $ref->addi_pname : "",
@@ -220,7 +220,7 @@ class UnauthenticatedController extends Controller
         $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
             ->where('produc_categories.category_id', $category_id)
             ->orderBy('product.id', 'desc')
-            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty','produc_categories.category_id')
+            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty', 'produc_categories.category_id')
             //->limit(12)
             ->get();
 
@@ -541,6 +541,39 @@ class UnauthenticatedController extends Controller
             return response()->json($modifiedCollection, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function checkCoupon(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'couponCode' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Coupon code is required'], 422);
+        }
+
+
+        $dateToCheck = date("Y-m-d"); //'2023-12-20';
+        //  echo $date;exit;
+        $couponCode = $request->input('couponCode');
+        $promoCode = PromoCode::where('coupon_code', $couponCode)
+            ->whereDate('frm_date', '<=', $dateToCheck)
+            ->whereDate('to_date', '>=', $dateToCheck)
+            ->first();
+
+
+        if ($promoCode) {
+            return response()->json([
+                'wallet_amount' => (int) $promoCode->coupon_amount,
+                'message' => 'Coupon code is valid',
+            ]);
+        } else {
+            return response()->json([
+                //'wallet_amount' => '',
+                'message' => 'Coupon code is invalid or has expired',
+            ], 422);
         }
     }
 }
