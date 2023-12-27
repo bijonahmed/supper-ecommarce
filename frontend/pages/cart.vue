@@ -233,6 +233,7 @@ export default {
     },
     data() {
         return {
+            wallet_balance: 0,
             shipfees_amt: 0,
             itemSubtotal: 0,
             categoryId: 27,
@@ -282,7 +283,6 @@ export default {
         },
         toggleWalletInfo() {
             this.showWalletInfo = !this.showWalletInfo;
-            // Call this.getCartTotal() when showWalletInfo is true
             if (this.showWalletInfo) {
                 this.getCartTotal();
             }
@@ -349,6 +349,7 @@ export default {
                 this.loading = true; // Show loader
                 const response = await this.$axios.get('/unauthenticate/setting');
                 this.pre_setting = response.data;
+                this.wallet_balance = response.data.wallet_balance;
                 this.shippingFee = response.data.shipping_fee;
                 this.getCartTotal();
             } catch (error) {
@@ -581,7 +582,6 @@ export default {
                     // Exclude products with category_id 27
                     if (categoryId !== 27 && !uniqueProductIds.includes(productId)) {
                         const shipFeesForItem = this.pre_setting.shipping_fee;
-
                         totalShippingFees += parseFloat(shipFeesForItem);
                         uniqueProductIds.push(productId);
                     }
@@ -591,9 +591,13 @@ export default {
                 this.shipfees_amt = totalShippingFees;
                 let shipfees = totalShippingFees;
                 console.log("shipfees :---" + totalShippingFees);
-                let walletbalance = this.pre_setting.wallet_balance;
-                // console.log("shipping FEES : " + shipfees);
-                let wallet_balance = this.isChecked ? parseFloat(walletbalance) : 0;
+                //let walletbalance = this.wallet_balance;
+                let wallet_balance;
+                if (this.showWalletInfo) {
+                    wallet_balance = this.wallet_balance;
+                } else {
+                    wallet_balance = 0;
+                }
 
                 let copon_result;
                 if (this.couponamt !== '') {
@@ -601,18 +605,13 @@ export default {
                 } else {
                     copon_result = 0;
                 }
-
                 const percetage = this.pre_setting.vat_percentage;
-
                 let percentageAmount;
                 percentageAmount = (parseFloat(totalPrice) * percetage) / 100;
                 this.percentageAmount = percentageAmount;
-
                 console.log(`Formula totalprice: + ${totalPrice}, percentage amount: + ${percentageAmount}, shipping fee: ${shipfees}, walletbalance: - ${wallet_balance} - coupon amount ${copon_result}`);
-
                 const total = parseFloat(totalPrice) + parseFloat(percentageAmount) + parseFloat(shipfees) - parseFloat(wallet_balance) - copon_result;
                 console.log("total result : " + total);
-
                 this.subtotal = `${total}`;
                 console.log('Total Price for Unique Items:', totalPrice);
                 this.loadTotalAmut();

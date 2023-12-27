@@ -20,6 +20,13 @@
         </li>
         <span v-if="user.role_id === 1">
             <li>
+                <Nuxt-link to="/setting/pre-setting" href="javascript:;">
+                    <i class='bx bx-key'></i>
+                    <div class="menu-title">Pre Setting</div>
+                </Nuxt-link>
+            </li>
+            <li>
+
                 <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_30" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bx bx-category"></i>
                     <div class="menu-title">My Products</div>
@@ -318,7 +325,6 @@
                 <Nuxt-link to="/ecommarce/category-list"><i class="bx bx-right-arrow-alt"></i>Category</Nuxt-link>
             </li>
 
-            
         </span>
     </ul>
 
