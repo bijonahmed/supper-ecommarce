@@ -271,7 +271,6 @@ class OrderController extends Controller
 
     public function submitOrder(Request $request)
     {
-
         //dd($request->all());
         //dd($request->all());
         $validator = Validator::make($request->all(), [

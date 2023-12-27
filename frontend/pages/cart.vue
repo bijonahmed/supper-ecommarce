@@ -114,7 +114,7 @@
                                     <span style="font-size: 10px;color: red;">Condition Apply</span>
                                 </div>
 
-                                <p>{{ pre_setting.currency }}&nbsp;{{ pre_setting.shipping_fee }}</p>
+                                <p>{{ pre_setting.currency }}&nbsp;{{ shipfees_amt }}</p>
                             </li>
                             <li>
                                 <p>VAT&nbsp;<span style="font-size: 10px;">({{ pre_setting.vat_percentage }}%)</span>
@@ -233,7 +233,9 @@ export default {
     },
     data() {
         return {
+            shipfees_amt: 0,
             itemSubtotal: 0,
+            categoryId: 27,
             shippingFee: 0,
             isChecked: false,
             showWalletInfo: false,
@@ -272,7 +274,7 @@ export default {
     methods: {
 
         loadTotalAmut() {
-            console.log("loadTotalAmut" + this.subtotal);
+            // console.log("loadTotalAmut" + this.subtotal);
             const subtotal = this.subtotal;
             // Save the updated cart back to local storage
             localStorage.setItem('subtotal', JSON.stringify(subtotal));
@@ -561,32 +563,56 @@ export default {
                     index === self.findIndex((t) => t.id === item.id)
                 );
                 let totalPrice = 0; // Declare totalPrice outside the if-else blocks
+                let totalQuantity = 0; // Declare totalQuantity variable
+                let uniqueProductIds = []; // Track unique product IDs to ensure shipping fee is added only once
+                let totalShippingFees = 0;
                 totalPrice = uniqueCart.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
-                // console.log("total :---" + totalPrice);
-                this.itemSubtotal = totalPrice;
-                const shipfees = this.pre_setting.shipping_fee;
-                // console.log("shipping FEES : " + shipfees);
-                const result_1 = this.isChecked ? parseFloat(totalPrice) - parseFloat(this.pre_setting.wallet_balance) : totalPrice;
-                //console.log("result 1 : " + result_1);
+                totalQuantity = uniqueCart.reduce((total, item) => total + (item.quantity || 0), 0);
+                console.log("Total Item quantity :---" + totalQuantity);
+                //let shipfees = this.pre_setting.shipping_fee * totalQuantity;
+                //start
+                totalPrice = uniqueCart.reduce((total, item) => total + (item.price || 0) * item.quantity, 0);
+                totalQuantity = uniqueCart.reduce((total, item) => total + (item.quantity || 0), 0);
+                console.log("Total Item quantity: " + totalQuantity);
 
-                let result_2;
+                uniqueCart.forEach((item) => {
+                    const productId = item.id;
+                    const categoryId = item.category_id;
+                    // Exclude products with category_id 27
+                    if (categoryId !== 27 && !uniqueProductIds.includes(productId)) {
+                        const shipFeesForItem = this.pre_setting.shipping_fee;
+
+                        totalShippingFees += parseFloat(shipFeesForItem);
+                        uniqueProductIds.push(productId);
+                    }
+                });
+                console.log("Total Shipping Fees:", totalShippingFees);
+                this.itemSubtotal = totalPrice;
+                this.shipfees_amt = totalShippingFees;
+                let shipfees = totalShippingFees;
+                console.log("shipfees :---" + totalShippingFees);
+                let walletbalance = this.pre_setting.wallet_balance;
+                // console.log("shipping FEES : " + shipfees);
+                let wallet_balance = this.isChecked ? parseFloat(walletbalance) : 0;
+
+                let copon_result;
                 if (this.couponamt !== '') {
-                    result_2 = parseFloat(result_1) - parseFloat(this.couponamt);
+                    copon_result = parseFloat(this.couponamt);
                 } else {
-                    result_2 = result_1;
+                    copon_result = 0;
                 }
-                // console.log("result_2 : " + result_2);
-                //console.log("shipping fee : " + this.pre_setting.shipping_fee);
+
                 const percetage = this.pre_setting.vat_percentage;
-                const result_3 = parseFloat(result_2) + parseFloat(this.pre_setting.shipping_fee);
 
                 let percentageAmount;
-                percentageAmount = (parseFloat(result_3) * percetage) / 100;
+                percentageAmount = (parseFloat(totalPrice) * percetage) / 100;
                 this.percentageAmount = percentageAmount;
-                // console.log("result 3: " + result_3);
-                //console.log("percetage result: " + percentageAmount);
-                const total = parseFloat(result_3) + parseFloat(percentageAmount);
-                // console.log("total result : " + total);
+
+                console.log(`Formula totalprice: + ${totalPrice}, percentage amount: + ${percentageAmount}, shipping fee: ${shipfees}, walletbalance: - ${wallet_balance} - coupon amount ${copon_result}`);
+
+                const total = parseFloat(totalPrice) + parseFloat(percentageAmount) + parseFloat(shipfees) - parseFloat(wallet_balance) - copon_result;
+                console.log("total result : " + total);
+
                 this.subtotal = `${total}`;
                 console.log('Total Price for Unique Items:', totalPrice);
                 this.loadTotalAmut();
