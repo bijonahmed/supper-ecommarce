@@ -11,36 +11,30 @@
                             <li class="breadcrumb-item">
                                 <router-link to="/hrm/dashboard"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></router-link>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Product List</li>
+                            <li class="breadcrumb-item active" aria-current="page">Ticket History List (Total Ticket: {{ totalTicket }})</li>
                         </ol>
                     </nav>
                 </div>
-                <div class="ms-auto">
-                    <div class="btn-group">
-                        <Nuxt-link to="/ecommarce/product-add"><button type="button" class="btn btn-primary"><i class="bx bx-plus"></i>New</button></Nuxt-link>
-                    </div>
-                </div>
+
             </div>
             <!--end breadcrumb-->
             <!-- <span class="loader"></span> -->
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control name" placeholder="Name" v-model="searchQuery.name" @input="handleSearch">
+                                <input type="text" class="form-control name" placeholder="Ticket Number" v-model="searchQuery.ticket_number" @input="handleSearch">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control name" placeholder="Product Name" v-model="searchQuery.name" @input="handleSearch">
                             </div>
                         </div>
 
                         <div class="col-md-2">
-                            <div class="input-group mb-3">
-                                <select class="form-select form-select-solid status" v-model="searchQuery.category_id" @change="handleSearch">
-                                    <option value="">All Categories</option>
-                                    <option v-for="category in categries" :key="category.id" :value="category.id">{{ category.name }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
                             <div class="input-group mb-3">
                                 <select class="form-select form-select-solid status" v-model="searchQuery.status" @change="handleSearch">
                                     <option value="">All Status</option>
@@ -68,11 +62,12 @@
                             <thead>
                                 <tr>
                                     <th>SL#</th>
-                                    <th>Title</th>
-                                    <th class="text-center">Quantity</th>
-                                    <th class="text-center">Total Sell</th>
+                                    <th>Ticket Number</th>
+                                    <th class="text-center">Product Name</th>
+                                    <th class="text-center">Order ID</th>
+                                    <th class="text-center">Order Date</th>
+                                    <th class="text-center">Customer ID</th>
                                     <th class="text-center">Status</th>
-                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,33 +75,25 @@
                                     <td>
                                         {{ (currentPage - 1) * perPage + index + 1 }}
                                     </td>
-                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.ticket_number }}</td>
 
                                     <td>
-                                        <center>{{ item.stock_qty }}</center>
+                                        <center>{{ item.name }}</center>
                                     </td>
                                     <td>
-                                        <center>{{ item.sell_qty }}</center>
+                                        <center>{{ item.orderId }}</center>
                                     </td>
-
+                                    <td>
+                                        <center>{{ item.orderDate }}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{ item.customer_id }}</center>
+                                    </td>
                                     <td class="text-center">
                                         <span v-if="(item.status == 1)"> Active </span>
                                         <span v-else> Inactive </span>
                                     </td>
-                                    <td>
-                                        <center>
-                                            <span @click="edit(item.id)"><button type="button"><i class="bx bx-edit"></i></button></span>
-
-                                            <span v-if="item.category_id == 27">
-                                                <span></span>
-                                            </span>
-                                            <span v-else>
-                                                <span @click="deleteProduct(item.id)"><button type="button" style="background-color: red; color: white;"><i class="bx bx-trash"></i></button></span>
-                                            </span>
-
-                                            <span @click="preview(item.id)"><button type="button"><i class="fadeIn animated bx bx-zoom-in"></i></button></span>
-                                        </center>
-                                    </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -135,7 +122,7 @@
 import _ from 'lodash';
 export default {
     head: {
-        title: 'Product List',
+        title: 'Ticket List',
     },
     data() {
         return {
@@ -144,11 +131,13 @@ export default {
                 name: '',
                 status: 1,
             },
+            totalTicket: 0,
             notifmsg: '',
             errors: {},
             data: [],
             categries: [],
             searchQuery: {
+                ticket_number: '',
                 name: '',
                 category_id: '',
                 status: 1
@@ -179,7 +168,12 @@ export default {
                 result = result.filter(item =>
                     item.category_id == this.searchQuery.category_id
                 );
+            }
 
+            if (this.searchQuery.ticket_number) {
+                result = result.filter(item =>
+                    item.ticket_number == this.searchQuery.ticket_number
+                );
             }
 
             if (this.searchQuery.status) {
@@ -210,7 +204,9 @@ export default {
         async fetchData() {
             $(".customerSpinner").show();
             try {
-                const response = await this.$axios.get(`/product/getProductList`);
+                const response = await this.$axios.get(`/product/getTicketList`);
+                //console.log(response.data.length);
+                this.totalTicket = response.data.length;
                 this.data = response.data;
                 $(".customerSpinner").hide();
             } catch (error) {

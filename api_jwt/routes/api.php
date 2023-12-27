@@ -144,6 +144,7 @@ Route::group([
     Route::post('product-update', [ProductController::class, 'productUpdate']);
     Route::post('insertVarientGroup', [ProductController::class, 'insertVarientGroup']);
     Route::get('getProductList', [ProductController::class, 'getProductList']);
+    Route::get('getTicketList', [ProductController::class, 'getTicketList']);
     Route::get('insertProductAttrAndValues', [ProductController::class, 'insertProductAttrAndValues']);
     Route::get('insertProductVarient', [ProductController::class, 'insertProductVarient']);
     Route::get('deleteValrient', [ProductController::class, 'deleteValrient']);
@@ -279,6 +280,9 @@ Route::group([
     Route::post('insertPayItem', [SettingController::class, 'insertPayItem']);
     Route::get('getPayItemList', [SettingController::class, 'getPayItemList']);
     Route::get('checkPayItemRow/{id}', [SettingController::class, 'checkPayItemRow']);
+
+    //update setting option 
+    Route::post('upateSetting', [SettingController::class, 'upateSetting']);
 });
 Route::group([
     'middleware' => 'api',

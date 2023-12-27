@@ -201,6 +201,53 @@ class SettingController extends Controller
         ];
         return response()->json($response);
     }
+
+
+    public function upateSetting(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required',
+            'email'     => 'required',
+            'wallet_balance'    => 'required',
+            'shipping_fee'      => 'required',
+            'vat_percentage'    => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'name'              => !empty($request->name) ? $request->name : "",
+            'email'             => !empty($request->email) ? $request->email : "",
+            'address'           => !empty($request->address) ? $request->address : "",
+            'whatsApp'          => !empty($request->whatsApp) ? $request->whatsApp : "",
+            'description'       => !empty($request->description) ? $request->description : "",
+            'copyright'         => !empty($request->copyright) ? $request->copyright : "",
+            'currency'          => !empty($request->currency) ? $request->currency : "",
+            'fblink'            => !empty($request->fblink) ? $request->fblink : "",
+            'website'           => !empty($request->website) ? $request->website : "",
+            'bkash_number'      => !empty($request->bkash_number) ? $request->bkash_number : "",
+            'bkash_fee'         => !empty($request->bkash_fee) ? $request->bkash_fee : "",
+            'nagad_fee'         => !empty($request->nagad_fee) ? $request->nagad_fee : "",
+            'rocket_number'     => !empty($request->rocket_number) ? $request->rocket_number : "",
+            'rocket_fee'        => !empty($request->rocket_fee) ? $request->rocket_fee : "",
+            'upay_number'       => !empty($request->upay_number) ? $request->upay_number : "",
+            'upay_fee'          => !empty($request->upay_fee) ? $request->upay_fee : "",
+            'wallet_balance'    => !empty($request->wallet_balance) ? $request->wallet_balance : "",
+            'shipping_fee'      => !empty($request->shipping_fee) ? $request->shipping_fee : "",
+            'vat_percentage'    => !empty($request->vat_percentage) ? $request->vat_percentage : "",
+        );
+        DB::table('setting')->where('id', 1)->update($data);
+
+        $response = [
+            'message' => 'Successfull',
+        ];
+        return response()->json($response);
+    }
+
+
+
+
+
     public function insertPayItem(Request $request)
     {
         $validator = Validator::make($request->all(), [

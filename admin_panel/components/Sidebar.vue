@@ -19,12 +19,7 @@
             </Nuxt-link>
         </li>
         <span v-if="user.role_id === 1">
-            <li>
-                <Nuxt-link to="/setting/pre-setting" href="javascript:;">
-                    <i class='bx bx-key'></i>
-                    <div class="menu-title">Pre Setting</div>
-                </Nuxt-link>
-            </li>
+            
             <li>
 
                 <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_30" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,80 +33,10 @@
                     <li>
                         <Nuxt-link to="/orders/order-list"><i class="bx bx-right-arrow-alt"></i>Orders</Nuxt-link>
                     </li>
-
-                    <!-- <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Seller Product</Nuxt-link>
-                    </li> -->
-                </ul>
-            </li>
-
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_31" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Sales</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_31" style="width:100%;">
                     <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>All Orders</Nuxt-link>
+                        <Nuxt-link to="/ecommarce/ticket-list"><i class="bx bx-right-arrow-alt"></i>Ticket History</Nuxt-link>
                     </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Inhouse orders</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Seller Orders</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Pickup- Point Order</Nuxt-link>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_32" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Delivery Boy</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_32" style="width:100%;">
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>All Delivery Boy</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Add Delivery Boy</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Payment Histories</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Collected Histories</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Cancel Request</Nuxt-link>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_33" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Refund</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_33" style="width:100%;">
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Refund Requests</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Approved Refunds</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i> Rejected Refunds</Nuxt-link>
-                    </li>
-
+ 
                 </ul>
             </li>
 
@@ -131,125 +56,7 @@
                 </ul>
             </li>
 
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_34" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Sellers</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_34" style="width:100%;">
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>All Sellers</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Payouts</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Payouts Request</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Seller Commission</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Seller Packages</Nuxt-link>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_34" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Reports</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_34" style="width:100%;">
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Sellers Producs Sales</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Products Stock </Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Products wishlist </Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Users Searches</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Commission History</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Wallet Recharge History</Nuxt-link>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_34" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Blog System</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_34" style="width:100%;">
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Category</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Posts</Nuxt-link>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_34" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Support</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_34" style="width:100%;">
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Ticket</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Product Conversations</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Product Queries</Nuxt-link>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="d-none">
-                <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_34" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-category"></i>
-                    <div class="menu-title">Affliate System</div>
-                </a>
-                <ul class="menu dropdown-menu" aria-labelledby="submenuDropdown_34" style="width:100%;">
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Affliate Configrations</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Affliate Users</Nuxt-link>
-                    </li>
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Referral Users</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Affliate Withdraw Requests</Nuxt-link>
-                    </li>
-
-                    <li>
-                        <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Affiliate Logs</Nuxt-link>
-                    </li>
-
-                </ul>
-            </li>
-
+            
             <li>
                 <a href="#" class="has-arrow nav-link dropdown-toggle" id="submenuDropdown_30" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bx bx-category"></i>
@@ -272,6 +79,10 @@
                     <li>
                         <Nuxt-link to="/sliders/sliders-list"><i class="bx bx-right-arrow-alt"></i>Sliders</Nuxt-link>
                     </li>
+                    <li>
+                        <Nuxt-link to="/setting/pre-setting"><i class="bx bx-right-arrow-alt"></i>Pre Setting</Nuxt-link>
+                    </li>
+                   
                 </ul>
             </li>
             <li>

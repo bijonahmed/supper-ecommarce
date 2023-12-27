@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\ProductAttributeValue;
 use App\Models\ProductVarrientHistory;
 use App\Models\Categorys;
+use App\Models\TicketHistory;
 use App\Models\ProductAttributes;
 use App\Models\ProductCategory;
 use App\Models\Product;
@@ -24,6 +25,7 @@ use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use DB;
+use PHPUnit\Framework\Attributes\Ticket;
 
 class ProductController extends Controller
 {
@@ -39,7 +41,7 @@ class ProductController extends Controller
     public function productUpdate(Request $request)
     {
 
-        // dd($request->all());
+
         $validator = Validator::make($request->all(), [
             'name'           => 'required',
             //  'category'       => 'required',
@@ -65,7 +67,7 @@ class ProductController extends Controller
             'cash_dev_status'            => !empty($request->cash_dev_status) ? $request->cash_dev_status : "",
             'price'                      => !empty($request->price) ? $request->price : 0,
             'unit'                       => !empty($request->unit) ? $request->unit : "",
-            'stock_qty'                  => !empty($request->stock_qty) ? $request->stock_qty : "",
+            // 'stock_qty'                  => !empty($request->stock_qty) ? $request->stock_qty : "",
             'stock_mini_qty'             => !empty($request->stock_mini_qty) ? $request->stock_mini_qty : 0,
             'stock_status'               => !empty($request->stock_status) ? $request->stock_status : "",
             'manufacturer'               => !empty($request->manufacturer) ? $request->manufacturer : "",
@@ -86,8 +88,32 @@ class ProductController extends Controller
             'entry_by'                   => $this->userid
         );
 
-        //start additional product 
 
+        //insert ticket (category=27) 
+        $categoryId =  (int) $request->category_id;
+        $chkPoint = TicketHistory::where('product_id', $product_id)->first();
+        //dd($chkPoint);
+
+        if ($categoryId == 27) {
+            if (empty($chkPoint)) {
+                $stockQty = $request->stock_qty;
+                $maxValue = TicketHistory::max('id');
+                $counter = ($maxValue) ? (int) $maxValue : 0;
+                for ($i = 0; $i < $stockQty; $i++) {
+                    $counter++;
+                    $formattedNumber = sprintf('%09d', $counter);
+                    TicketHistory::create([
+                        'product_id' => $product_id,
+                        'status' => 1,
+                        'ticket_number' => $formattedNumber, // Example of generating a random number between 1000 and 9999
+                    ]);
+                }
+            }
+        } else {
+            $data['stock_qty']  = !empty($request->stock_qty) ? $request->stock_qty : "";
+        }
+
+        //start additional product 
         $chk = AdditionalProducts::where('product_id', $product_id)->first();
         if (empty($chk)) {
             //start additional product 
@@ -219,6 +245,8 @@ class ProductController extends Controller
             'entry_by'                   => $this->userid
         );
 
+
+
         // dd($data);
         if (!empty($request->file('files'))) {
             $files = $request->file('files');
@@ -262,6 +290,25 @@ class ProductController extends Controller
                 DB::table('produc_img_history')->insert($img_data);
             }
         }
+
+        //insert ticket (category=27) ----
+        $categoryId =  (int) $request->category;
+        if ($categoryId == 27) {
+            $stockQty = $request->stock_qty;
+            $maxValue = TicketHistory::max('id');
+            $counter = ($maxValue) ? (int) $maxValue : 0;
+            for ($i = 0; $i < $stockQty; $i++) {
+                $counter++;
+                $formattedNumber = sprintf('%09d', $counter);
+                TicketHistory::create([
+                    'product_id' => $product_id,
+                    'status' => 1,
+                    'ticket_number' => $formattedNumber, // Example of generating a random number between 1000 and 9999
+                ]);
+            }
+        }
+
+
         //INSERT MULTIPLE CATEGORY
         $category     = $request->category;
         $dynamicArray = explode(',', $category); // Convert the string to an array
@@ -496,7 +543,9 @@ class ProductController extends Controller
     public function productrow($id)
     {
 
+        $category_row      = ProductCategory::where('product_id', $id)->first();
         $produCategory     = ProductCategory::where('product_id', $id)->get();
+        $ticketHistory     = TicketHistory::where('product_id', $id)->get();
         $additionalProduct = AdditionalProducts::where('product_id', $id)
             ->select('product.name as product_name', 'additional_product.referrance_product_id', 'additional_product.add_product_qty', 'additional_product.add_product_price', 'additional_product.final_price')
             ->join('product', 'product.id', '=', 'additional_product.referrance_product_id')->first();
@@ -526,12 +575,40 @@ class ProductController extends Controller
         $responseData['productImg']        = !empty($prodImages) ? url($prodImages->thumnail_img) : "";
         $responseData['product']           = Product::where('product.id', $id)->first();
         //dd($responseData['product']);
-        $responseData['product_cat']       = $resulting_string;
-        $responseData['product_edit_cat']  = $show_edit_cat;
-        $responseData['product_imgs']      = $addiImg;
+        $responseData['product_cat']        = $resulting_string;
+        $responseData['product_edit_cat']   = $show_edit_cat;
+        $responseData['product_imgs']       = $addiImg;
         $responseData['product_additional'] = $additionalProduct;
-        //dd($responseData);
+        $responseData['category_id']        = $category_row->category_id;
+        $responseData['ticketHistory']      = $ticketHistory;
+        //dd($responseData['ticketHistory']);
         return response()->json($responseData);
+    }
+
+
+    public function getTicketList()
+    {
+
+        $data = TicketHistory::orderBy('id', 'desc')
+            ->select('ticket_history.id','ticket_history.product_id', 'product.name', 'ticket_history.ticket_number', 'ticket_history.orderId', 'ticket_history.status','ticket_history.customer_id','ticket_history.orderDate')
+            ->join('product', 'product.id', '=', 'ticket_history.product_id')
+            ->get();
+
+        $formatedData = [];
+        foreach ($data as $Key => $value) {
+            $formatedData[] = [
+                'id'               => $value->id,
+                'product_id'       => $value->product_id,
+                'name'             => $value->name,
+                'ticket_number'    => $value->ticket_number,
+                'orderId'         => $value->orderId,
+                'status'           => $value->status,
+                'customer_id'      => $value->customer_id,
+                'orderDate'        => $value->orderDate,
+            ];
+        }
+        //dd($formatedData);
+        return response()->json($formatedData);
     }
 
     public function getProductList()
@@ -544,7 +621,7 @@ class ProductController extends Controller
         $collection = collect($data);
         $groupedCollection = $collection->groupBy('id');
         $modifiedCollection = $groupedCollection->map(function ($group) {
-        $firstItem = $group->first();
+            $firstItem = $group->first();
 
             return [
                 'id'         => $firstItem['id'],

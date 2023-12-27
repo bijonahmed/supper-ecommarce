@@ -28,181 +28,208 @@
                             <div class="border p-4 rounded">
                                 <div class="card">
 
-                                    <table class="table table-bordered w-100">
-                                        <tr>
-                                            <td width="21%">Product Name</td>
-                                            <td width="1%"><strong>:</strong></td>
-                                            <td width="78%">{{ productData.name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Meta Tag Title</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.meta_title }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Meta Tag Description</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.meta_description }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Meta Tag Keywords</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.meta_keyword }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Product Tags</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.product_tag }}</td>
-                                        </tr>
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <table class="table table-bordered w-100">
+                                                <tr>
+                                                    <td width="21%">Product Name</td>
+                                                    <td width="1%"><strong>:</strong></td>
+                                                    <td width="78%">{{ productData.name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Meta Tag Title</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.meta_title }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Meta Tag Description</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.meta_description }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Meta Tag Keywords</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.meta_keyword }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Product Tags</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.product_tag }}</td>
+                                                </tr>
 
-                                        <tr>
-                                            <td colspan="3">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brand</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.brand_name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>SKU</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.sku }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>External Link</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.external_link }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Description</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <div class="pro_description marleft"></div>
+                                                <tr>
+                                                    <td colspan="3">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Brand</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.brand_name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>SKU</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.sku }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>External Link</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.external_link }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Description</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <div class="pro_description marleft"></div>
 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Price</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.price }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Unit</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.unit }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Discount</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.discount }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Quantity</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.stock_qty }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Stock Minimum Quantity</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.stock_mini_qty }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Out Of Stock Status</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <span v-if="productData.stock_status === 1" class="marleft">2-3 Days</span>
-                                                <span v-if="productData.stock_status === 2" class="marleft">In Stock</span>
-                                                <span v-if="productData.stock_status === 3" class="marleft">Out Of Stock</span>
-                                                <span v-if="productData.stock_status === 4" class="marleft">Pre-Order</span>
-                                                <span v-if="productData.stock_status === 5" class="marleft">Others</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Free Shipping</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <div v-if="productData.free_shopping === 0" class="marleft">No</div>
-                                                <div v-if="productData.free_shopping === 1" class="marleft">Yes</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Flat Rate</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <div v-if="productData.flat_rate_status === 0" class="marleft">No</div>
-                                                <div v-if="productData.flat_rate_status === 1" class="marleft">Yes</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Shipping Days</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.shipping_days }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Vat</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.vat }} </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Vat Status</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <div v-if="productData.vat_status === 0" class="marleft">No</div>
-                                                <div v-if="productData.vat_status === 1" class="marleft">Yes</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tax</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.tax }} </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tax Status</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <div v-if="productData.tax_status === 0" class="marleft">No</div>
-                                                <div v-if="productData.tax_status === 1" class="marleft">Yes</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Price</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.price }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Unit</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.unit }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Discount</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.discount }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Quantity</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.stock_qty }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Stock Minimum Quantity</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.stock_mini_qty }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Out Of Stock Status</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <span v-if="productData.stock_status === 1" class="marleft">2-3 Days</span>
+                                                        <span v-if="productData.stock_status === 2" class="marleft">In Stock</span>
+                                                        <span v-if="productData.stock_status === 3" class="marleft">Out Of Stock</span>
+                                                        <span v-if="productData.stock_status === 4" class="marleft">Pre-Order</span>
+                                                        <span v-if="productData.stock_status === 5" class="marleft">Others</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Free Shipping</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <div v-if="productData.free_shopping === 0" class="marleft">No</div>
+                                                        <div v-if="productData.free_shopping === 1" class="marleft">Yes</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Flat Rate</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <div v-if="productData.flat_rate_status === 0" class="marleft">No</div>
+                                                        <div v-if="productData.flat_rate_status === 1" class="marleft">Yes</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Shipping Days</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.shipping_days }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Vat</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.vat }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Vat Status</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <div v-if="productData.vat_status === 0" class="marleft">No</div>
+                                                        <div v-if="productData.vat_status === 1" class="marleft">Yes</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tax</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.tax }} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tax Status</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <div v-if="productData.tax_status === 0" class="marleft">No</div>
+                                                        <div v-if="productData.tax_status === 1" class="marleft">Yes</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
 
-                                        <tr>
-                                            <td>Manufacturer</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.manufacturer }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Categories</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <div class="output-container">
-                                                    <span class="show_categorys"></span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Download Link</td>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ productData.download_link }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Status</td>
-                                            <td><strong>:</strong></td>
-                                            <td>
-                                                <div v-if="productData.status === 0" class="marleft">Draft</div>
-                                                <div v-if="productData.status === 1" class="marleft">Publish</div>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                                <tr>
+                                                    <td>Manufacturer</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.manufacturer }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Categories</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <div class="output-container">
+                                                            <span class="show_categorys"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Download Link</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>{{ productData.download_link }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td><strong>:</strong></td>
+                                                    <td>
+                                                        <div v-if="productData.status === 0" class="marleft">Draft</div>
+                                                        <div v-if="productData.status === 1" class="marleft">Publish</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-5" v-if="productData.category_id == 27">
+                                            <div class="scrollable-container">
+                                                <p>Total Tickets: {{ ticketHistory.length }}</p>
+                                                <table class="w-100" border="1">
+                                                    <tr>
+                                                        <td width="15%">#</td>
+                                                        <td width="70%">TIcket Number </td>
+                                                        <td width="15%">Status</td>
+                                                    </tr>
+                                                    <tr v-for="(data, index) in ticketHistory" :key="index">
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td>{{ data.ticket_number }}</td>
+                                                        <td>
+                                                            <div v-if="data.status === 0" class="marleft">Inactive</div>
+                                                            <div v-if="data.status === 1" class="marleft">Active</div>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -255,6 +282,7 @@ export default {
                 name: '',
                 description: '',
                 meta_title: '',
+                category_id: '',
                 meta_description: '',
                 meta_keyword: '',
                 description: '',
@@ -263,6 +291,7 @@ export default {
                 product_tag: '',
                 discount: '',
                 sku: '',
+                category_id: '',
                 brand_name: '',
                 external_link: '',
                 price: '',
@@ -282,6 +311,7 @@ export default {
                 download_link: '',
 
             },
+            ticketHistory: [],
             product_cat: [],
             arr_his_val: [],
             selectedItem: [],
@@ -324,8 +354,9 @@ export default {
         productDetails() {
             let product_id = this.$route.query.parameter;
             this.$axios.get(`/product/productrow/${product_id}`).then(response => {
-                //console.log("product row:" + response.data);
+                console.log("product row:" + response.data.category_id);
                 this.productData.name = response.data.product.name;
+                this.productData.category_id = response.data.category_id;
                 this.productData.description = response.data.product.description;
                 this.productData.meta_title = response.data.product.meta_title;
                 this.productData.meta_description = response.data.product.meta_description;
@@ -354,6 +385,7 @@ export default {
                 this.productData.download_link = response.data.product.download_link;
                 this.productImg = response.data.productImg;
                 this.productAddImgs = response.data.product_imgs;
+                this.ticketHistory = response.data.ticketHistory;
                 $(".show_categorys").html(response.data.product_cat)
                 // = response.data.product_cat;
                 console.log(`Product category ${response.data.product_cat}`);
@@ -366,6 +398,32 @@ export default {
 </script>
 
 <style scoped>
+.scrollable-container {
+    max-height: 400px;
+    /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    border: 1px solid #dddddd;
+    /* Optional: Add a border for styling */
+    padding: 8px;
+    /* Optional: Add padding for better appearance */
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
 .marleft {
     margin-left: -7px;
 }

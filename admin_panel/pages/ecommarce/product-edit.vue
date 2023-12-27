@@ -28,6 +28,7 @@
                             <div class="border p-4 rounded">
                                 <div class="card">
                                     <form @submit.prevent="saveData()" id="formrest" class="forms-sample" enctype="multipart/form-data">
+                                       
                                         <div class="card-body">
                                             <ul class="nav nav-pills mb-3" role="tablist">
                                                 <li class="nav-item" role="presentation">
@@ -457,6 +458,7 @@ export default {
             insertdata: {
                 referrance_product_id: '',
                 add_product_qty: '',
+                category_id: '',
                 add_product_price: '',
                 final_price: '',
                 id: '',
@@ -597,6 +599,7 @@ export default {
             // formData.append('images', this.images); //multiple
             formData.append('category', this.multi_categories);
             formData.append('name', this.insertdata.name);
+            formData.append('category_id', this.insertdata.category_id);
             formData.append('description', this.insertdata.description);
             formData.append('meta_title', this.insertdata.meta_title);
             formData.append('meta_description', this.insertdata.meta_description);
@@ -847,8 +850,9 @@ export default {
             let product_id = this.$route.query.parameter;
             //  alert(product_id);
             this.$axios.get(`/product/productrow/${product_id}`).then(response => {
-                //console.log("product row:" + response.data);
+                console.log("product row:" + response.data.category_id);
                 this.insertdata.id = response.data.product.id;
+                this.insertdata.category_id = response.data.category_id;
                 this.insertdata.name = response.data.product.name;
                 this.insertdata.description = response.data.product.description;
                 this.insertdata.meta_title = response.data.product.meta_title;
