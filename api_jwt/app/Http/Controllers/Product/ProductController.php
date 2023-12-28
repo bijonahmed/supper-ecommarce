@@ -245,8 +245,6 @@ class ProductController extends Controller
             'entry_by'                   => $this->userid
         );
 
-
-
         // dd($data);
         if (!empty($request->file('files'))) {
             $files = $request->file('files');
@@ -590,7 +588,7 @@ class ProductController extends Controller
     {
 
         $data = TicketHistory::orderBy('id', 'desc')
-            ->select('ticket_history.id','ticket_history.product_id', 'product.name', 'ticket_history.ticket_number', 'ticket_history.orderId', 'ticket_history.status','ticket_history.customer_id','ticket_history.orderDate')
+            ->select('ticket_history.id', 'ticket_history.product_id', 'product.name', 'ticket_history.ticket_number', 'ticket_history.orderId', 'ticket_history.status', 'ticket_history.customer_id', 'ticket_history.orderDate')
             ->join('product', 'product.id', '=', 'ticket_history.product_id')
             ->get();
 

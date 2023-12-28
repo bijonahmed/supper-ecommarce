@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Session;
 use App\Models\Order;
 use Validator;
+use App\Models\TicketHistory;
 use App\Models\OrderStatus;
 use App\Models\OrderHistory;
 use App\Models\WishList;
@@ -41,7 +42,6 @@ class OrderController extends Controller
         return response()->json($odata, 200);
     }
 
-
     public function paymenttype($id)
     {
         $name = "";
@@ -54,7 +54,7 @@ class OrderController extends Controller
         } elseif ($id === 5) {
             $name = "Upay";
         }
-            return $name; 
+        return $name;
     }
 
     public function orderStatusRow($id)
@@ -184,11 +184,52 @@ class OrderController extends Controller
         return response()->json($order, 200);
     }
 
-
     public function update_order_status(Request $request)
     {
+
+        $orderid = $request->orderId;
+        $ckhOrder = Order::where('orderId', $orderid)->select('id')->first();
+        $chkpoint = OrderHistory::join('produc_categories', 'produc_categories.product_id', '=', 'order_history.product_id')
+            ->select('order_history.quantity', 'order_history.product_id', 'produc_categories.category_id')
+            ->where('order_id', $ckhOrder->id)
+            ->get();
+
+        $result = [];
+        foreach ($chkpoint as $v) {
+            $category_id = $v->category_id;
+            if ($category_id == 27) {
+                $quantity = $v->quantity;
+                $orderid = $orderid;
+                $product_id = $v->product_id;
+                $chkPointTicket =  TicketHistory::where('product_id', $product_id)->whereNull('orderId')->limit($quantity)->get();
+                $result[] = $chkPointTicket;
+            }
+        }
+
+        $toUpdate = [];
+        foreach ($result as $collection) {
+            foreach ($collection as $record) {
+                $chk = TicketHistory::where('orderId', $orderid)->select('orderId')->get();
+                // If there are no records with the specified orderId, add to the update array
+                if ($chk->isEmpty()) {
+                    $data['orderid']  = $orderid;
+                    $data['quantity'] = 1;
+
+                    $toUpdate[] = [
+                        'id' => $record->id,
+                        'data' => $data,
+                    ];
+                }
+            }
+        }
+        // Perform the update outside the loop
+        foreach ($toUpdate as $update) {
+            TicketHistory::where('id', $update['id'])
+                ->update($update['data']);
+        }
         $data['order_status'] = $request->orderstatus;
         Order::where('orderId', $request->orderId)->update($data);
+
         return response()->json("update successfully", 200);
     }
     public function orderDetails($order_id)
@@ -198,9 +239,8 @@ class OrderController extends Controller
         $findorder       = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')->select('orders.*', 'order_status.name as orderstatus', 'order_status.id as orderstatus_id')->where('orderId', $order_id)->first();
         $data['orders']  = OrderHistory::join('product', 'product.id', '=', 'order_history.product_id')
             ->select('product.name as product_name', 'product.thumnail_img', 'order_history.*')
-          //  ->groupBy('order_history.order_id')
+            //  ->groupBy('order_history.order_id')
             ->where('order_id', $findorder->id)->get();
-
 
         foreach ($data['orders'] as $v) {
             $orders[] = [
@@ -212,7 +252,7 @@ class OrderController extends Controller
             ];
         }
 
-       // dd($orders);
+        // dd($orders);
 
         $findCustomer = User::where('id', $findorder->customer_id)->first();
         $order['customername']  = !empty($findCustomer->name) ? $findCustomer->name : "";
@@ -220,6 +260,7 @@ class OrderController extends Controller
         $order['orderdata']     = $orders;
         $order['orderrow']      = !empty($findorder->orderstatus) ? $findorder->orderstatus : "";
         $order['orderstatus_id'] = !empty($findorder->orderstatus_id) ? $findorder->orderstatus_id : "";
+        $order['subtotal'] = !empty($findorder->subtotal) ? $findorder->subtotal : "";
         $order['OrderStatus']   = $orderStatus;
         //dd($data['orderStatus']);
         return response()->json($order, 200);
@@ -247,12 +288,12 @@ class OrderController extends Controller
         return response()->json($order, 200);
     }
 
-
     public function allOrdersAdmin()
     {
 
         $data['orders']  = Order::join('order_status', 'orders.order_status', '=', 'order_status.id')
             ->select('orders.*', 'order_status.name')
+            ->orderBy('orders.id', 'DESC')
             ->get(); //Order::where('customer_id', $this->userid)->get();
         foreach ($data['orders'] as $v) {
             $orders[] = [

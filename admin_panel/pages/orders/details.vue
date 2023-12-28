@@ -77,17 +77,12 @@
                                     <tr>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
-                                        <td>
+                                        <td colspan="3">
                                             <div align="right">Total</div>
                                         </td>
+                                      
                                         <td>
-                                            <div align="center">{{ totalQuantity }}</div>
-                                        </td>
-                                        <td>
-                                            <div align="center">{{ totalAmount }}</div>
-                                        </td>
-                                        <td>
-                                            <div align="center">{{ totalAmount }}</div>
+                                            <div align="center">{{ subtotal }}</div>
                                         </td>
                                     </tr>
                                 </table>
@@ -129,6 +124,7 @@ export default {
 
     data() {
         return {
+            subtotal:'',
             orderstatus: '',
             orderid: '',
             customername: '',
@@ -195,6 +191,7 @@ export default {
                     this.customername = response.data.customername;
                     this.customeremail = response.data.customeremail;
                     this.order_status = response.data.OrderStatus; 
+                    this.subtotal = response.data.subtotal; 
                     this.insertdata.orderstatus = response.data.orderstatus_id; 
                    // $(".orderstatus").html(1);
                 })

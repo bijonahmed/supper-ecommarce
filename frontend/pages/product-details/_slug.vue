@@ -30,7 +30,7 @@
                             <h2 class="mb-2" v-if="category_id !== 27">You will get a Lottery Ticket for free </h2>
 
                             <div class="d-flex justify-content-between align-items-center" v-if="category_id !== 27">
-
+                            
                                 <div class="custom-select">
                                     <select name="choose_size" v-model="choose_size">
                                         <option value="">Size</option>
@@ -49,7 +49,7 @@
                                 <div class="custom-select">
                                     <select v-model="ticket_qty" @change="updatePrice">
                                         <option value="">Select</option>
-                                        <option v-for="number in 150" :key="number">{{ number }}</option>
+                                        <option v-for="(qty, index) in pro_row.stock_qty" :key="index">{{ qty }}</option>
                                     </select>
                                     <span class="custom-arrow"></span>
                                 </div>
@@ -133,6 +133,7 @@ export default {
             pro_row: [],
             prodAttr: [],
             ticket_qty: '',
+            stock_qty:'',
             pro_row: {
                 price: 0, // Initial price
             },
@@ -274,12 +275,12 @@ export default {
         async fetchData() {
             const prosulg = this.$route.params.slug;
             const response = await this.$axios.get(`/unauthenticate/productSlug/${prosulg}`);
-            //console.log("----" +  response.data.additional.addi_description);
+            console.log("----" +  response.data.pro_row.stock_qty);
             this.slider_img = response.data.slider_img;
             this.prodAttr = response.data.prodAttr;
             this.pro_row = response.data.pro_row;
             this.category_id = response.data.category_id;
-
+            this.stock_qty = response.data.pro_row.stock_qty;
             this.addi_pname = response.data.additional.addi_pname;
             this.addi_thumnail = response.data.additional.addi_thumnail;
             this.addi_product_price = response.data.additional.addi_product_price;
