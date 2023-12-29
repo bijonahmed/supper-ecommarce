@@ -19,98 +19,163 @@
             </div>
             <!--end breadcrumb-->
             <!-- <span class="loader"></span> -->
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control name" placeholder="Ticket Number" v-model="searchQuery.ticket_number" @input="handleSearch">
-                            </div>
-                        </div>
 
-                        <div class="col-md-4">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control name" placeholder="Product Name" v-model="searchQuery.name" @input="handleSearch">
-                            </div>
-                        </div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">All Ticket's</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" @click="fetchtickets">Tickets Selling History</button>
+                </li>
 
-                        <div class="col-md-2">
-                            <div class="input-group mb-3">
-                                <select class="form-select form-select-solid status" v-model="searchQuery.status" @change="handleSearch">
-                                    <option value="">All Status</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="input-group mb-3">
-                                <button class="btn btn-primary w-100" type="button" @click="fetchData">Search</button>
-                            </div>
-                        </div>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                    </div>
-                    <div style="display: none;" class="customerSpinner">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                    <!-- Start  -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control name" placeholder="Order ID..." v-model="searchQuery.orderId" @input="handleSearch">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control name" placeholder="Ticket Number" v-model="searchQuery.ticket_number" @input="handleSearch">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control name" placeholder="Product Name" v-model="searchQuery.name" @input="handleSearch">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="input-group mb-3">
+                                        <select class="form-select form-select-solid status" v-model="searchQuery.status" @change="handleSearch">
+                                            <option value="">All Status</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group mb-3">
+                                        <button class="btn btn-primary w-100" type="button" @click="fetchData">Search</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div style="display: none;" class="customerSpinner">
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>SL#</th>
+                                            <th>Ticket Number</th>
+                                            <th class="text-center">Product Name</th>
+                                            <th class="text-center">Order ID</th>
+                                            <th class="text-center">Order Date</th>
+                                            <th class="text-center">Customer ID</th>
+                                            <th class="text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in paginatedData" :key="item.id">
+                                            <td>
+                                                {{ (currentPage - 1) * perPage + index + 1 }}
+                                            </td>
+                                            <td>{{ item.ticket_number }}</td>
+
+                                            <td>
+                                                <center>{{ item.name }}</center>
+                                            </td>
+                                            <td>
+                                                <center>{{ item.orderId }}</center>
+                                            </td>
+                                            <td>
+                                                <center>{{ item.orderDate }}</center>
+                                            </td>
+                                            <td>
+                                                <center>{{ item.customer_id }}</center>
+                                            </td>
+                                            <td class="text-center">
+                                                <span v-if="(item.status == 1)"> Active </span>
+                                                <span v-else> Inactive </span>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagenation">
+                                <div style="text-align: right;">
+                                    <button @click="previousPage" :disabled="currentPage === 1" class="btn btn-primary btn-sm">
+                                        <center><i class="lni lni-angle-double-left"></i></center>
+                                    </button>
+                                    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                                    <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-primary btn-sm">
+                                        <center><i class="lni lni-angle-double-right"></i></center>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    <th>SL#</th>
-                                    <th>Ticket Number</th>
-                                    <th class="text-center">Product Name</th>
-                                    <th class="text-center">Order ID</th>
-                                    <th class="text-center">Order Date</th>
-                                    <th class="text-center">Customer ID</th>
-                                    <th class="text-center">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(item, index) in paginatedData" :key="item.id">
-                                    <td>
-                                        {{ (currentPage - 1) * perPage + index + 1 }}
-                                    </td>
-                                    <td>{{ item.ticket_number }}</td>
+                    <!-- END -->
 
-                                    <td>
-                                        <center>{{ item.name }}</center>
-                                    </td>
-                                    <td>
-                                        <center>{{ item.orderId }}</center>
-                                    </td>
-                                    <td>
-                                        <center>{{ item.orderDate }}</center>
-                                    </td>
-                                    <td>
-                                        <center>{{ item.customer_id }}</center>
-                                    </td>
-                                    <td class="text-center">
-                                        <span v-if="(item.status == 1)"> Active </span>
-                                        <span v-else> Inactive </span>
-                                    </td>
-                                    
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="pagenation">
-                        <div style="text-align: right;">
-                            <button @click="previousPage" :disabled="currentPage === 1" class="btn btn-primary btn-sm">
-                                <center><i class="lni lni-angle-double-left"></i></center>
-                            </button>
-                            <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                            <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-primary btn-sm">
-                                <center><i class="lni lni-angle-double-right"></i></center>
-                            </button>
-                        </div>
-                    </div>
                 </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                    <!-- start  -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-lg" border="1">
+                                        <thead>
+                                            <tr>
+                                                <th width="4%">SL #</th>
+                                                <th width="69%">Ticket Name</th>
+                                                <th width="8%">Total Tickets</th>
+                                                <th width="8%">Total Selling</th>
+                                                <th width="11%">Current Stock</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(ticket, index) in tickets" :key="index">
+                                                <td>{{ index + 1 }}</td>
+                                                <td>{{ ticket.name }}</td>
+                                                <td style="font-size: 15px; color:blue;">
+                                                    <div align="center"><b>{{ ticket.total_tickets }}</b></div>
+                                                </td>
+                                                <td style="font-size: 15px; color:rgb(1, 4, 8);">
+                                                    <div align="center"><b>{{ ticket.total_selling }}</b></div>
+                                                </td>
+                                                <td style="font-size: 15px; color:rgb(88, 1, 1);">
+                                                    <div align="center"><b>{{ ticket.current_stock }}</b></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END -->
+
+                </div>
+
             </div>
+
         </div>
     </div>
 
@@ -126,6 +191,7 @@ export default {
     },
     data() {
         return {
+            tickets: [],
             insertdata: {
                 id: '',
                 name: '',
@@ -137,6 +203,7 @@ export default {
             data: [],
             categries: [],
             searchQuery: {
+                orderId: '',
                 ticket_number: '',
                 name: '',
                 category_id: '',
@@ -144,12 +211,13 @@ export default {
             },
             searchQueryPhone: '',
             currentPage: 1,
-            perPage: 100, // Number of items per page
+            perPage: 150, // Number of items per page
         };
     },
     async mounted() {
         await this.fetchData();
         await this.fetchCategoryData();
+        await this.fetchtickets();
     },
     computed: {
 
@@ -167,6 +235,12 @@ export default {
             if (this.searchQuery.category_id) {
                 result = result.filter(item =>
                     item.category_id == this.searchQuery.category_id
+                );
+            }
+
+            if (this.searchQuery.orderId) {
+                result = result.filter(item =>
+                    item.orderId == this.searchQuery.orderId
                 );
             }
 
@@ -191,7 +265,11 @@ export default {
 
     },
     methods: {
-
+        async fetchtickets() {
+            // Fetch data from the Laravel API
+            const response = await this.$axios.get('/product/summary-report-tickets'); // Update the endpoint accordingly
+            this.tickets = response.data;
+        },
         preview(id) {
             this.$router.push({
                 path: '/ecommarce/product-preview',

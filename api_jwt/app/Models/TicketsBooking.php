@@ -14,6 +14,6 @@ class TicketsBooking extends Authenticatable
   use HasApiTokens, HasFactory, Notifiable;
   public $table = "tickets_booking";
   protected $fillable = [
-    'ticket_history_id', 'orderId', 'order_date'
+    'ticket_number','ticket_history_id', 'orderId', 'category_id','product_id','orderDate','customer_id','approved_date'
   ];
 }

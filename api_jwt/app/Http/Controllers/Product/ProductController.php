@@ -41,7 +41,6 @@ class ProductController extends Controller
     public function productUpdate(Request $request)
     {
 
-
         $validator = Validator::make($request->all(), [
             'name'           => 'required',
             //  'category'       => 'required',
@@ -87,7 +86,6 @@ class ProductController extends Controller
             'status'                     => 1, //!empty($request->status) ? $request->status : "",
             'entry_by'                   => $this->userid
         );
-
 
         //insert ticket (category=27) 
         $categoryId =  (int) $request->category_id;
@@ -305,7 +303,6 @@ class ProductController extends Controller
                 ]);
             }
         }
-
 
         //INSERT MULTIPLE CATEGORY
         $category     = $request->category;
@@ -583,7 +580,6 @@ class ProductController extends Controller
         return response()->json($responseData);
     }
 
-
     public function getTicketList()
     {
 
@@ -653,5 +649,38 @@ class ProductController extends Controller
         $query = $request->input('query');
         $suggestions = Product::where('name', 'like', '%' . $query . '%')->get(['id', 'name', 'stock_qty', 'price']);
         return response()->json($suggestions);
+    }
+
+    public function summaryReportTickets()
+    {
+
+        $data = ProductCategory::orderBy('product.id', 'desc')
+            ->select(
+                'product.id',
+                'product.name',
+                'produc_categories.category_id',
+            )
+            ->join('product', 'product.id', '=', 'produc_categories.product_id')
+            ->leftJoin('ticket_history', 'ticket_history.product_id', '=', 'product.id')
+            ->where('produc_categories.category_id', 27)
+            ->groupBy('product.id', 'product.name', 'produc_categories.category_id')
+            ->get();
+
+        $formattedData = [];
+        foreach ($data as $key => $value) {
+            $total_tickets  = TicketHistory::where('product_id', $value->id)->count();
+            $total_selling  = TicketHistory::where('product_id', $value->id)->whereNotNull('orderId')->count();
+            $current_stock  = ($total_tickets - $total_selling);
+            $formattedData[] = [
+                'id'               => $value->id,
+                'name'             => $value->name,
+                'category_id'      => $value->category_id,
+                'total_tickets'    => $total_tickets,
+                'total_selling'    => $total_selling,
+                'current_stock'    => $current_stock,
+            ];
+        }
+        //dd($formattedData);
+        return response()->json($formattedData);
     }
 }

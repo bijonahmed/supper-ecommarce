@@ -202,7 +202,7 @@ class OrderController extends Controller
             $pcategory = ProductCategory::where('product_id', $v->product_id)->first();
             $category_id = $pcategory->category_id;
             $quantity = $v->quantity;
-        
+
             if ($category_id == 27) {
                 $product_id = $v->product_id;
                 $chkPointTickets = TicketHistory::where('product_id', $product_id)
@@ -218,53 +218,31 @@ class OrderController extends Controller
                     ->limit($addi_quantity)
                     ->get();
             }
-        
+
+            $data = [];
             foreach ($chkPointTickets as $tChkPoint) {
+                $existingRecord = TicketHistory::where('orderId', $orderid)->where('category_id', $category_id)->first();
 
-                $data['orderId'] = $orderid;
-                $data['category_id'] = $category_id;
-                $data['product_id'] = $product_id;  
-                $data['orderDate'] =  date("Y-m-d",strtotime($ckhOrder->created_at));
-                $data['customer_id'] = $ckhOrder->customer_id;  
-                // Increment the total quantity
-                $totalQty++;
-                TicketHistory::where('id', $tChkPoint->id)->update($data);
-                //TicketHistory::where('id', $tChkPoint->id)->update(['orderId' => $orderid]);
-            }
-        }
-        
-        // Now $totalQty contains the total number of records inserted
-        echo "Total Records Inserted: $totalQty";
-        
-
-
-        
-
-
-
-     
-        exit;
-        $data = [];
-        foreach ($totalQty as $v) {
-            foreach ($v as $record) {
-                $chkpost = TicketsBooking::where('orderId', $orderid)->first();
-                if (empty($chkpost)) {
-                    $data[] = [
-                        'ticket_history_id' => $record->id,
-                        'orderId'           => $orderid,
-                        // Add other columns and values as needed
-                    ];
+                if (empty($existingRecord)) {
+                    $data['orderId']       = $orderid;
+                    $data['category_id']   = $category_id;
+                    $data['product_id']    = $product_id;
+                    $data['orderDate']     = date("Y-m-d", strtotime($ckhOrder->created_at));
+                    $data['customer_id']   = $ckhOrder->customer_id;
+                    $data['approved_date'] = date("Y-m-d");
+                    //$data['ticket_history_id']   = $tChkPoint->id;
+                   
                 }
+
+                $totalQty++;
+                //TicketsBooking::insert($data);
+                TicketHistory::where('id', $tChkPoint->id)->update($data);
             }
         }
-        dd($data);
-        // Perform multiple inserts
-        DB::table('tickets_booking')->insert($data);
+               //echo "Total Records Inserted: $totalQty";
 
-        exit;
-
-        $data['order_status'] = $request->orderstatus;
-        Order::where('orderId', $request->orderId)->update($data);
+        $odata['order_status'] = $request->orderstatus;
+        Order::where('orderId', $request->orderId)->update($odata);
 
         return response()->json("update successfully", 200);
     }

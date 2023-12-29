@@ -155,6 +155,8 @@ Route::group([
     Route::get('getVarientHistory', [ProductController::class, 'getVarientHistory']);
     Route::get('removeProducts/{id}', [ProductController::class, 'removeProducts']);
     Route::get('productsearchAutocomplete', [ProductController::class, 'autocompleteSearch']);
+    Route::get('summary-report-tickets', [ProductController::class, 'summaryReportTickets']);
+    
 });
 
 Route::group([
