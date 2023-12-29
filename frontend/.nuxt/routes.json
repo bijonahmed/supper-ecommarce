@@ -3,210 +3,180 @@
     "name": "about",
     "path": "/about",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\about.vue",
-    "chunkName": "pages/about",
-    "_name": "_d0344366"
+    "chunkName": "pages/about"
   },
   {
     "name": "agreement",
     "path": "/agreement",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\agreement.vue",
-    "chunkName": "pages/agreement",
-    "_name": "_4ca8f24a"
+    "chunkName": "pages/agreement"
   },
   {
     "name": "cart",
     "path": "/cart",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\cart.vue",
-    "chunkName": "pages/cart",
-    "_name": "_537edbe0"
+    "chunkName": "pages/cart"
   },
   {
     "name": "contact",
     "path": "/contact",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\contact.vue",
-    "chunkName": "pages/contact",
-    "_name": "_38645360"
+    "chunkName": "pages/contact"
   },
   {
     "name": "faq",
     "path": "/faq",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\faq.vue",
-    "chunkName": "pages/faq",
-    "_name": "_f7323954"
+    "chunkName": "pages/faq"
   },
   {
     "name": "login",
     "path": "/login",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_fd7547ae"
+    "chunkName": "pages/login"
   },
   {
     "name": "offer",
     "path": "/offer",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\offer.vue",
-    "chunkName": "pages/offer",
-    "_name": "_5ba6d59c"
+    "chunkName": "pages/offer"
   },
   {
     "name": "payment",
     "path": "/payment",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\payment.vue",
-    "chunkName": "pages/payment",
-    "_name": "_4bb80374"
+    "chunkName": "pages/payment"
   },
   {
     "name": "privacy-policy",
     "path": "/privacy-policy",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\privacy-policy.vue",
-    "chunkName": "pages/privacy-policy",
-    "_name": "_15e31887"
+    "chunkName": "pages/privacy-policy"
   },
   {
     "name": "products",
     "path": "/products",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\products.vue",
-    "chunkName": "pages/products",
-    "_name": "_6fc18b58"
+    "chunkName": "pages/products"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\register.vue",
-    "chunkName": "pages/register",
-    "_name": "_24d0e013"
+    "chunkName": "pages/register"
   },
   {
     "name": "ticket",
     "path": "/ticket",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\ticket.vue",
-    "chunkName": "pages/ticket",
-    "_name": "_e2861408"
+    "chunkName": "pages/ticket"
   },
   {
     "name": "winners",
     "path": "/winners",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\winners.vue",
-    "chunkName": "pages/winners",
-    "_name": "_c333c558"
+    "chunkName": "pages/winners"
   },
   {
     "name": "user-message",
     "path": "/user/message",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\message.vue",
-    "chunkName": "pages/user/message",
-    "_name": "_01d93f48"
+    "chunkName": "pages/user/message"
   },
   {
     "name": "user-notification",
     "path": "/user/notification",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\notification.vue",
-    "chunkName": "pages/user/notification",
-    "_name": "_d439fa34"
+    "chunkName": "pages/user/notification"
   },
   {
     "name": "user-offer",
     "path": "/user/offer",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\offer.vue",
-    "chunkName": "pages/user/offer",
-    "_name": "_38c07371"
+    "chunkName": "pages/user/offer"
   },
   {
     "name": "user-order-details",
     "path": "/user/order-details",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\order-details.vue",
-    "chunkName": "pages/user/order-details",
-    "_name": "_410e2f58"
+    "chunkName": "pages/user/order-details"
   },
   {
     "name": "user-orderlist",
     "path": "/user/orderlist",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\orderlist.vue",
-    "chunkName": "pages/user/orderlist",
-    "_name": "_472c28fe"
+    "chunkName": "pages/user/orderlist"
   },
   {
     "name": "user-payment",
     "path": "/user/payment",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\payment.vue",
-    "chunkName": "pages/user/payment",
-    "_name": "_51650a4a"
+    "chunkName": "pages/user/payment"
   },
   {
     "name": "user-personal-details",
     "path": "/user/personal-details",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\personal-details.vue",
-    "chunkName": "pages/user/personal-details",
-    "_name": "_7c509730"
+    "chunkName": "pages/user/personal-details"
   },
   {
     "name": "user-profile",
     "path": "/user/profile",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\profile.vue",
-    "chunkName": "pages/user/profile",
-    "_name": "_3db548fe"
+    "chunkName": "pages/user/profile"
   },
   {
     "name": "user-settings",
     "path": "/user/settings",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\settings.vue",
-    "chunkName": "pages/user/settings",
-    "_name": "_527ac39e"
+    "chunkName": "pages/user/settings"
   },
   {
     "name": "user-thankyou",
     "path": "/user/thankyou",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\thankyou.vue",
-    "chunkName": "pages/user/thankyou",
-    "_name": "_bd934920"
+    "chunkName": "pages/user/thankyou"
   },
   {
     "name": "user-ticket",
     "path": "/user/ticket",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\ticket.vue",
-    "chunkName": "pages/user/ticket",
-    "_name": "_54d712c7"
+    "chunkName": "pages/user/ticket"
   },
   {
     "name": "user-wallet",
     "path": "/user/wallet",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\wallet.vue",
-    "chunkName": "pages/user/wallet",
-    "_name": "_6b60bd34"
+    "chunkName": "pages/user/wallet"
   },
   {
     "name": "user-wishlist",
     "path": "/user/wishlist",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\user\\\\wishlist.vue",
-    "chunkName": "pages/user/wishlist",
-    "_name": "_21021c40"
+    "chunkName": "pages/user/wishlist"
   },
   {
     "name": "index",
     "path": "/",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_90c48ddc"
+    "chunkName": "pages/index"
   },
   {
     "name": "categories-slug",
     "path": "/categories/:slug?",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\categories\\\\_slug.vue",
-    "chunkName": "pages/categories/_slug",
-    "_name": "_1d735ea4"
+    "chunkName": "pages/categories/_slug"
   },
   {
     "name": "order-slug",
     "path": "/order/:slug?",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\order\\\\_slug.vue",
-    "chunkName": "pages/order/_slug",
-    "_name": "_784ffdec"
+    "chunkName": "pages/order/_slug"
   },
   {
     "name": "product-details-slug",
     "path": "/product-details/:slug?",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\product-details\\\\_slug.vue",
-    "chunkName": "pages/product-details/_slug",
-    "_name": "_408f6a16"
+    "chunkName": "pages/product-details/_slug"
   }
 ]

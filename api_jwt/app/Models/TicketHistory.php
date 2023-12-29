@@ -11,7 +11,7 @@ class TicketHistory extends Model
     use HasFactory;
    
     public $table = "ticket_history";
-    protected $fillable = ['product_id', 'ticket_number',  'orderId', 'orderDate' ,'customer_id','quantity','status'];
+    protected $fillable = ['product_id', 'ticket_number',  'orderId', 'orderDate' ,'customer_id','qty','status'];
     
 }
 

@@ -144,7 +144,7 @@ export default {
             },
             searchQueryPhone: '',
             currentPage: 1,
-            perPage: 10, // Number of items per page
+            perPage: 100, // Number of items per page
         };
     },
     async mounted() {

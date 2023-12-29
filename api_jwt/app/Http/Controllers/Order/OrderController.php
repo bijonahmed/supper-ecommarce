@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdditionalProducts;
 use Illuminate\Http\Request;
 use App\Models\Product;
 //use Darryldecode\Cart\Cart;
@@ -12,8 +13,11 @@ use Validator;
 use App\Models\TicketHistory;
 use App\Models\OrderStatus;
 use App\Models\OrderHistory;
+use App\Models\ProductCategory;
 use App\Models\WishList;
 use App\Models\User;
+use App\Models\TicketsBooking;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -188,45 +192,77 @@ class OrderController extends Controller
     {
 
         $orderid = $request->orderId;
-        $ckhOrder = Order::where('orderId', $orderid)->select('id')->first();
-        $chkpoint = OrderHistory::join('produc_categories', 'produc_categories.product_id', '=', 'order_history.product_id')
-            ->select('order_history.quantity', 'order_history.product_id', 'produc_categories.category_id')
+        $ckhOrder = Order::where('orderId', $orderid)->first();
+        $chkpoint = OrderHistory::select('order_history.quantity', 'order_history.product_id')
             ->where('order_id', $ckhOrder->id)
             ->get();
 
-        $result = [];
+        $totalQty = 0;
         foreach ($chkpoint as $v) {
-            $category_id = $v->category_id;
+            $pcategory = ProductCategory::where('product_id', $v->product_id)->first();
+            $category_id = $pcategory->category_id;
+            $quantity = $v->quantity;
+        
             if ($category_id == 27) {
-                $quantity = $v->quantity;
-                $orderid = $orderid;
                 $product_id = $v->product_id;
-                $chkPointTicket =  TicketHistory::where('product_id', $product_id)->whereNull('orderId')->limit($quantity)->get();
-                $result[] = $chkPointTicket;
+                $chkPointTickets = TicketHistory::where('product_id', $product_id)
+                    ->whereNull('orderId')
+                    ->limit($quantity)
+                    ->get();
+            } else {
+                $additionalProduct = AdditionalProducts::where('product_id', $v->product_id)->first();
+                $addi_quantity = $additionalProduct->add_product_qty;
+                $product_id = $additionalProduct->referrance_product_id;
+                $chkPointTickets = TicketHistory::where('product_id', $product_id)
+                    ->whereNull('orderId')
+                    ->limit($addi_quantity)
+                    ->get();
+            }
+        
+            foreach ($chkPointTickets as $tChkPoint) {
+
+                $data['orderId'] = $orderid;
+                $data['category_id'] = $category_id;
+                $data['product_id'] = $product_id;  
+                $data['orderDate'] =  date("Y-m-d",strtotime($ckhOrder->created_at));
+                $data['customer_id'] = $ckhOrder->customer_id;  
+                // Increment the total quantity
+                $totalQty++;
+                TicketHistory::where('id', $tChkPoint->id)->update($data);
+                //TicketHistory::where('id', $tChkPoint->id)->update(['orderId' => $orderid]);
             }
         }
+        
+        // Now $totalQty contains the total number of records inserted
+        echo "Total Records Inserted: $totalQty";
+        
 
-        $toUpdate = [];
-        foreach ($result as $collection) {
-            foreach ($collection as $record) {
-                $chk = TicketHistory::where('orderId', $orderid)->select('orderId')->get();
-                // If there are no records with the specified orderId, add to the update array
-                if ($chk->isEmpty()) {
-                    $data['orderid']  = $orderid;
-                    $data['quantity'] = 1;
 
-                    $toUpdate[] = [
-                        'id' => $record->id,
-                        'data' => $data,
+        
+
+
+
+     
+        exit;
+        $data = [];
+        foreach ($totalQty as $v) {
+            foreach ($v as $record) {
+                $chkpost = TicketsBooking::where('orderId', $orderid)->first();
+                if (empty($chkpost)) {
+                    $data[] = [
+                        'ticket_history_id' => $record->id,
+                        'orderId'           => $orderid,
+                        // Add other columns and values as needed
                     ];
                 }
             }
         }
-        // Perform the update outside the loop
-        foreach ($toUpdate as $update) {
-            TicketHistory::where('id', $update['id'])
-                ->update($update['data']);
-        }
+        dd($data);
+        // Perform multiple inserts
+        DB::table('tickets_booking')->insert($data);
+
+        exit;
+
         $data['order_status'] = $request->orderstatus;
         Order::where('orderId', $request->orderId)->update($data);
 
