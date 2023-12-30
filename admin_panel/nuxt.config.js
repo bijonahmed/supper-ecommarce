@@ -94,7 +94,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
   baseURL: "http://127.0.0.1:8000/api",
- // baseURL: "https://api.winup360.com/api",
+  //baseURL: "https://api.winup360.com/api",
   },
   // router: {
   //   middleware: ['auth']

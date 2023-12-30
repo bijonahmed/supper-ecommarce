@@ -371,7 +371,11 @@
                                                     <div class="row mb-3">
                                                         <label for="input-meta-description-1" class="col-sm-3 col-form-label">Addtional Quantity</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" name="keyword" v-model="insertdata.add_product_qty" class="form-control" />
+                                                            <input type="text" name="keyword" autocomplete="off" v-model="insertdata.add_product_qty" @input="validateQty" class="form-control" />
+                                                            <div v-if="!isQtyValid">
+                                                                <!-- Display an error message or take other actions if the quantity is not valid -->
+                                                                Quantity must be less than {{insertdata.sqty}}.
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -471,9 +475,11 @@ export default {
                 vat_status: 1,
                 tax: 0,
                 tax_status: 1,
+                sqty: '',
                 images: '',
                 status: 1,
             },
+            isQtyValid: true,
             inputValue: '',
             previewUrl: null,
             images: [],
@@ -502,11 +508,21 @@ export default {
     },
 
     methods: {
+        validateQty() {
+            const qty = parseFloat(this.insertdata.add_product_qty);
+            if (!isNaN(qty) && qty > this.insertdata.sqty) {
+                this.insertdata.add_product_qty = "";
+                this.isQtyValid = false;
+            } else {
+                this.isQtyValid = true;
+            }
 
+        },
         handleItemClick(suggestion) {
             this.searchQuery = suggestion.name;
             this.insertdata.referrance_product_id = suggestion.id;
             this.insertdata.add_product_qty = suggestion.stock_qty;
+            this.insertdata.sqty = suggestion.stock_qty;
             this.insertdata.add_product_price = suggestion.price;
             this.suggestions = [];
 
@@ -596,17 +612,17 @@ export default {
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
-                   // if (img.width === 393 && img.height === 491) {
-                        const url = e.target.result;
-                        this.images.push({
-                            url,
-                            file
-                        });
-                   // } else {
-                      //  alert('Image dimensions must be 393x491 pixels.');
-                        this.$refs.images.value = ''; // Reset file input
-                        //this.$refs.files = '';
-                  //  }
+                    // if (img.width === 393 && img.height === 491) {
+                    const url = e.target.result;
+                    this.images.push({
+                        url,
+                        file
+                    });
+                    // } else {
+                    //  alert('Image dimensions must be 393x491 pixels.');
+                    this.$refs.images.value = ''; // Reset file input
+                    //this.$refs.files = '';
+                    //  }
                 };
             };
             reader.readAsDataURL(file);
@@ -627,10 +643,10 @@ export default {
                 img.src = e.target.result;
                 img.onload = () => {
                     //if (img.width === 393 && img.height === 491) {
-                        this.previewUrl = e.target.result;
-                  //  } else {
-                      //  alert('Image dimensions must be 393x491 pixels.');
-                  //  }
+                    this.previewUrl = e.target.result;
+                    //  } else {
+                    //  alert('Image dimensions must be 393x491 pixels.');
+                    //  }
                 };
             };
             reader.readAsDataURL(file);

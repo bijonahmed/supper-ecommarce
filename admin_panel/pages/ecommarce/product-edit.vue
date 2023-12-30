@@ -389,7 +389,11 @@
                                                             <div class="row mb-3">
                                                                 <label for="input-meta-description-1" class="col-sm-3 col-form-label">Addtional Quantity</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" name="keyword" v-model="insertdata.add_product_qty" class="form-control" />
+                                                                    <input type="text" name="keyword"  autocomplete="off"  v-model="insertdata.add_product_qty" @input="validateQty" class="form-control" />
+                                                                    <div v-if="!isQtyValid">
+                                                                <!-- Display an error message or take other actions if the quantity is not valid -->
+                                                                Quantity must be less than {{insertdata.sqty}}.
+                                                            </div>
                                                                 </div>
                                                             </div>
 
@@ -491,6 +495,7 @@ export default {
                 tax: '',
                 tax_status: '',
                 status: '',
+                sqty:'',
                 manufacturer: '',
                 download_link: '',
 
@@ -505,6 +510,7 @@ export default {
                 price: '',
                 file: ''
             }],
+            isQtyValid: true,
             arr_val: [],
             attributeslist: [],
             attrValList: [],
@@ -545,6 +551,16 @@ export default {
         CKEDITOR.replace('editor');
     },
     methods: {
+        validateQty() {
+            const qty = parseFloat(this.insertdata.add_product_qty);
+            if (!isNaN(qty) && qty > this.insertdata.sqty) {
+                this.insertdata.add_product_qty = "";
+                this.isQtyValid = false;
+            } else {
+                this.isQtyValid = true;
+            }
+
+        },
         async searchModels() {
             try {
                 const response = await this.$axios.get(`/brands/allbrandlist`);
@@ -838,6 +854,7 @@ export default {
             this.insertdata.referrance_product_id = suggestion.id;
             this.insertdata.add_product_qty = suggestion.stock_qty;
             this.insertdata.add_product_price = suggestion.price;
+            this.insertdata.sqty = suggestion.stock_qty;
             this.suggestions = [];
 
             //final price

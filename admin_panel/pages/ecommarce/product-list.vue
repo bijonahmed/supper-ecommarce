@@ -71,6 +71,7 @@
                                     <th>Title</th>
                                     <th class="text-center">Quantity</th>
                                     <th class="text-center">Total Sell</th>
+                                    <th class="text-center">Current Stock</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -87,6 +88,9 @@
                                     </td>
                                     <td>
                                         <center>{{ item.sell_qty }}</center>
+                                    </td>
+                                    <td>
+                                        <center>{{ item.currentstock }}</center>
                                     </td>
 
                                     <td class="text-center">

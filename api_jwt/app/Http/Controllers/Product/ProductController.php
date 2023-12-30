@@ -584,21 +584,24 @@ class ProductController extends Controller
     {
 
         $data = TicketHistory::orderBy('id', 'desc')
-            ->select('ticket_history.id', 'ticket_history.product_id', 'product.name', 'ticket_history.ticket_number', 'ticket_history.orderId', 'ticket_history.status', 'ticket_history.customer_id', 'ticket_history.orderDate')
+            ->select('ticket_history.id', 'ticket_history.product_id', 'product.name', 'ticket_history.ticket_number', 'ticket_history.orderId', 'ticket_history.status', 'ticket_history.customer_id', 'ticket_history.category_id', 'ticket_history.orderDate')
             ->join('product', 'product.id', '=', 'ticket_history.product_id')
+
             ->get();
 
         $formatedData = [];
         foreach ($data as $Key => $value) {
+            $category =  Category::where('category_id', $value->category_id)->first();
             $formatedData[] = [
                 'id'               => $value->id,
                 'product_id'       => $value->product_id,
                 'name'             => $value->name,
                 'ticket_number'    => $value->ticket_number,
-                'orderId'         => $value->orderId,
+                'orderId'          => $value->orderId,
                 'status'           => $value->status,
                 'customer_id'      => $value->customer_id,
                 'orderDate'        => $value->orderDate,
+                'category_name'    => $category->name,
             ];
         }
         //dd($formatedData);
@@ -615,13 +618,29 @@ class ProductController extends Controller
         $collection = collect($data);
         $groupedCollection = $collection->groupBy('id');
         $modifiedCollection = $groupedCollection->map(function ($group) {
+
             $firstItem = $group->first();
 
+            $total_tickets  = TicketHistory::where('product_id', $firstItem['id'])->count();
+            $total_selling  = TicketHistory::where('product_id', $firstItem['id'])->whereNotNull('orderId')->count();
+            $current_stock  = ($total_tickets - $total_selling);
+
+
+            if ($firstItem['category_id'] == 27) {
+                $tsell = !empty($total_selling) ? $total_selling : 0;
+                $cstock = $current_stock;
+            } else {
+                $tsell = "";
+                $cstock = "";
+            }
+
+
             return [
-                'id'         => $firstItem['id'],
+                'id'              => $firstItem['id'],
                 'name'       => substr($firstItem['name'], 0, 250),
-                'stock_qty'  => $firstItem['stock_qty'],
-                'sell_qty'   => $firstItem['sell_qty'],
+                'stock_qty'  => !empty($total_tickets) ? $total_tickets : "",
+                'sell_qty'   => $tsell,
+                'currentstock'   => $cstock,
                 'category_id' => $firstItem['category_id'],
                 'status'     => $firstItem['status'],
             ];
@@ -647,8 +666,13 @@ class ProductController extends Controller
     public function autocompleteSearch(Request $request)
     {
         $query = $request->input('query');
-        $suggestions = Product::where('name', 'like', '%' . $query . '%')->get(['id', 'name', 'stock_qty', 'price']);
-        return response()->json($suggestions);
+        $suggestions = Product::join('produc_categories', 'product.id', '=', 'produc_categories.product_id')
+            ->join('categorys', 'produc_categories.category_id', '=', 'categorys.id')
+            ->select('product.id', 'product.name', 'product.stock_qty', 'product.price')
+            ->where('product.name', 'like', '%' . $query . '%')
+            ->where('produc_categories.category_id', 27)
+            ->get();
+            return response()->json($suggestions);
     }
 
     public function summaryReportTickets()

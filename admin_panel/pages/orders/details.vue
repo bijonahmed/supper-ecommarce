@@ -63,7 +63,7 @@
                                         <td>
                                             <img :src="order.thumbnail_img" alt="Thumbnail Image" style="height:50px;width:50px;" />
                                         </td>
-                                        <td>{{ order.product_name }}</td>
+                                        <td>{{ order.product_name }}<br>{{ order.ticketsNumber }}</td>
                                         <td>
                                             <div align="center">{{ order.quantity }}</div>
                                         </td>

@@ -100,7 +100,7 @@
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
                                     <div class="d-flex align-items-center">
                                         <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
-                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
+                                 <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
                                     </div>
                                     <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
@@ -153,7 +153,7 @@
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
                                     <div class="d-flex align-items-center">
                                         <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
-                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
+                                         <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
                                     </div>
                                     <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
@@ -205,7 +205,7 @@
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
                                     <div class="d-flex align-items-center">
                                         <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
-                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
+                                        <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
                                     </div>
                                     <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
@@ -260,7 +260,7 @@
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
                                     <div class="d-flex align-items-center">
                                         <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
-                                        <button class="btn_submit" id="pasteBtn" type="button">paste</button>
+                                        <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
                                     </div>
                                     <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>

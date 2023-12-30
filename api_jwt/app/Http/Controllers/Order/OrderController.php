@@ -193,55 +193,59 @@ class OrderController extends Controller
 
         $orderid = $request->orderId;
         $ckhOrder = Order::where('orderId', $orderid)->first();
+        $orderstatus = (int) $request->orderstatus;
         $chkpoint = OrderHistory::select('order_history.quantity', 'order_history.product_id')
             ->where('order_id', $ckhOrder->id)
             ->get();
 
-        $totalQty = 0;
-        foreach ($chkpoint as $v) {
-            $pcategory = ProductCategory::where('product_id', $v->product_id)->first();
-            $category_id = $pcategory->category_id;
-            $quantity = $v->quantity;
 
-            if ($category_id == 27) {
-                $product_id = $v->product_id;
-                $chkPointTickets = TicketHistory::where('product_id', $product_id)
-                    ->whereNull('orderId')
-                    ->limit($quantity)
-                    ->get();
-            } else {
-                $additionalProduct = AdditionalProducts::where('product_id', $v->product_id)->first();
-                $addi_quantity = $additionalProduct->add_product_qty;
-                $product_id = $additionalProduct->referrance_product_id;
-                $chkPointTickets = TicketHistory::where('product_id', $product_id)
-                    ->whereNull('orderId')
-                    ->limit($addi_quantity)
-                    ->get();
-            }
+        if ($orderstatus == 10) {
+            $totalQty = 0;
+            foreach ($chkpoint as $v) {
+                $pcategory = ProductCategory::where('product_id', $v->product_id)->first();
+                $category_id = $pcategory->category_id;
+                $quantity = $v->quantity;
 
-            $data = [];
-            foreach ($chkPointTickets as $tChkPoint) {
-                $existingRecord = TicketHistory::where('orderId', $orderid)->where('category_id', $category_id)->first();
-
-                if (empty($existingRecord)) {
-                    $data['orderId']       = $orderid;
-                    $data['category_id']   = $category_id;
-                    $data['product_id']    = $product_id;
-                    $data['orderDate']     = date("Y-m-d", strtotime($ckhOrder->created_at));
-                    $data['customer_id']   = $ckhOrder->customer_id;
-                    $data['approved_date'] = date("Y-m-d");
-                    //$data['ticket_history_id']   = $tChkPoint->id;
-                   
+                if ($category_id == 27) {
+                    $product_id = $v->product_id;
+                    $chkPointTickets = TicketHistory::where('product_id', $product_id)
+                        ->whereNull('orderId')
+                        ->limit($quantity)
+                        ->get();
+                } else {
+                    $additionalProduct = AdditionalProducts::where('product_id', $v->product_id)->first();
+                    $addi_quantity = $additionalProduct->add_product_qty;
+                    $product_id = $additionalProduct->referrance_product_id;
+                    $chkPointTickets = TicketHistory::where('product_id', $product_id)
+                        ->whereNull('orderId')
+                        ->limit($addi_quantity)
+                        ->get();
                 }
 
-                $totalQty++;
-                //TicketsBooking::insert($data);
-                TicketHistory::where('id', $tChkPoint->id)->update($data);
+                $data = [];
+                foreach ($chkPointTickets as $tChkPoint) {
+                    $existingRecord = TicketHistory::where('orderId', $orderid)->where('category_id', $category_id)->first();
+
+                    if (empty($existingRecord)) {
+                        $data['orderId']       = $orderid;
+                        $data['category_id']   = $category_id;
+                        $data['product_id']    = $product_id;
+                        $data['orderDate']     = date("Y-m-d", strtotime($ckhOrder->created_at));
+                        $data['customer_id']   = $ckhOrder->customer_id;
+                        $data['approved_date'] = date("Y-m-d");
+                        //$data['ticket_history_id']   = $tChkPoint->id;
+                    }
+
+                    $totalQty++;
+                    //TicketsBooking::insert($data);
+                    TicketHistory::where('id', $tChkPoint->id)->update($data);
+                }
             }
         }
-               //echo "Total Records Inserted: $totalQty";
 
-        $odata['order_status'] = $request->orderstatus;
+        //echo "Total Records Inserted: $totalQty";
+
+        $odata['order_status'] = $orderstatus;
         Order::where('orderId', $request->orderId)->update($odata);
 
         return response()->json("update successfully", 200);
@@ -257,16 +261,46 @@ class OrderController extends Controller
             ->where('order_id', $findorder->id)->get();
 
         foreach ($data['orders'] as $v) {
+
+            $chkProCategory  = ProductCategory::where('product_id', $v->product_id)->first();
+            if ($chkProCategory->category_id == 27) {
+
+                $ticketHistory = TicketHistory::where('product_id', $v->product_id)
+                    ->where('orderId', $order_id)
+                    ->get();
+                $tickets = [];
+                foreach ($ticketHistory as $history) {
+                    $tickets[] = $history->ticket_number;
+                }
+
+                $implodedtickets = empty($tickets) ? '' : implode(', ', $tickets);
+               //echo "$chkProCategory->category_id-----tickets....pid: $v->product_id<br>";
+            } else {
+
+                $getrow = AdditionalProducts::where('product_id', $v->product_id)->first();
+                $ticketHistory = TicketHistory::where('product_id', $getrow->referrance_product_id)
+                    ->where('orderId', $order_id)
+                    ->get();
+
+                $tickets = [];
+                foreach ($ticketHistory as $history) {
+                    $tickets[] = $history->ticket_number;
+                }
+                $implodedtickets = empty($tickets) ? '' : implode(', ', $tickets);
+                //echo "$chkProCategory->category_id-----products...pid : $v->product_id<br>";
+            }
+
             $orders[] = [
+                'product_id'      => $v->product_id,
                 'product_name'    => $v->product_name,
                 'thumbnail_img'   => url($v->thumnail_img),
                 'quantity'        => $v->quantity,
                 'price'           => $v->price,
+                'ticketsNumber'   => $implodedtickets,
                 'total'           => $v->quantity * $v->price,
+
             ];
         }
-
-        // dd($orders);
 
         $findCustomer = User::where('id', $findorder->customer_id)->first();
         $order['customername']  = !empty($findCustomer->name) ? $findCustomer->name : "";

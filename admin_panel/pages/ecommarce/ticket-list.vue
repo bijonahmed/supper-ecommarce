@@ -83,6 +83,7 @@
                                             <th>SL#</th>
                                             <th>Ticket Number</th>
                                             <th class="text-center">Product Name</th>
+                                            <th class="text-center">Category</th>
                                             <th class="text-center">Order ID</th>
                                             <th class="text-center">Order Date</th>
                                             <th class="text-center">Customer ID</th>
@@ -94,10 +95,14 @@
                                             <td>
                                                 {{ (currentPage - 1) * perPage + index + 1 }}
                                             </td>
-                                            <td>{{ item.ticket_number }}</td>
 
+                                            <td>{{ item.ticket_number }}</td>
                                             <td>
                                                 <center>{{ item.name }}</center>
+                                            </td>
+                                            <td>
+                                                <center>{{ item.category_name }}</center>
+                                                
                                             </td>
                                             <td>
                                                 <center>{{ item.orderId }}</center>
@@ -305,7 +310,6 @@ export default {
 
         deleteProduct(id) {
             //alert(id);
-
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
