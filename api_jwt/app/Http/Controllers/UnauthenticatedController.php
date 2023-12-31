@@ -15,7 +15,7 @@ use App\Models\ProductAdditionalImg;
 use App\Models\ProductCategory;
 use App\Models\PromoCode;
 use App\Models\Categorys;
-use App\Models\ProductAttributes;
+use App\Models\TicketHistory;
 use App\Models\Setting;
 use Illuminate\Support\Str;
 use App\Rules\MatchOldPassword;
@@ -91,7 +91,7 @@ class UnauthenticatedController extends Controller
         $data['prodAttr'] = Attribute::where('status', 1)->get();
 
         $pro_row  =  Product::where('product.slug', $slug)
-            ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
+            ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.stock_status','product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
             ->first();
 
         $additionalProducts  = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
@@ -107,6 +107,7 @@ class UnauthenticatedController extends Controller
             'thumnail_img'      => url($pro_row->thumnail_img),
             'description'       => $pro_row->description,
             'price'             => $pro_row->price,
+            'stock_status'      => $pro_row->stock_status,
             'discount'          => $pro_row->discount,
             'stock_qty'         => $pro_row->stock_qty,
             'stock_mini_qty'    => $pro_row->stock_mini_qty,
@@ -220,11 +221,16 @@ class UnauthenticatedController extends Controller
         $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
             ->where('produc_categories.category_id', $category_id)
             ->orderBy('product.id', 'desc')
-            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty', 'produc_categories.category_id')
+            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty', 'product.stock_status','produc_categories.category_id')
             //->limit(12)
             ->get();
 
         foreach ($data as $v) {
+
+            $total_tickets  = TicketHistory::where('product_id', $v->id)->count();
+            $total_selling  = TicketHistory::where('product_id', $v->id)->whereNotNull('orderId')->count();
+            $current_stock  = ($total_tickets - $total_selling);
+
             $result[] = [
                 'id'          => $v->id,
                 'name'        => substr($v->name, 0, 350) . '...',
@@ -233,6 +239,9 @@ class UnauthenticatedController extends Controller
                 'price'       => $v->price,
                 'stock_qty'   => $v->stock_qty,
                 'category_id' => $v->category_id,
+                'stock_status'=> $v->stock_status,
+                'total_tickets' => $total_tickets,
+                'total_selling' => $total_selling,
             ];
         }
         $tdata['tickets']     = $result;

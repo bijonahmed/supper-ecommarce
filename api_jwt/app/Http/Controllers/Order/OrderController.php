@@ -14,6 +14,7 @@ use App\Models\TicketHistory;
 use App\Models\OrderStatus;
 use App\Models\OrderHistory;
 use App\Models\ProductCategory;
+use App\Models\Setting;
 use App\Models\WishList;
 use App\Models\User;
 use App\Models\TicketsBooking;
@@ -39,7 +40,7 @@ class OrderController extends Controller
         $ptype     = $this->paymenttype($paytype);
         $orderstatus              = !empty($status->name) ? $status->name : "";
         $odata['orderId']         = $orderRow->orderId;
-        $odata['subtotal']        = $orderRow->subtotal;
+        $odata['total']        = $orderRow->total;
         $odata['payment_getway']  = $ptype;
         $odata['order_status']    = $orderstatus;
         $odata['placeOn']         = date_format(date_create($orderRow->created_at), "d-m-Y");
@@ -253,6 +254,7 @@ class OrderController extends Controller
     public function orderDetails($order_id)
     {
 
+
         $orderStatus     = orderStatus::all();
         $findorder       = Order::join('order_status', 'order_status.id', '=', 'orders.order_status')->select('orders.*', 'order_status.name as orderstatus', 'order_status.id as orderstatus_id')->where('orderId', $order_id)->first();
         $data['orders']  = OrderHistory::join('product', 'product.id', '=', 'order_history.product_id')
@@ -274,20 +276,29 @@ class OrderController extends Controller
                 }
 
                 $implodedtickets = empty($tickets) ? '' : implode(', ', $tickets);
-               //echo "$chkProCategory->category_id-----tickets....pid: $v->product_id<br>";
+                $ticketName = "";
+                //echo "$chkProCategory->category_id-----tickets....pid: $v->product_id<br>";
             } else {
 
                 $getrow = AdditionalProducts::where('product_id', $v->product_id)->first();
-                $ticketHistory = TicketHistory::where('product_id', $getrow->referrance_product_id)
-                    ->where('orderId', $order_id)
-                    ->get();
+                //echo "$getrow->referrance_product_id.'<br>'";
+                if(!empty($getrow->referrance_product_id)){
 
-                $tickets = [];
-                foreach ($ticketHistory as $history) {
-                    $tickets[] = $history->ticket_number;
-                }
-                $implodedtickets = empty($tickets) ? '' : implode(', ', $tickets);
+                    $proName = Product::where('id', $getrow->referrance_product_id)->first();
+                    $ticketName = !empty($proName) ? $proName->name : ""; //!empty($proName) ? '<b>'.$proName->name.':</b>' : "";
+                    $ticketHistory = TicketHistory::where('product_id', $getrow->referrance_product_id)
+                        ->where('orderId', $order_id)
+                        ->get();
+
+                    $tickets = [];
+                    foreach ($ticketHistory as $history) {
+                        $tickets[] = $history->ticket_number;
+                    }
+                    $implodedtickets = empty($tickets) ? '' : implode(', ', $tickets);
                 //echo "$chkProCategory->category_id-----products...pid : $v->product_id<br>";
+
+                }
+                
             }
 
             $orders[] = [
@@ -296,20 +307,39 @@ class OrderController extends Controller
                 'thumbnail_img'   => url($v->thumnail_img),
                 'quantity'        => $v->quantity,
                 'price'           => $v->price,
+                'ticketName'      => strip_tags($ticketName),
                 'ticketsNumber'   => $implodedtickets,
                 'total'           => $v->quantity * $v->price,
 
             ];
         }
 
+        $pay_msg = $findorder->payment_getway == 2 ? 'Bkash' : (
+            $findorder->payment_getway == 3 ? 'Nagot' : (
+                $findorder->payment_getway == 4 ? 'Rocket' : (
+                    $findorder->payment_getway == 5 ? 'Upay' : ''
+                )));
+
+        $setting = Setting::where('id',1)->first();
         $findCustomer = User::where('id', $findorder->customer_id)->first();
-        $order['customername']  = !empty($findCustomer->name) ? $findCustomer->name : "";
-        $order['customeremail'] = !empty($findCustomer->email) ? $findCustomer->email : "";
-        $order['orderdata']     = $orders;
-        $order['orderrow']      = !empty($findorder->orderstatus) ? $findorder->orderstatus : "";
-        $order['orderstatus_id'] = !empty($findorder->orderstatus_id) ? $findorder->orderstatus_id : "";
-        $order['subtotal'] = !empty($findorder->subtotal) ? $findorder->subtotal : "";
-        $order['OrderStatus']   = $orderStatus;
+        $order['customername']      = !empty($findCustomer->name) ? $findCustomer->name : "";
+        $order['customeremail']     = !empty($findCustomer->email) ? $findCustomer->email : "";
+        $order['orderdata']         = $orders;
+        $order['orderrow']          = !empty($findorder->orderstatus) ? $findorder->orderstatus : "";
+        $order['orderstatus_id']    = !empty($findorder->orderstatus_id) ? $findorder->orderstatus_id : "";
+        $order['total']             = $findorder->total;
+        $order['itemstotal']        = $findorder->itemstotal;
+        $order['odate']             = !empty($findorder->created_at) ? date('d-m-Y', strtotime($findorder->created_at)) : "";
+        $order['txtid']             = !empty($findorder->txtid) ? $findorder->txtid : "";
+        $order['pay_msg']           = $pay_msg;
+        $order['orderId']           = $order_id;
+        $order['OrderStatus']       = $orderStatus;
+        $order['percentageAmount']  = $findorder->percentageAmount;
+        $order['walletBalance']     = $findorder->walletBalance;
+        $order['copon_amount']      = $findorder->copon_amount;
+        $order['vat_percentage']    = $setting->vat_percentage;
+        $order['shipping_fee']      = $findorder->shipping_fee;
+
         //dd($data['orderStatus']);
         return response()->json($order, 200);
     }
@@ -328,6 +358,54 @@ class OrderController extends Controller
                 'orderId'      => $v->orderId,
                 'placeOn'      => date_format(date_create($v->created_at), "Y-m-d"),
                 'total'        => number_format($v->total, 2),
+                
+            ];
+        }
+
+        $order['orderdata']      = $orders;
+
+        return response()->json($order, 200);
+    }
+
+
+    public function activeTickets()
+    {
+       
+        $tickets  = TicketHistory::join('product', 'product.id', '=', 'ticket_history.product_id')
+            ->select('product.id', 'product.name', 'product.price','ticket_history.orderId','product.thumnail_img')
+            ->where('ticket_history.category_id', 27)
+            ->where('ticket_history.customer_id', $this->userid)
+            ->groupBy('ticket_history.orderId')
+            ->orderBy('product.id', 'desc')
+            ->get();
+
+        foreach ($tickets as $v) {
+            $ticketHistory = TicketHistory::where('product_id', $v->id)
+                    ->where('orderId', $v->orderId)
+                    ->get();
+                $tickets = [];
+                foreach ($ticketHistory as $history) {
+                    $tickets[] = $history->ticket_number;
+                }
+            $implodedtickets = empty($tickets) ? '' : implode(', ', $tickets);
+
+
+            $total_tickets  = TicketHistory::where('product_id', $v->id)->count();
+            $total_selling  = TicketHistory::where('product_id',$v->id)->whereNotNull('orderId')->count();
+            $tickets  = TicketHistory::where('orderId', $v->orderId)->where('ticket_history.category_id', 27)->count();
+            $current_stock  = ($total_tickets - $total_selling);
+
+            $orders[] = [
+                'id'           => $v->id,
+                'name'         => $v->name,
+                'orderId'      => $v->orderId,
+                'total_tickts' => $total_tickets,
+                'ticketsSum'   => $tickets,
+                'total_selling'=> $total_selling,
+                'implodedtickets'=> $implodedtickets,
+                'thumbnail_img'   => url($v->thumnail_img),
+                'placeOn'      => date_format(date_create($v->created_at), "Y-m-d"),
+                'price'        => number_format($v->price, 2),
             ];
         }
 
@@ -344,10 +422,19 @@ class OrderController extends Controller
             ->orderBy('orders.id', 'DESC')
             ->get(); //Order::where('customer_id', $this->userid)->get();
         foreach ($data['orders'] as $v) {
+
+            $pay_msg = '';
+            $pay_msg = $v->payment_getway == 2 ? 'Bkash' : (
+                $v->payment_getway == 3 ? 'Nagot' : (
+                    $v->payment_getway == 4 ? 'Rocket' : (
+                        $v->payment_getway == 5 ? 'Upay' : ''
+                    )));
             $orders[] = [
                 'id'           => $v->id,
                 'name'         => $v->name,
                 'orderId'      => $v->orderId,
+                'txtid'        => $v->txtid,
+                'payment_getway' => $pay_msg,
                 'placeOn'      => date_format(date_create($v->created_at), "Y-m-d"),
                 'total'        => number_format($v->total, 2),
             ];
@@ -371,35 +458,29 @@ class OrderController extends Controller
 
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
 
-        $cartData = $request->input('cart');
+ 
         $cart     = $request->input('cart');
         $txtid    = $request->input('txtid');
-        $subtotal_amt    = floatval($request->input('subtotal_amt'));
-        $payment_getway    = $request->input('payment_getway');
+        
+        $total           = floatval($request->input('subtotal_amt'));
+        $itemsubtotal    = $request->input('itemsubtotal');
+        $percentageAmount= $request->input('percentageAmount');
+        $walletBalance   = $request->input('walletBalance');
+        $copon_amount    = $request->input('copon_amount');
+        $payment_getway  = $request->input('payment_getway');
+        $totalShippingFees  = $request->input('totalShippingFees');
         ///dd($cartData);
-        $total = 0;
-        foreach ($cartData as $cartItem) {
-            $productid = $cartItem['id'];
-            $quantity  = $cartItem['quantity'];
-            $price     = $cartItem['price']; //str_replace(',', '', $cartItem['price']); // Remove commas
-            $price     = floatval($price); // Convert to float
-
-            if (!is_numeric($quantity) || !is_numeric($price)) {
-                //  echo "Invalid quantity or price for Product ID: {$productid}<br/>";
-                continue;  // Skip the current iteration and move to the next item
-            }
-            // Calculate the subtotal for the current item
-            $subtotal = $subtotal_amt; //$quantity * $price;
-            // Add the subtotal to the total
-            $total += $subtotal;
-            //echo "Product ID: {$productid} - Quantity: {$quantity} - Price: {$price} - Subtotal: {$subtotal} - Total: {$total}<br/>";
-        }
+         
         $order                  = new Order();
         $order->orderId         = $randomNum;
         $order->txtid           = $txtid;
         $order->payment_getway  = $payment_getway;
+        $order->itemstotal      = $itemsubtotal;
+        $order->shipping_fee    = $totalShippingFees;
         $order->total           = $total;
-        $order->subtotal        = $total;
+        $order->percentageAmount= $percentageAmount;
+        $order->walletBalance   = $walletBalance;
+        $order->copon_amount    = $copon_amount;
         $order->customer_id     = $this->userid;
         $order->order_status    = 1; // Order Placed 
         $order->save();

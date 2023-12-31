@@ -48,6 +48,8 @@
 
                                     <th>OrderId</th>
                                     <th>Order Date</th>
+                                    <th>Paymet Type</th>
+                                    <th>Trans. ID </th>
                                     <th>Total</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
@@ -57,6 +59,8 @@
                                 <tr v-for="item in paginatedData" :key="item.id">
                                     <td>{{ item.orderId }}</td>
                                     <td>{{ item.placeOn }} </td>
+                                    <td>{{ item.payment_getway }} </td>
+                                    <td>{{ item.txtid }} </td>
                                     <td>{{ item.total }}</td>
                                     <td class="text-center">{{ item.name }}</td>
                                     <td>

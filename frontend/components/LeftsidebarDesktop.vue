@@ -2,7 +2,7 @@
 <div>
 
     <div class="profile_image">
-        <input type="file" class="file-upload" id="profile_img" name="profile">
+        <!-- <input type="file" class="file-upload" id="profile_img" name="profile"> -->
         <label for="profile_img">
             <img src="/images/blank_profile.png" class="img-fulid profile_pic" width="100%" loading="lazy" alt="">
         </label>
@@ -30,13 +30,13 @@
             <li>
                 <nuxt-link to="/user/ticket"><span><strong class="fa-solid fa-ticket"></strong>Active Ticket</span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
             </li>
-            <li>
+            <li  class="d-none">
                 <nuxt-link to="/user/payment"><span><strong class="fa-regular fa-credit-card"></strong>Payment Option </span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
             </li>
-            <li>
+            <li >
                 <nuxt-link to="/user/settings"><span><strong class="fa-solid fa-gear"></strong>Settings</span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
             </li>
-            <li>
+            <li class="d-none">
                 <nuxt-link to="/user/notification"><span><strong class="fa-solid fa-bell"></strong>Notifications</span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
             </li>
             <li>

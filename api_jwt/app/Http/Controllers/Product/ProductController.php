@@ -591,7 +591,7 @@ class ProductController extends Controller
 
         $formatedData = [];
         foreach ($data as $Key => $value) {
-            $category =  Category::where('category_id', $value->category_id)->first();
+            $category =  Categorys::where('id', $value->category_id)->first();
             $formatedData[] = [
                 'id'               => $value->id,
                 'product_id'       => $value->product_id,
@@ -601,7 +601,8 @@ class ProductController extends Controller
                 'status'           => $value->status,
                 'customer_id'      => $value->customer_id,
                 'orderDate'        => $value->orderDate,
-                'category_name'    => $category->name,
+                'category_name'    => !empty($category->name) ? $category->name : "",
+                'category_id'      => !empty($category->category_id) ? $category->category_id : "",
             ];
         }
         //dd($formatedData);
@@ -652,6 +653,7 @@ class ProductController extends Controller
     {
         //echo $id;exit; 
         if (!empty($id)) {
+            /*
             Product::where('id', $id)->delete();
             ProductAttributes::where('product_id', $id)->delete();
             ProductAttributeValue::where('product_id', $id)->delete();
@@ -659,6 +661,7 @@ class ProductController extends Controller
             ProductVarrientHistory::where('product_id', $id)->delete();
             ProductCategory::where('product_id', $id)->delete();
             ProductAdditionalImg::where('product_id', $id)->delete();
+            */
         }
         return response()->json("successfully delete product", 200);
     }

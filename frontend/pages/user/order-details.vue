@@ -36,82 +36,55 @@
                                         <h1>Thank You For Your Order.</h1>
                                         <div class="user_details">
                                             <p><strong>Order Status:</strong>{{ orderstatus }}</p>
-                                            <p><strong>Order Id:</strong>#1111111</p>
-                                            <p><strong>Payment With:</strong>Bkash</p>
-                                            <p><strong>Trx Id:</strong>KJLSD7F7U9SDF</p>
-                                            <p><strong>Order date:</strong>25/12/2023</p>
+                                            <p><strong>Order Id:</strong>#{{ orderId }}</p>
+                                            <p><strong>Payment With:</strong>{{ pay_msg }}</p>
+                                            <p><strong>Trx Id:</strong>{{ txtid }}</p>
+                                            <p><strong>Order date:</strong>{{ odate }}</p>
                                         </div>
-                                        </p>
+
                                     </div>
                                     <ul>
-                                        <li>
+                                        <li v-for="(order, index) in orders" :key="index">
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="d_p_image">
-                                                        <img src="/images/Modesh_Men_069.jpg" class="img-fluid" loading="lazy" alt="">
+                                                        <img :src="order.thumbnail_img" class="img-fluid" loading="lazy" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <div class="des_part">
                                                         <div>
-                                                            <h1>MEN'S POLO T-SHIRT BLACK</h1>
-                                                            <p><strong>Quantity: </strong>3</p>
+                                                            <h1>{{ order.product_name }}</h1>
+                                                            <p><strong>Quantity: </strong>{{ order.quantity }}</p>
                                                         </div>
                                                         <div>
-                                                            <h6>300TK</h6>
+                                                            <h6>{{ order.price }} TK.</h6>
                                                         </div>
                                                     </div>
                                                     <div class="des_ticket">
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <img src="images/iphone15.png" class="img-fluid" loading="lazy" alt="ticket-image">
                                                             <div>
-                                                                <h3>Win iPhone15 pro 256GB</h3>
-                                                                <p><span>776672788343,</span><span>776672788343,</span><span>776672788343,</span>
+                                                                <h3>
+                                                                    <span v-if="order.ticketName !==''">
+                                                                        <b><u style="color:rgb(178, 249, 37);">{{ order.ticketName }}</u></b>
+                                                                    </span></h3>
+                                                                <p><span>{{ order.ticketsNumber }}</span>
                                                                 </p>
                                                             </div>
-                                                        </div>
-                                                        <div>
-                                                            <h6>00.00TK</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="d_p_image">
-                                                        <img src="images/Modesh_Men_069.jpg" class="img-fluid" loading="lazy" alt="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="des_part">
-                                                        <div>
-                                                            <h1>MEN'S POLO T-SHIRT BLACK</h1>
-                                                            <p><strong>Quantity: </strong>3</p>
-                                                        </div>
-                                                        <div>
-                                                            <h6>300TK</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="des_ticket">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <img src="images/iphone15.png" class="img-fluid" loading="lazy" alt="ticket-image">
-                                                            <div>
-                                                                <h3>Win iPhone15 pro 256GB</h3>
-                                                                <p><span>776672788343,</span><span>776672788343,</span><span>776672788343,</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <h6>00.00TK</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
+
                                         <div class="text-end mt-2">
-                                            <p>Total Ammount: 600 Tk</p>
+                                            <p>Item Subtotal : {{ itemstotal }} Tk</p>
+                                            <p>Shipping Fee : {{ shipping_fee }} Tk</p>
+                                            <p>VAT ({{ vat_percentage }} %): {{ percentageAmount }} Tk</p>
+                                            <p>Wallet Balance: -{{ walletBalance }} Tk</p>
+                                            <p>Promo DCF : -{{ copon_amount }} Tk</p>
+                                            <p>Total Ammount: {{ total }} Tk</p>
+
                                         </div>
                                     </ul>
                                 </div>
@@ -141,7 +114,20 @@ export default {
     data() {
         return {
             loading: false,
+            total: '',
+            txtid: '',
+            odate: '',
+            pay_msg: '',
+            itemstotal: 0,
+            percentageAmount: 0,
+            shipping_fee: 0,
+            walletBalance: 0,
+            copon_amount: 0,
+            vat_percentage: '',
             orderstatus: '',
+            orderId: '',
+            customername: '',
+            customeremail: '',
             orders: [],
             errors: {},
         }
@@ -163,6 +149,7 @@ export default {
         },
     },
     methods: {
+
         captureBtn() {
             html2canvas($("#mobileScreen")[0], {
                 scale: 3, // Resolution scale (2 for 2x, 3 for 3x, and so on)
@@ -170,7 +157,7 @@ export default {
                 var imgData = canvas.toDataURL();
                 var downloadLink = document.createElement("a");
                 downloadLink.href = imgData;
-                downloadLink.download = "Order Details(winUp360.com).png";  
+                downloadLink.download = "Order Details(winUp360.com).png";
                 document.body.appendChild(downloadLink);
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
@@ -181,8 +168,29 @@ export default {
             this.loading = true;
             const orderId = this.$route.query.orderId;
             await this.$axios.get(`/order/orderDetails/${orderId}`).then(response => {
+                    // this.orders = response.data.orderdata;
+                    // this.orderstatus = response.data.orderrow;
                     this.orders = response.data.orderdata;
                     this.orderstatus = response.data.orderrow;
+                    this.txtid = response.data.txtid;
+                    this.odate = response.data.odate;
+                    this.orderId = response.data.orderId;
+                    this.pay_msg = response.data.pay_msg;
+                    this.customername = response.data.customername;
+                    this.customeremail = response.data.customeremail;
+                    this.order_status = response.data.OrderStatus;
+                    this.total = response.data.total;
+                    this.itemstotal = response.data.itemstotal;
+                    this.shipping_fee = response.data.shipping_fee;
+
+                    this.shipping_fee = response.data.shipping_fee;
+                    this.vat_percentage = response.data.vat_percentage;
+
+                    this.percentageAmount = response.data.percentageAmount;
+                    this.walletBalance = response.data.walletBalance;
+                    this.copon_amount = response.data.copon_amount;
+
+                    this.insertdata.orderstatus = response.data.orderstatus_id;
                 })
                 .catch(error => {
                     // Handle error

@@ -63,7 +63,14 @@
                                         <td>
                                             <img :src="order.thumbnail_img" alt="Thumbnail Image" style="height:50px;width:50px;" />
                                         </td>
-                                        <td>{{ order.product_name }}<br>{{ order.ticketsNumber }}</td>
+                                        <td>{{ order.product_name }}<br>
+
+                                            <span v-if="order.ticketName !==''">
+                                                <b><u>{{ order.ticketName }}</u></b>
+                                            </span>
+
+                                            {{ order.ticketsNumber }}
+                                        </td>
                                         <td>
                                             <div align="center">{{ order.quantity }}</div>
                                         </td>
@@ -74,15 +81,75 @@
                                             <div align="center">{{ order.total }}</div>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td colspan="3">
-                                            <div align="right">Total</div>
+                                            <div align="right">Item Subtotal</div>
                                         </td>
-                                      
+
                                         <td>
-                                            <div align="center">{{ subtotal }}</div>
+                                            <div align="center">{{ itemstotal }}</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td colspan="3">
+                                            <div align="right">Shipping Fee</div>
+                                        </td>
+
+                                        <td>
+                                            <div align="center">{{ shipping_fee }}</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td colspan="3">
+                                            <div align="right">VAT ({{ vat_percentage }}%)</div>
+                                        </td>
+
+                                        <td>
+                                            <div align="center">{{ percentageAmount }}</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td colspan="3">
+                                            <div align="right">Wallet Balance</div>
+                                        </td>
+
+                                        <td>
+                                            <div align="center">-{{ walletBalance }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td colspan="3">
+                                            <div align="right">Promo DCF</div>
+                                        </td>
+
+                                        <td>
+                                            <div align="center">-{{ copon_amount }}</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td colspan="3">
+                                            <div align="right">Total Ammount</div>
+                                        </td>
+
+                                        <td>
+                                            <div align="center">{{ total }}</div>
                                         </td>
                                     </tr>
                                 </table>
@@ -124,17 +191,23 @@ export default {
 
     data() {
         return {
-            subtotal:'',
+            total: 0,
             orderstatus: '',
             orderid: '',
             customername: '',
             customeremail: '',
+            itemstotal: 0,
+            percentageAmount: 0,
+            shipping_fee: 0,
+            walletBalance: 0,
+            copon_amount: 0,
+            vat_percentage: '',
             insertdata: {
                 orderId: this.$route.query.orderId,
                 orderstatus: '',
             },
             orders: [],
-            order_status:[],
+            order_status: [],
             notifmsg: '',
             errors: {},
         }
@@ -190,10 +263,22 @@ export default {
                     this.orderstatus = response.data.orderrow;
                     this.customername = response.data.customername;
                     this.customeremail = response.data.customeremail;
-                    this.order_status = response.data.OrderStatus; 
-                    this.subtotal = response.data.subtotal; 
-                    this.insertdata.orderstatus = response.data.orderstatus_id; 
-                   // $(".orderstatus").html(1);
+                    this.order_status = response.data.OrderStatus;
+                    //calculated
+                    this.total = response.data.total;
+                    this.itemstotal = response.data.itemstotal;
+                    this.shipping_fee = response.data.shipping_fee;
+
+                    this.shipping_fee = response.data.shipping_fee;
+                    this.vat_percentage = response.data.vat_percentage;
+
+                    this.percentageAmount = response.data.percentageAmount;
+                    this.walletBalance = response.data.walletBalance;
+                    this.copon_amount = response.data.copon_amount;
+                    //END 
+
+                    this.insertdata.orderstatus = response.data.orderstatus_id;
+                    // $(".orderstatus").html(1);
                 })
                 .catch(error => {
                     // Handle error

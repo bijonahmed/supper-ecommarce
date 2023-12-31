@@ -12,6 +12,7 @@
                             <Loader />
                         </span>
                         <p class="l_alrt" v-if="!loggedIn">Please Login for Complete this process.</p>
+                        <!-- <h1>Percent:{{ percentageAmount }}, wallet balance: {{ walletBalance }}, Coupon Amount: {{ copon_amount }}</h1> -->
                         <ul>
                             <li v-for="item in cart" :key="item.id">
                                 <div class="cart_item ">
@@ -234,10 +235,13 @@ export default {
     data() {
         return {
             wallet_balance: 0,
+            walletBalance: 0,
             shipfees_amt: 0,
             itemSubtotal: 0,
             categoryId: 27,
+            totalShippingFees:0,
             shippingFee: 0,
+            copon_amount: 0,
             isChecked: false,
             showWalletInfo: false,
             couponCode: '',
@@ -276,9 +280,23 @@ export default {
 
         loadTotalAmut() {
             // console.log("loadTotalAmut" + this.subtotal);
+            const itemsubtotal =  this.itemSubtotal;
+            const totalShippingFees =  this.totalShippingFees;
             const subtotal = this.subtotal;
-            // Save the updated cart back to local storage
-            localStorage.setItem('subtotal', JSON.stringify(subtotal));
+            const percentageAmount = this.percentageAmount;
+            const walletBalance = this.walletBalance;
+            const copon_amount = this.copon_amount;
+            // Create an object with dynamic key-value pairs
+            const dataObject = {
+                itemsubtotal: itemsubtotal,
+                subtotal: subtotal,
+                percentageAmount: percentageAmount,
+                totalShippingFees: totalShippingFees,
+                walletBalance: walletBalance,
+                copon_amount: copon_amount
+            };
+            // Save the object back to local storage
+            localStorage.setItem('orderSummary', JSON.stringify(dataObject));
 
         },
         toggleWalletInfo() {
@@ -588,9 +606,11 @@ export default {
                 });
                 console.log("Total Shipping Fees:", totalShippingFees);
                 this.itemSubtotal = totalPrice;
+               
                 this.shipfees_amt = totalShippingFees;
                 let shipfees = totalShippingFees;
                 console.log("shipfees :---" + totalShippingFees);
+                this.totalShippingFees = totalShippingFees;
                 //let walletbalance = this.wallet_balance;
                 let wallet_balance;
                 if (this.showWalletInfo) {
@@ -605,16 +625,26 @@ export default {
                 } else {
                     copon_result = 0;
                 }
+
                 const percetage = this.pre_setting.vat_percentage;
                 let percentageAmount;
                 percentageAmount = (parseFloat(totalPrice) * percetage) / 100;
                 this.percentageAmount = percentageAmount;
+
+                this.walletBalance = wallet_balance;
+                this.copon_amount = copon_result;
+
                 console.log(`Formula totalprice: + ${totalPrice}, percentage amount: + ${percentageAmount}, shipping fee: ${shipfees}, walletbalance: - ${wallet_balance} - coupon amount ${copon_result}`);
                 const total = parseFloat(totalPrice) + parseFloat(percentageAmount) + parseFloat(shipfees) - parseFloat(wallet_balance) - copon_result;
                 console.log("total result : " + total);
                 this.subtotal = `${total}`;
+               // this.itemsubtotal
                 console.log('Total Price for Unique Items:', totalPrice);
                 this.loadTotalAmut();
+
+                //Update cart:
+
+                //END 
 
             } else {
                 console.error('No cart data found in local storage.');

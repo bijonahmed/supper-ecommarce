@@ -63,7 +63,8 @@
                                 <p>Price</p>
                                 <h3>BDT {{ ticketprice || pro_row.price }}</h3>
                             </div>
-                            <button class="btn_submit" @click="addtoCart(pro_row)">Add to cart</button>
+                            <button class="btn_submit" @click="addtoCart(pro_row)" v-if="pro_row.stock_status==1">Add to cart</button>
+                            <button class="btn_submit" v-else>Stock Out</button>
                         </div>
                         <div class="accordion accordion-flush" id="accordionFlushExample">
                             <div class="accordion-item">

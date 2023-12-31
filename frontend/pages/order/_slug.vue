@@ -32,7 +32,7 @@
                                         </li>
                                         <li>
                                             <p>Total</p>
-                                            <p>{{ subtotal }}</p>
+                                            <p>{{ total }}</p>
                                         </li>
 
                                         <li>
@@ -45,7 +45,7 @@
                                         
 
                                     </ul>
-                                    <div class="row">
+                                    <div class="row d-none">
                                         <div class="col-md-8">
                                             <p>If you have any questions, please feel free to send us a direct message. <a href="whatsapp://send?phone=1234567890&text=Hello%20from%20your%20website!">Send WhatsApp Message</a></p>
                                         </div>
@@ -76,7 +76,7 @@ export default {
             order_status: '',
             payment_getway: '',
             orderId: '',
-            subtotal: 0,
+            total: 0,
             placeOn: ''
         }
     },
@@ -91,7 +91,7 @@ export default {
             this.order_status = response.data.order_status;
             this.payment_getway = response.data.payment_getway;
             this.orderId = response.data.orderId;
-            this.subtotal = response.data.subtotal;
+            this.total = response.data.total;
             this.placeOn = response.data.placeOn;
         },
     }

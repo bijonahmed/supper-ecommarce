@@ -100,7 +100,7 @@
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
                                     <div class="d-flex align-items-center">
                                         <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
-                                 <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
+                                        <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
                                     </div>
                                     <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
@@ -153,7 +153,7 @@
                                     <p style="color: #aded28; font-size: 12px;">Trx Id Is Required</p>
                                     <div class="d-flex align-items-center">
                                         <input type="text" v-model="orderData.txtid" id="txtid" placeholder="Enter Transection Id">
-                                         <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
+                                        <!-- <button class="btn_submit" id="pasteBtn" type="button">paste</button> -->
                                     </div>
                                     <span class="text-black" v-if="errors.txtid">{{ errors.txtid[0] }}</span>
                                 </div>
@@ -250,9 +250,7 @@
                             </li>
                             <div class="trx_img">
                                 <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How to get Trx Id?</a>
-                                <div class="collapse" id="collapseExample">
-                                    <img src="images/transection_image.png" class="img-fluid" loading="lazy" alt="">
-                                </div>
+                                <img src="/images/transection_image.png" class="img-fluid" loading="lazy" alt="">
                             </div>
                             <li>
                                 <h6>Trx ID: </h6>
@@ -329,17 +327,25 @@ export default {
             };
 
             const savedCart = localStorage.getItem('cart');
-            const subtotal = localStorage.getItem('subtotal');
-
+            const osummary = localStorage.getItem('orderSummary');
+            const summarydata = JSON.parse(osummary);
+           // console.log("subtotal: " + summarydata.subtotal);
             let cartData = JSON.parse(savedCart);
-            let subtotal_amt = JSON.parse(subtotal);
+
+
             const requestData = {
                 cart: cartData,
                 payment_getway: payment_getway,
-                subtotal_amt: subtotal_amt,
+                itemsubtotal: summarydata.itemsubtotal,
+                totalShippingFees: summarydata.totalShippingFees,
+                subtotal_amt: summarydata.subtotal,
+                percentageAmount: summarydata.percentageAmount,
+                walletBalance: summarydata.walletBalance,
+                copon_amount: summarydata.copon_amount,
                 txtid: this.orderData.txtid
             };
-
+            console.log(requestData);
+            //return false; 
             await this.$axios.post('/order/submitOrder', requestData, {
                     headers
                 })
@@ -392,11 +398,21 @@ export default {
                     index === self.findIndex((t) => t.id === item.id)
                 );
 
-                const subtotal = localStorage.getItem('subtotal');
-                let subtotal_amt = JSON.parse(subtotal)
-                console.log(subtotal_amt);
-                this.subtotal = subtotal_amt; //totalPrice;
-                console.log('Total Price for Unique Items:', subtotal_amt);
+                const osummary = localStorage.getItem('orderSummary');
+                if (osummary !== null) {
+                    const summarydata = JSON.parse(osummary);
+                    console.log("subtotal: " + summarydata.subtotal);
+                    //console.log("percentageAmount: " + summarydata.percentageAmount);
+                    //console.log("walletBalance: " + summarydata.walletBalance);
+                    //console.log("copon_amount: " + summarydata.copon_amount);
+                    let subtotal_amt = summarydata.subtotal;
+                    this.subtotal = subtotal_amt; //totalPrice;
+                    console.log('Total Price for Unique Items:', subtotal_amt);
+                } else {
+                    console.log("No order summary found in localStorage");
+                }
+                //return false;
+
             } else {
                 console.error('No cart data found in local storage.');
             }

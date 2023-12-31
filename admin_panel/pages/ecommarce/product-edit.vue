@@ -28,7 +28,7 @@
                             <div class="border p-4 rounded">
                                 <div class="card">
                                     <form @submit.prevent="saveData()" id="formrest" class="forms-sample" enctype="multipart/form-data">
-                                       
+
                                         <div class="card-body">
                                             <ul class="nav nav-pills mb-3" role="tablist">
                                                 <li class="nav-item" role="presentation">
@@ -126,7 +126,7 @@
                                                                 <label for="input-meta-title-1" class="col-sm-2 col-form-label">SKU</label>
                                                                 <div class="col-sm-10">
                                                                     <input type="text" placeholder="SKU" v-model="insertdata.sku" class="form-control" />
-                                                                   
+
                                                                     <small>Stock Keeping Unit</small>
                                                                 </div>
                                                             </div>
@@ -187,16 +187,13 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3 required">
-                                                                <label for="input-meta-title-1" class="col-sm-4 col-form-label">Out Of Stock Status</label>
+                                                                <label for="input-meta-title-1" class="col-sm-4 col-form-label">Display Out Of Stock Status</label>
                                                                 <div class="col-sm-8">
                                                                     <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="insertdata.stock_status">
                                                                         <option selected>Select</option>
-                                                                        <!-- categories -->
-                                                                        <option value="1">2-3 Days</option>
-                                                                        <option value="2">In Stock</option>
-                                                                        <option value="3">Out Of Stock</option>
-                                                                        <option value="4">Pre-Order</option>
-                                                                        <option value="5">Others</option>
+                                                                        <option value="1">Yes</option>
+                                                                        <option value="2">No</option>
+                                                                       
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -389,11 +386,11 @@
                                                             <div class="row mb-3">
                                                                 <label for="input-meta-description-1" class="col-sm-3 col-form-label">Addtional Quantity</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" name="keyword"  autocomplete="off"  v-model="insertdata.add_product_qty" @input="validateQty" class="form-control" />
+                                                                    <input type="text" name="keyword" autocomplete="off" v-model="insertdata.add_product_qty" @input="validateQty" class="form-control" />
                                                                     <div v-if="!isQtyValid">
-                                                                <!-- Display an error message or take other actions if the quantity is not valid -->
-                                                                Quantity must be less than {{insertdata.sqty}}.
-                                                            </div>
+                                                                        <!-- Display an error message or take other actions if the quantity is not valid -->
+                                                                        Quantity must be less than {{insertdata.sqty}}.
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -411,6 +408,16 @@
                                                                 </div>
                                                             </div>
                                                             <!-- END  -->
+                                                            
+                                                            <div class="row mb-3">
+                                                                <label for="input-meta-description-1" class="col-sm-3 col-form-label">Status</label>
+                                                                <div class="col-sm-9">
+                                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="insertdata.status" name="status" id="status">
+                                                                        <option selected value="1">Active</option>
+                                                                        <option value="0">Inactive</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <button type="submit" class="btn btn-success px-5 w-100"><i class="bx bx-check-circle mr-1"></i> Save & Next</button>
@@ -495,7 +502,7 @@ export default {
                 tax: '',
                 tax_status: '',
                 status: '',
-                sqty:'',
+                sqty: '',
                 manufacturer: '',
                 download_link: '',
 
@@ -727,15 +734,15 @@ export default {
                 img.src = e.target.result;
                 img.onload = () => {
                     //if (img.width === 393 && img.height === 491) {
-                        const url = e.target.result;
-                        this.images.push({
-                            url,
-                            file
-                        });
+                    const url = e.target.result;
+                    this.images.push({
+                        url,
+                        file
+                    });
                     //} else {
-                      //  alert('Image dimensions must be 393x491 pixels.');
-                        this.$refs.images.value = ''; // Reset file input
-                        //this.$refs.files = '';
+                    //  alert('Image dimensions must be 393x491 pixels.');
+                    this.$refs.images.value = ''; // Reset file input
+                    //this.$refs.files = '';
                     //}
                 };
             };
@@ -756,11 +763,11 @@ export default {
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
-                   // if (img.width === 393 && img.height === 491) {
-                        this.previewUrl = e.target.result;
-                   // } else {
-                        //alert('Image dimensions must be 393x491px pixels.');
-                   // }
+                    // if (img.width === 393 && img.height === 491) {
+                    this.previewUrl = e.target.result;
+                    // } else {
+                    //alert('Image dimensions must be 393x491px pixels.');
+                    // }
                 };
             };
             reader.readAsDataURL(file);

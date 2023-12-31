@@ -16,55 +16,46 @@
             <div class="col-xl-3 desktop_view">
                 <LeftsidebarDesktop />
             </div>
+
             <div class="col-xl-9">
                 <div class="profile_right">
                     <h1 class="desktop_view">Active Ticket</h1>
+                    <span v-if="loading">
+                        <Loader />
+                    </span>
                     <div class="cart_list">
                         <ul>
-                            <li>
-                                <div class="cart_item ">
 
-                                    <div class="row" style="width: 100%;">
-                                        <div class="col-md-12">
-                                            <div class="cart_left">
-                                                <div class="c_price" style="position: unset;">
-                                                    <img src="/images/cash2.png" class="img-fulid" style="width: 100%;" alt="">
-                                                </div>
-                                                <div class="cart_title">
-                                                    <h1>VIP Plate T-285 or BDT150, Lorem ipsum dolor sit amet
-                                                        consectetur
-                                                        adipisicing elit. Ipsum, quas.</h1>
-                                                    <h6>Lottery credit</h6>
-                                                    <p>BDT5.00</p>
-                                                    <span>Draw Date: <strong style="color: limegreen;">24 Jan
-                                                            2024</strong></span>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <li v-for="(order, index) in orders" :key="index">
+                                <div class="cart_item ">
+                                    <!-- show list buttons -->
+                                    <div class="t_list">
+                                        <a href="javascript:" data-bs-toggle="collapse" :data-bs-target="'#collapseExample_' + index" aria-expanded="false" aria-controls="collapseExample">{{ order.ticketsSum }}</a>
                                     </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="cart_item ">
-
                                     <div class="row" style="width: 100%;">
                                         <div class="col-md-12">
                                             <div class="cart_left">
                                                 <div class="c_price" style="position: unset;">
-                                                    <img src="/images/cash2.png" class="img-fulid" style="width: 100%;" alt="">
+                                                    <img :src="order.thumbnail_img" class="img-fulid" style="width: 100%;" alt="">
                                                 </div>
                                                 <div class="cart_title">
-                                                    <h1>VIP Plate T-285 or BDT150, Lorem ipsum dolor sit amet
-                                                        consectetur
-                                                        adipisicing elit. Ipsum, quas.</h1>
-                                                    <h6>Lottery credit</h6>
-                                                    <p>BDT5.00</p>
-                                                    <span>Draw Date: <strong style="color: limegreen;">24 Jan
-                                                            2024</strong></span>
+                                                    <h1>Order ID: {{ order.orderId }}</h1>
+                                                    <h1>{{ order.name }}</h1>
+                                                    <p>BDT{{ order.price }}</p>
+                                                    <span>Issue On:{{ order.placeOn }}</span><br/>
+                                                    <span>{{ order.total_selling }} Out Of {{ order.total_tickts }}
+                                                        <nuxt-link to="/" class="btn_submit" style="padding: 2px 8px; font-size: 10px; text-decoration: none;">Buy more</nuxt-link>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="ticket_list_op">
+                                                <div class="collapse" :id="'collapseExample_' + index">
+                                                    <div class="card card-body">
+                                                         <span>{{ order.implodedtickets }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </li>
@@ -73,28 +64,46 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <Footer />
 </div>
 </template>
 
-    
 <script>
 export default {
     head: {
-        title: 'Ticket',
+        title: 'Active Ticket',
     },
     data() {
         return {
-
+            loading: false,
+            orders: [],
+            order_status: [],
+            notifmsg: '',
+            errors: {},
         }
     },
-    mounted() {
-
+    async mounted() {
+        this.defaultLoading();
     },
     methods: {
+        async defaultLoading() {
 
+            await this.$axios.get(`/order/activeTickets`).then(response => {
+                    this.orders = response.data.orderdata;
+
+                    return false;
+                })
+                .catch(error => {
+                    // Handle error
+                })
+                .finally(() => {
+                    this.loading = false; // Hide loader after response
+                });
+
+        },
         addtoCart() {
             this.$router.push('/cart');
         },
@@ -102,3 +111,15 @@ export default {
     }
 }
 </script>
+<style scoped>
+.cart_title p {
+	font-family: 'Rubik', sans-serif;
+	color: #acff00;
+	font-size: 19px;
+	line-height: 10px;
+	letter-spacing: -.63px;
+	margin: 0 0 0px;
+	font-weight: 500;
+	margin-top: 10px;
+}
+</style>

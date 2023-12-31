@@ -14,21 +14,22 @@
                             <li v-for="(item, index) in prouducts" :key="index">
                                 <div class="campain_box ">
                                     <!-- total ticket  -->
-                                    <div class="total_ticket">
-                                        <div class="t_count">
-                                            <div>
-                                                <h6>{{ item.stock_qty }}</h6>
-                                                <p>Total</p>
-                                            </div>
+                                    <div class="available_ticket ">
+                                        <div class="sold">
+                                            <h6>{{ item.total_selling }}</h6>
+                                            <p>Sold</p>
                                         </div>
-                                        <h5>Tickets</h5>
+                                        <div class="total">
+                                            <p>Out of</p>
+                                            <h6>{{ item.total_tickets }}</h6>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="c_campain_left">
                                                 <div class="camp_count">
                                                     <!-- <div id="timer" class=" c_timer" data-endtime="25 october 2024 10:00:00 GMT+01:00"></div> -->
-                                                    <div>BDT&nbsp;{{ item.price }}</div>
+                                                    <div>BDT&nbsp;{{ item.price }}Tk.</div>
                                                 </div>
                                                 <div class="campain_image">
                                                     <!-- Swiper -->
@@ -44,7 +45,7 @@
                                                 <div class="c_price">
                                                     <div class="creadit_ticket">
                                                         <p>Lottery Creadit</p>
-                                                        <h1>BDT{{ item.price }}</h1>
+                                                        <h1>BDT{{ item.price }}TK.</h1>
                                                     </div>
                                                 </div>
                                             </div>
@@ -60,7 +61,9 @@
                                                             <div class="d-flex">
                                                                 <nuxt-link :to="`/product-details/${item.slug}`">View Details</nuxt-link>
                                                                 <!-- <a href="javascript:" class="btn_details show_details" @click="viewDetails(item.slug)">View Details</a> -->
-                                                                <button type="button" @click="addtoCart(item)">add to cart</button>
+                                                                <button type="button" @click="addtoCart(item)" v-if="item.stock_status==1">Add to cart</button>
+                                                                <button type="button" v-else>Stock Out</button>
+
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -270,7 +273,7 @@ export default {
         },
 
         addtoCart(product) {
- 
+
             this.loading = true;
             // const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const existingProduct = this.cart.find(item => item.id === product.id);
@@ -287,8 +290,8 @@ export default {
                         category_id: this.category_id,
                         ticketprice: product.price,
                         thumnail_img: product.thumnail,
-                        addi_pname :'',
-                        addi_thumnail :'',
+                        addi_pname: '',
+                        addi_thumnail: '',
                         ticket_qty: 1,
                         quantity: 1,
                     });

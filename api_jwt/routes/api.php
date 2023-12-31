@@ -122,6 +122,7 @@ Route::group([
     Route::post('submitOrder', [OrderController::class, 'submitOrder']);
     Route::get('getOrder', [OrderController::class, 'getOrder']);
     Route::get('allOrders', [OrderController::class, 'allOrders']);
+    Route::get('activeTickets', [OrderController::class, 'activeTickets']);
     Route::get('orderDetails/{orderid}', [OrderController::class, 'orderDetails']);
     Route::get('addtowish/{slug}', [OrderController::class, 'addtowish']);
     Route::get('allWishList/', [OrderController::class, 'allWishList']);

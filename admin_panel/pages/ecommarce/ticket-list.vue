@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control name" placeholder="Product Name" v-model="searchQuery.name" @input="handleSearch">
                                     </div>
@@ -62,9 +62,22 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-2">
                                     <div class="input-group mb-3">
-                                        <button class="btn btn-primary w-100" type="button" @click="fetchData">Search</button>
+                                        <select class="form-select form-select-solid status" v-model="searchQuery.order_condition" @change="handleSearch">
+                                            <option value="">Order Condition</option>
+                                            <option value="1">NOT NULL ORDER ID</option>
+                                            <option value="2">NULL ORDER ID</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <div class="input-group mb-3">
+                                        <button class="btn btn-primary w-100" type="button" @click="fetchData"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 24 24">
+                                                <path d="M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 19.585938 21.585938 C 20.137937 22.137937 21.033938 22.137938 21.585938 21.585938 C 22.137938 21.033938 22.137938 20.137938 21.585938 19.585938 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z"></path>
+                                            </svg></button>
                                     </div>
                                 </div>
 
@@ -91,7 +104,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item, index) in paginatedData" :key="item.id">
+                                        <tr v-for="(item, index) in paginatedData" :key="item.id" :style="{ backgroundColor: item.category_id === 27 ? 'green' : '' }">
                                             <td>
                                                 {{ (currentPage - 1) * perPage + index + 1 }}
                                             </td>
@@ -102,7 +115,7 @@
                                             </td>
                                             <td>
                                                 <center>{{ item.category_name }}</center>
-                                                
+
                                             </td>
                                             <td>
                                                 <center>{{ item.orderId }}</center>
@@ -196,6 +209,8 @@ export default {
     },
     data() {
         return {
+            sortOrder: 'asc', // Initial sort order
+            sortBy: 'id', // Initial sort column
             tickets: [],
             insertdata: {
                 id: '',
@@ -209,6 +224,7 @@ export default {
             categries: [],
             searchQuery: {
                 orderId: '',
+                order_condition: '',
                 ticket_number: '',
                 name: '',
                 category_id: '',
@@ -260,6 +276,16 @@ export default {
                     item.status == this.searchQuery.status
                 );
             }
+
+            if (this.searchQuery.order_condition === '1') {
+                // Show only items with non-null orderId
+                result = result.filter(item => item.orderId !== null && item.orderId !== undefined);
+            } else if (this.searchQuery.order_condition === '2') {
+                // Show only items with null orderId
+                result = result.filter(item => item.orderId === null || item.orderId === undefined);
+            }
+            //order_condition
+
             return result;
         },
         paginatedData() {
@@ -270,6 +296,22 @@ export default {
 
     },
     methods: {
+        sortTable(column) {
+            if (this.sortBy === column) {
+                // Toggle between ascending and descending order if the same column is clicked
+                this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+            } else {
+                // Set the new column to sort and reset order to ascending
+                this.sortBy = column;
+                this.sortOrder = 'asc';
+            }
+
+            // Perform the sorting logic here
+            this.paginatedData = this.filteredData().sort((a, b) => {
+                const factor = this.sortOrder === 'asc' ? 1 : -1;
+                return a[column] > b[column] ? factor : -factor;
+            });
+        },
         async fetchtickets() {
             // Fetch data from the Laravel API
             const response = await this.$axios.get('/product/summary-report-tickets'); // Update the endpoint accordingly
