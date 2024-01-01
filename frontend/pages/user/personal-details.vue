@@ -22,16 +22,16 @@
 
                     <form @submit.prevent="updateprofile()" id="userSubmitFrm" class="forms-sample" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="input-container">
                                     <input type="hidden" v-model="insertdata.id">
-                                    <input placeholder="First Name " class="input-field" type="text" v-model="insertdata.fname">
-                                    <label for="input-field" class="input-label">First Name </label>
-                                    <span class="text-danger" v-if="errors.fname">{{ errors.fname[0] }}</span>
+                                    <input placeholder="Name " class="input-field" type="text" v-model="insertdata.name">
+                                    <label for="input-field" class="input-label"> Name </label>
+                                    <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                                     <span class="input-highlight"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-none">
                                 <div class="input-container">
                                     <input placeholder="Last Name " class="input-field" type="text" v-model="insertdata.lname">
                                     <label for="input-field" class="input-label">Last Name </label>
@@ -76,21 +76,36 @@
                             <div class="col-md-6">
                                 <div class="input_group input-container">
                                     <label for="nationality" class="s_label">Nationality</label>
-                                    <select v-model="insertdata.nationality_id" class="form-control input-field" id="nationality">
-                                        <option value="" disabled>Select Nationality</option>
-                                        <option v-for="country in countries" :value="country.id" :key="country.id">{{ country.countryname }}</option>
+                                    <select v-model="insertdata.nationality_id" class="form-control input-field" id="nationality" @change="onNationalityChange">
+                                        <option value="">Select Nationality</option>
+                                        <option v-for="country in countries" :value="country.id" :key="country.id" :selected="insertdata.nationality_id === 18">{{ country.name }}</option>
                                     </select>
+
+                                    <span class="text-danger" v-if="errors.nationality_id">{{ errors.nationality_id[0] }}</span>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="input_group input-container">
-                                    <label for="residence" class="s_label">Country Of Residence</label>
-                                    <select v-model="insertdata.country_residence" class="form-control input-field" id="country_residence">
-                                        <option value="" disabled>Select Nationality</option>
-                                        <option v-for="country in countries" :value="country.id" :key="country.id">{{ country.countryname }}</option>
+                                    <label for="residence" class="s_label">City</label>
+                                    <select v-model="insertdata.state_id" class="form-control input-field" id="state">
+                                        <option value="" disabled>Select State</option>
+                                        <option v-for="state in states" :value="state.id" :key="state.id">{{ state.name }}</option>
                                     </select>
+                                    <span class="text-danger" v-if="errors.state_id">{{ errors.state_id[0] }}</span>
+                                    <span class="input-highlight"></span>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="input_group input-container">
+                                    <label for="residence" class="s_label">Address 1</label>
+                                    <input placeholder="Address 1" id="mobile_code" class="input-field" type="text" v-model="insertdata.address_1">
+                                    <span class="text-danger" v-if="errors.address_1">{{ errors.address_1[0] }}</span>
+                                    <span class="input-highlight"></span>
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="input-container">
                                     <input type="submit" class="btn_submit" value="Update">
@@ -116,13 +131,17 @@ export default {
         return {
             loading: false,
             countries: [],
+            states: [],
             insertdata: {
                 id: '',
                 fname: '',
                 lname: '',
                 name: '',
-                nationality_id: '',
+                nationality_id: 18,
+                state_id: '',
                 date_of_birth: '',
+                address_1: '',
+                address_2: '',
                 email: '',
                 phone_number: '',
                 country_residence: '',
@@ -133,21 +152,40 @@ export default {
         }
     },
     mounted() {
+        this.onNationalityChange();
         this.countrys();
         this.defaultLoadingData();
     },
     methods: {
+        async onNationalityChange() {
+            let nationalityId = this.insertdata.nationality_id;
+            let url = `/user/checkState/${nationalityId}`;
+            await this.$axios.get(url)
+                .then(response => {
+                    this.states = response.data.data;
+                })
+                .catch(error => {
+                    // Handle error
+                })
+                .finally(() => {
+                    this.loading = false; // Hide loader after response
+                })
+
+        },
         async updateprofile() {
             this.loading = true;
             const formData = new FormData();
             // formData.append('file', this.file);
-            formData.append('fname', this.insertdata.fname);
+            formData.append('name', this.insertdata.name);
             formData.append('lname', this.insertdata.lname);
             formData.append('email', this.insertdata.email);
             formData.append('phone_number', this.insertdata.phone_number);
             formData.append('nationality_id', this.insertdata.nationality_id);
+            formData.append('state_id', this.insertdata.state_id);
+            formData.append('address_1', this.insertdata.address_1);
+            formData.append('address_2', this.insertdata.address_2);
             formData.append('date_of_birth', this.insertdata.date_of_birth);
-            formData.append('country_residence', this.insertdata.country_residence);
+            // formData.append('country_residence', this.insertdata.country_residence);
             formData.append('gender', this.insertdata.gender);
             const headers = {
                 'Content-Type': 'multipart/form-data'
@@ -181,9 +219,17 @@ export default {
                 this.insertdata.name = response.data.data.name;
                 this.insertdata.email = response.data.data.email;
                 this.insertdata.phone_number = response.data.data.phone_number;
-                this.insertdata.nationality_id = response.data.data.nationality_id;
+                // this.insertdata.nationality_id = response.data.data.nationality_id;
                 this.insertdata.country_residence = response.data.data.country_residence;
                 this.insertdata.gender = response.data.data.gender;
+                this.insertdata.address_1 = response.data.data.address_1;
+                this.insertdata.address_2 = response.data.data.address_2;
+                  this.insertdata.state_id = response.data.data.state_id;
+                this.insertdata.website = response.data.data.website;
+                this.insertdata.github = response.data.data.github;
+                this.insertdata.twitter = response.data.data.twitter;
+                this.insertdata.instagram = response.data.data.instagram;
+                this.insertdata.facebook = response.data.data.facebook;
 
             });
         },

@@ -71,22 +71,25 @@
                             <div class="col-md-6">
                                 <div class="input_group input-container">
                                     <label for="nationality" class="s_label">Nationality</label>
-                                    <select v-model="insertdata.nationality_id" class="form-control input-field" id="nationality">
-                                        <option value="" disabled>Select Nationality</option>
-                                        <option v-for="country in countries" :value="country.id" :key="country.id" :selected="insertdata.nationality_id === 23" disabled>{{ country.countryname }}</option>
+                                    <select v-model="insertdata.nationality_id" class="form-control input-field" id="nationality" @change="onNationalityChange">
+                                        <option value="">Select Nationality</option>
+                                        <option v-for="country in countries" :value="country.id" :key="country.id" :selected="insertdata.nationality_id === 18">{{ country.name }}</option>
                                     </select>
 
+                                    <span class="text-danger" v-if="errors.nationality_id">{{ errors.nationality_id[0] }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input_group input-container">
                                     <label for="residence" class="s_label">City</label>
-                                    <input placeholder="1700000000" id="mobile_code" class="input-field" type="text" v-model="insertdata.phone_number">
-                                    <span class="text-danger" v-if="errors.phone_number">{{ errors.phone_number[0] }}</span>
+                                    <select v-model="insertdata.state_id" class="form-control input-field" id="state">
+                                        <option value="" disabled>Select State</option>
+                                        <option v-for="state in states" :value="state.id" :key="state.id">{{ state.name }}</option>
+                                    </select>
+                                    <span class="text-danger" v-if="errors.state_id">{{ errors.state_id[0] }}</span>
                                     <span class="input-highlight"></span>
                                 </div>
                             </div>
-
 
                             <div class="col-md-6">
                                 <div class="input_group input-container">
@@ -132,15 +135,17 @@ export default {
         return {
             loading: false,
             countries: [],
+            states: [],
             insertdata: {
                 id: '',
                 fname: '',
                 lname: '',
                 name: '',
-                nationality_id: 23,
+                nationality_id: 18,
+                state_id: '',
                 date_of_birth: '',
-                address_1:'',
-                address_2:'',
+                address_1: '',
+                address_2: '',
                 email: '',
                 phone_number: '',
                 country_residence: '',
@@ -151,11 +156,28 @@ export default {
         }
     },
     mounted() {
+        this.onNationalityChange();
         this.countrys();
         //$("#nationality").val(23);
         this.defaultLoadingData();
     },
     methods: {
+
+        async onNationalityChange() {
+            let nationalityId = this.insertdata.nationality_id;
+            let url = `/user/checkState/${nationalityId}`;
+            await this.$axios.get(url)
+                .then(response => {
+                    this.states = response.data.data;
+                })
+                .catch(error => {
+                    // Handle error
+                })
+                .finally(() => {
+                    this.loading = false; // Hide loader after response
+                })
+
+        },
         async updateprofile() {
             this.loading = true;
             const formData = new FormData();
@@ -165,6 +187,7 @@ export default {
             formData.append('email', this.insertdata.email);
             formData.append('phone_number', this.insertdata.phone_number);
             formData.append('nationality_id', this.insertdata.nationality_id);
+            formData.append('state_id', this.insertdata.state_id);
             formData.append('address_1', this.insertdata.address_1);
             formData.append('address_2', this.insertdata.address_2);
             formData.append('date_of_birth', this.insertdata.date_of_birth);
@@ -202,11 +225,12 @@ export default {
                 this.insertdata.name = response.data.data.name;
                 this.insertdata.email = response.data.data.email;
                 this.insertdata.phone_number = response.data.data.phone_number;
-               // this.insertdata.nationality_id = response.data.data.nationality_id;
+                // this.insertdata.nationality_id = response.data.data.nationality_id;
                 this.insertdata.country_residence = response.data.data.country_residence;
                 this.insertdata.gender = response.data.data.gender;
                 this.insertdata.address_1 = response.data.data.address_1;
                 this.insertdata.address_2 = response.data.data.address_2;
+                  this.insertdata.state_id = response.data.data.state_id;
                 this.insertdata.website = response.data.data.website;
                 this.insertdata.github = response.data.data.github;
                 this.insertdata.twitter = response.data.data.twitter;

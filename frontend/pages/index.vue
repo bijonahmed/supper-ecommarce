@@ -23,7 +23,7 @@
         <div class="popup">
             <header>
                 <span>Share With </span>
-                <div class="close"><i class="fa-solid fa-x"></i></div>
+                <div class="close" @click="closepopup"><i class="fa-solid fa-x"></i></div>
             </header>
             <div class="content">
                 <p>Share this link via</p>
@@ -78,6 +78,9 @@ export default {
 
     },
     methods: {
+        closepopup(){
+            $(".modal_share").fadeOut();
+        },
         loadCart() {
             const savedCart = localStorage.getItem('cart');
 

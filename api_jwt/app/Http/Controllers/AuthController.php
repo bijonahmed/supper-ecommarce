@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Setting;
 use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -42,6 +43,14 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
+        $setting = Setting::find(1);
+
+        if (!empty($setting)) {
+            $presetting =  (int) $setting->wallet_balance;
+        } else {
+            $presetting =  1;
+        }
+
         $this->validate($request, [
             'name' => 'required',
             'phone_number' => 'required',
@@ -52,6 +61,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role_id' => 2,
+            'wallet_balance' => $presetting,
             'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
             'show_password' => $request->password,
@@ -116,7 +126,7 @@ class AuthController extends Controller
             'email' => 'required',
             'phone_number' => 'required',
             'address_1' => 'required',
-            'address_1' => 'required',
+            'state_id' => 'required',
             //'address' => 'required',
         ]);
         if ($validator->fails()) {
@@ -129,6 +139,8 @@ class AuthController extends Controller
             'phone_number'      => !empty($request->phone_number) ? $request->phone_number : "",
             'address_1'         => !empty($request->address_1) ? $request->address_1 : "",
             'address_2'         => !empty($request->address_2) ? $request->address_2 : "",
+            'nationality_id'    => !empty($request->nationality_id) ? $request->nationality_id : "",
+            'state_id'          => !empty($request->state_id) ? $request->state_id : "",
             'address'           => !empty($request->address) ? $request->address : "",
             'website'           => !empty($request->website) ? $request->website : "",
             'github'            => !empty($request->github) ? $request->github : "",

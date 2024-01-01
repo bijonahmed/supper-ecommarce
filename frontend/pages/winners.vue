@@ -15,7 +15,7 @@
                             <p>Buy any of our products and get a chance to win amazing prizes. Too good to be true? Have a
                                 look at some of our previous winners and come join the joy of winning!</p>
     
-                            <p>All draws are regulated by the Dubai Economy & Tourism.</p>
+                           
                         </div>
                     </div>
                 </div>

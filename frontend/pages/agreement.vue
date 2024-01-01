@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="user-agreement" style="padding: 20px;">
-                
+
                         <h1>User Agreement</h1>
                         <p>Last updated: 1 January 2024</p>
                         <h4>Apple is not a sponsor nor is it involved in the activities of Winup360 campaign draws in any manner.
@@ -683,171 +683,172 @@
                             </li>
                             <li>
                                 18. Winup360 DRAW TERMS ("DRAW TERMS")
-                                
+
+                            <li>
+                                18.1 &nbsp; In addition to your agreement with the Terms, the following provisions apply with
+                                respect to
+                                you
+                                participating in our contest draws ("Draw(s)") and winning the prizes ("Prize(s)").
+
+                            </li>
+                            <li>
+                                18.2 &nbsp; We may amend these Draw Terms at any point in time without notice and the amendments
+                                will take
+                                effect
+                                once they have been displayed on the Platform. You acknowledge and agree that it is your
+                                responsibility to
+                                review these Draw Terms periodically to familiarize yourself with any modifications. Your continued
+                                use of
+                                the Platform and/or entry into Draws following any amendments shall be construed as acceptance of
+                                those
+                                amendments.
+
+                            </li>
+                            <li>
+                                18.3 &nbsp; Draws will be approved by Futuregenit Limited are in accordance with the guidelines (as
+                                such they
+                                may be
+                                amended from time to time). A valid permit number will be issued for each respective Draw.
+                            </li>
+                            <li>
+                                18.4 &nbsp; Only users with a valid Membership to the Platform that satisfies all the Terms are
+                                eligible to
+                                enter
+                                into our Draws.
+                            </li>
+                            <li>
+                                18.5. The types of Draws vary on the Platform. Each shopping card purchased on the Winup360 App in
+                                accordance
+                                with these Terms is associated with a specific type of Draw whereby a user is awarded at least a
+                                single
+                                complimentary ticket ("Ticket") to that specified Draw after purchasing the shopping card.
+                            </li>
+                            <li>
+                                18.6 &nbsp; If you purchase a shopping card on the Winup360 App, you are entitled to redeem the
+                                shopping card
+                                in part
+                                or in full at our online or physical WinUp World stores that stock a host of WinUp branded
+                                merchandise. Your
+                                shopping card(s) do not have an expiry date and can be redeemed at any time of your choice.
+                            </li>
+                            <li>
+                                18.7 &nbsp; To collect your product(s), you must visit our premises within fifteen (15) calendar
+                                days from
+                                purchasing
+                                the product(s) and present your valid identification (such as your national identification card,
+                                passport,
+                                driver's license, etc.) as may be required in our sole discretion. Winup360 may, at its sole
+                                discretion,
+                                allow an individual who has been given a written, valid and effective Power of Attorney (POA) by you
+                                to
+                                collect the product, subject to them presenting the necessary identification. Winup360 will evaluate
+                                any
+                                such reliance on a POA on a case-by-case basis and cannot guarantee that an individual with a POA
+                                from you
+                                will be allowed to collect the product on your behalf. Failure to collect the purchased product
+                                within this
+                                time frame will result in such product purchase being canceled.
+                            </li>
+                            <li>
+                                18.8 &nbsp; Winup360 reserves the right, without prior notice, to consider any unutilized shopping
+                                card
+                                credits in
+                                your Wallet waived by you after a reasonable amount of time.
+                            </li>
+                            <li>
+                                18.9 &nbsp; Ticket numbers are computer generated and may not be sequential to the order in which
+                                the
+                                shopping cards
+                                they are associated with are purchased. You cannot choose Ticket numbers as they are generated only
+                                upon
+                                checkout and completion of purchase of the shopping cards.
+                            </li>
+                            <li>
+                                18.10 &nbsp; Tickets awarded to you through your use of our Platform are neither refundable nor
+                                transferable
+                                and are
+                                owned solely and exclusively by you.
+                            </li>
+                            <li>
+                                18.11 &nbsp; The length of each Draw varies and the date when the Prizes are awarded can occur on
+                                any day of
+                                the week
+                                for the Draws that have 'sold out' a minimum of 24 hours prior to the day of the Draw. The Draw
+                                shall occur
+                                in the presence of a government representative, unless the government authority approves otherwise,
+                                and as
+                                such the results of any Draw are not subject to negotiation, interference, challenge, or argument by
+                                a user.
+                                The Draw date will be subject to the government representative's availability.
+                            </li>
+                            <li>
+                                18.12 &nbsp; The deadline to enter any Draw is prior to the sell-out of all shopping cards specified
+                                within
+                                the Draw,
+                                or prior to the closure of the Draw (which happens before the Draw date); or, in the case of a timed
+                                Draw,
+                                prior to the end of the timer displayed on the campaign box of the specific Draw. The period of the
+                                Draws
+                                can be extended at Winup360's sole discretion, and we will notify you of any such extension.
+                            </li>
+                            <li>
+                                18.13 &nbsp; Winners of the Draws are selected by the government representative and will be notified
+                                on the
+                                day the
+                                Draw occurs. The names of winners may also be announced in the local and regional press as well as
+                                on the
+                                Platform and our associated social (online) media profiles, unless you specifically advise us
+                                otherwise in
+                                writing prior to the Draw. Unless otherwise specified, the number of winners per Draw will always be
+                                one
+                                (1).
+                            </li>
+                            <li>
+                                18.14 &nbsp; On the Draw day, an email will be sent to the registered email on the Platform
+                                detailing the
+                                next steps
+                                and how you can claim the Prize, which may include the following:
+                                <ul>
                                     <li>
-                                        18.1 &nbsp; In addition to your agreement with the Terms, the following provisions apply with
-                                        respect to
-                                        you
-                                        participating in our contest draws ("Draw(s)") and winning the prizes ("Prize(s)").
+                                        18.14.1 &nbsp; In the event the winner is based in the Bangladesh, then he/she needs to collect
+                                        the Prize
+                                        from our
+                                        premises within sixty (60) calendar days and present valid identification as may be required, in
+                                        our sole
+                                        discretion, in order to collect the Prize. Failure to collect the Prize within this time period
+                                        WILL result
+                                        in us transferring the Prize to the government authority after which Winup360 will have no
+                                        further
+                                        responsibility with respect to the Prize. Post transfer, the winner must liaise with the
+                                        government
+                                        authority whereupon he/she will be subject to their terms and conditions.
 
                                     </li>
                                     <li>
-                                        18.2 &nbsp; We may amend these Draw Terms at any point in time without notice and the amendments
-                                        will take
-                                        effect
-                                        once they have been displayed on the Platform. You acknowledge and agree that it is your
-                                        responsibility to
-                                        review these Draw Terms periodically to familiarize yourself with any modifications. Your continued
-                                        use of
-                                        the Platform and/or entry into Draws following any amendments shall be construed as acceptance of
-                                        those
-                                        amendments.
-
+                                        18.14.2 &nbsp;In the event a winner does not reside in the Bangladesh, we will either courier
+                                        the Prize
+                                        to the winner
+                                        by air or land (as we may determine in our sole discretion), or ship the Prize to the winner's
+                                        country of
+                                        residence (nearest seaport as selected by us in our sole discretion) free of charge, and we will
+                                        insure
+                                        shipment of the Prize until delivery thereof at the port. Collection from the port and clearance
+                                        through the
+                                        port and customs shall be the responsibility, and at the cost, of the winner. Accordingly, all
+                                        local taxes,
+                                        custom duties, and any other form of expense beyond shipping and delivery at the port will be
+                                        paid by the
+                                        winner.
                                     </li>
-                                    <li>
-                                        18.3 &nbsp; Draws will be approved by Futuregenit Limited are in accordance with the guidelines (as
-                                        such they
-                                        may be
-                                        amended from time to time). A valid permit number will be issued for each respective Draw.
-                                    </li>
-                                    <li>
-                                        18.4 &nbsp; Only users with a valid Membership to the Platform that satisfies all the Terms are
-                                        eligible to
-                                        enter
-                                        into our Draws.
-                                    </li>
-                                    <li>
-                                        18.5. The types of Draws vary on the Platform. Each shopping card purchased on the Winup360 App in
-                                        accordance
-                                        with these Terms is associated with a specific type of Draw whereby a user is awarded at least a
-                                        single
-                                        complimentary ticket ("Ticket") to that specified Draw after purchasing the shopping card.
-                                    </li>
-                                    <li>
-                                        18.6 &nbsp; If you purchase a shopping card on the Winup360 App, you are entitled to redeem the
-                                        shopping card
-                                        in part
-                                        or in full at our online or physical WinUp World stores that stock a host of WinUp branded
-                                        merchandise. Your
-                                        shopping card(s) do not have an expiry date and can be redeemed at any time of your choice.
-                                    </li>
-                                    <li>
-                                        18.7 &nbsp; To collect your product(s), you must visit our premises within fifteen (15) calendar
-                                        days from
-                                        purchasing
-                                        the product(s) and present your valid identification (such as your national identification card,
-                                        passport,
-                                        driver's license, etc.) as may be required in our sole discretion. Winup360 may, at its sole
-                                        discretion,
-                                        allow an individual who has been given a written, valid and effective Power of Attorney (POA) by you
-                                        to
-                                        collect the product, subject to them presenting the necessary identification. Winup360 will evaluate
-                                        any
-                                        such reliance on a POA on a case-by-case basis and cannot guarantee that an individual with a POA
-                                        from you
-                                        will be allowed to collect the product on your behalf. Failure to collect the purchased product
-                                        within this
-                                        time frame will result in such product purchase being canceled.
-                                    </li>
-                                    <li>
-                                        18.8 &nbsp; Winup360 reserves the right, without prior notice, to consider any unutilized shopping
-                                        card
-                                        credits in
-                                        your Wallet waived by you after a reasonable amount of time.
-                                    </li>
-                                    <li>
-                                        18.9 &nbsp; Ticket numbers are computer generated and may not be sequential to the order in which
-                                        the
-                                        shopping cards
-                                        they are associated with are purchased. You cannot choose Ticket numbers as they are generated only
-                                        upon
-                                        checkout and completion of purchase of the shopping cards.
-                                    </li>
-                                    <li>
-                                        18.10 &nbsp; Tickets awarded to you through your use of our Platform are neither refundable nor
-                                        transferable
-                                        and are
-                                        owned solely and exclusively by you.
-                                    </li>
-                                    <li>
-                                        18.11 &nbsp; The length of each Draw varies and the date when the Prizes are awarded can occur on
-                                        any day of
-                                        the week
-                                        for the Draws that have 'sold out' a minimum of 24 hours prior to the day of the Draw. The Draw
-                                        shall occur
-                                        in the presence of a government representative, unless the government authority approves otherwise,
-                                        and as
-                                        such the results of any Draw are not subject to negotiation, interference, challenge, or argument by
-                                        a user.
-                                        The Draw date will be subject to the government representative's availability.
-                                    </li>
-                                    <li>
-                                        18.12 &nbsp; The deadline to enter any Draw is prior to the sell-out of all shopping cards specified
-                                        within
-                                        the Draw,
-                                        or prior to the closure of the Draw (which happens before the Draw date); or, in the case of a timed
-                                        Draw,
-                                        prior to the end of the timer displayed on the campaign box of the specific Draw. The period of the
-                                        Draws
-                                        can be extended at Winup360's sole discretion, and we will notify you of any such extension.
-                                    </li>
-                                    <li>
-                                        18.13 &nbsp; Winners of the Draws are selected by the government representative and will be notified
-                                        on the
-                                        day the
-                                        Draw occurs. The names of winners may also be announced in the local and regional press as well as
-                                        on the
-                                        Platform and our associated social (online) media profiles, unless you specifically advise us
-                                        otherwise in
-                                        writing prior to the Draw. Unless otherwise specified, the number of winners per Draw will always be
-                                        one
-                                        (1).
-                                    </li>
-                                    <li>
-                                        18.14 &nbsp; On the Draw day, an email will be sent to the registered email on the Platform
-                                        detailing the
-                                        next steps
-                                        and how you can claim the Prize, which may include the following:
-                                        <ul>
-                                            <li>
-                                                18.14.1 &nbsp; In the event the winner is based in the Bangladesh, then he/she needs to collect
-                                                the Prize
-                                                from our
-                                                premises within sixty (60) calendar days and present valid identification as may be required, in
-                                                our sole
-                                                discretion, in order to collect the Prize. Failure to collect the Prize within this time period
-                                                WILL result
-                                                in us transferring the Prize to the government authority after which Winup360 will have no
-                                                further
-                                                responsibility with respect to the Prize. Post transfer, the winner must liaise with the
-                                                government
-                                                authority whereupon he/she will be subject to their terms and conditions.
-
-                                            </li>
-                                            <li>
-                                                18.14.2 &nbsp;In the event a winner does not reside in the Bangladesh, we will either courier
-                                                the Prize
-                                                to the winner
-                                                by air or land (as we may determine in our sole discretion), or ship the Prize to the winner's
-                                                country of
-                                                residence (nearest seaport as selected by us in our sole discretion) free of charge, and we will
-                                                insure
-                                                shipment of the Prize until delivery thereof at the port. Collection from the port and clearance
-                                                through the
-                                                port and customs shall be the responsibility, and at the cost, of the winner. Accordingly, all
-                                                local taxes,
-                                                custom duties, and any other form of expense beyond shipping and delivery at the port will be
-                                                paid by the
-                                                winner.
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    18.15 &nbsp; Once a Prize is handed to/collected by the courier/handler for delivery, risk and
-                                    responsibility
-                                    will
-                                    transfer to the winner and we no longer hold claim nor responsibility for any damage/injury incurred
-                                    in
-                                    transit, or upon delivery.
+                                </ul>
+                            </li>
+                            <li>
+                                18.15 &nbsp; Once a Prize is handed to/collected by the courier/handler for delivery, risk and
+                                responsibility
+                                will
+                                transfer to the winner and we no longer hold claim nor responsibility for any damage/injury incurred
+                                in
+                                transit, or upon delivery.
                             </li>
                             <li>
                                 18.16 &nbsp; By entering the Draw, all winners consent to the use of any and all content made by or

@@ -447,8 +447,16 @@ class OrderController extends Controller
 
     public function submitOrder(Request $request)
     {
-        //dd($request->all());
-        //dd($request->all());
+
+        //$pre_setting  =  Setting::find(1);
+        $chkWBalance = User::where('id', $this->userid)->first();
+        if (!empty($chkWBalance) && floatval($chkWBalance->wallet_balance) > 0) {
+            //echo "have balance";
+            $udata['wallet_balance'] = 0;
+            User::where('id', $this->userid)->update($udata);
+
+        }
+        
         $validator = Validator::make($request->all(), [
             'txtid'           => 'required',
         ]);

@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-md-3">
 
-                    <div class="offer_box">
+                    <div class="offer_box" v-if="loggedIn">
                         <div class="checkboxes__item">
                             <label class="checkbox style-e">
                                 <input type="checkbox" v-model="isChecked" @click="toggleWalletInfo">
@@ -85,7 +85,7 @@
                         </div>
                         <div>
                             <h6> Lottery Wallet</h6>
-                            <h6>available balance: {{ pre_setting.currency }}&nbsp;{{ pre_setting.wallet_balance }}</h6>
+                            <h6 v-if="isChecked">available balance: {{ pre_setting.currency }}&nbsp;{{ pre_setting.wallet_balance }}</h6>
                         </div>
                     </div>
                     <div class="promo_box offer_box">
@@ -178,18 +178,18 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="input-container">
-                                                <input placeholder="Password" class="input-field" id="password-field" type="password" v-model="login.password">
+                                                <input placeholder="Password" class="input-field" id="password-field" :type="showPassword ? 'text' : 'password'" v-model="login.password">
                                                 <label for="input-field" class="input-label">Password </label>
                                                 <span class="text-danger" v-if="errors.password">{{ errors.password[0]
                                                     }}</span>
                                                 <span class="input-highlight"></span>
-                                                <i toggle="#password-field" class="fa-solid fa-eye toggle-password"></i>
+                                                <i toggle="#password-field" class="fa-solid fa-eye toggle-password" @click="showhidePassword"></i>
                                             </div>
                                         </div>
                                         <div class="row pe-0">
                                             <div class="col-6">
                                                 <div class="input-container">
-                                                    <a href="javascript:" class="f_link"><small>
+                                                    <a href="javascript:" class="f_link d-none"><small>
                                                             <p style="color:white;">Forget Password?</p>
                                                         </small></a>
                                                 </div>
@@ -258,6 +258,7 @@ export default {
                 email: '',
                 password: '',
             },
+            showPassword: false,
             invaliderror: '',
             notifmsg: '',
             errors: {},
@@ -277,7 +278,9 @@ export default {
     },
 
     methods: {
-
+        showhidePassword() {
+            this.showPassword = !this.showPassword;
+        },
         loadTotalAmut() {
             // console.log("loadTotalAmut" + this.subtotal);
             const itemsubtotal =  this.itemSubtotal;
@@ -365,7 +368,7 @@ export default {
         async setting() {
             try {
                 this.loading = true; // Show loader
-                const response = await this.$axios.get('/unauthenticate/setting');
+                const response = await this.$axios.get('/user/setting');
                 this.pre_setting = response.data;
                 this.wallet_balance = response.data.wallet_balance;
                 this.shippingFee = response.data.shipping_fee;

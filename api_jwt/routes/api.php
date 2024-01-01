@@ -61,6 +61,9 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+
+    Route::get('setting/', [UserController::class, 'preSetting']);
+    Route::get('checkState/{id}', [UserController::class, 'checkStates']);
     Route::get('allUsers', [UserController::class, 'AllUsersList']);
     Route::get('allemployeeType', [UserController::class, 'allemployeeType']);
     Route::get('employeeRow/{id}', [UserController::class, 'employeeRow']);
@@ -223,6 +226,7 @@ Route::group([
     Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
     Route::get('countrys/', [UnauthenticatedController::class, 'getCountrys']);
     Route::get('setting/', [UnauthenticatedController::class, 'preSetting']);
+
     Route::post('check-coupon/', [UnauthenticatedController::class, 'checkCoupon']);
     //Route::get('defaultShowingMovies', [UnauthenticatedController::class, 'defaultShowingMovies']);
 

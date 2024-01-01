@@ -136,16 +136,16 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="input-container">
-                                    <input placeholder="Password" class="input-field" id="password-field" type="password" v-model="login.password">
+                                    <input placeholder="Password" class="input-field" id="password-field" :type="showPassword ? 'text' : 'password'" v-model="login.password">
                                     <label for="input-field" class="input-label">Password </label>
                                     <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
                                     <span class="input-highlight"></span>
-                                    <i toggle="#password-field" class="fa-solid fa-eye toggle-password"></i>
+                                    <i toggle="#password-field" class="fa-solid fa-eye toggle-password" @click="showhidePassword"></i>
                                 </div>
                             </div>
                             <div class="row pe-0">
                                 <div class="col-6">
-                                    <div class="input-container">
+                                    <div class="input-container  d-none">
                                         <a href="javascript:" class="f_link"><small>
                                                 <p style="color:white;">Forget Password?</p>
                                             </small></a>
@@ -217,6 +217,7 @@ export default {
                 email: '',
                 password: '',
             },
+            showPassword: false,
             invaliderror: '',
             notifmsg: '',
             errors: {},
@@ -233,6 +234,10 @@ export default {
 
     },
     methods: {
+        showhidePassword() {
+            this.showPassword = !this.showPassword;
+        },
+
         async wishlist(slug) {
             try {
                 this.loading = true; // Show loader

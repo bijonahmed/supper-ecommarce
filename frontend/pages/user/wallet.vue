@@ -24,7 +24,7 @@
                     <div class="cart_list">
                         <div class="wallet_available">
                             <p>Available Balance in winup360 Wallet</p>
-                            <h1>BDT5.00</h1>
+                            <h1>BDT{{ pre_setting.wallet_balance }}</h1>
                         </div>
                     </div>
 
@@ -46,13 +46,27 @@ export default {
     },
     data() {
         return {
-
+            pre_setting: '',
         }
     },
     mounted() {
-
+        this.setting();
     },
     methods: {
+
+        async setting() {
+            try {
+                this.loading = true; // Show loader
+                const response = await this.$axios.post('/auth/me');
+                this.pre_setting = response.data;
+            } catch (error) {
+                console.error('Error fetching sellingFast:', error);
+
+            } finally {
+                this.loading = false; // Hide loader after response or error
+            }
+
+        },
 
         addtoCart() {
             this.$router.push('/cart');

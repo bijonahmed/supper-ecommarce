@@ -72,7 +72,7 @@
                                 <p>TK{{ item.price }}</p>
                             </nuxt-link>
                         </div> -->
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col-md-4 col-12 m-auto">
                             <button class="btn_submit m-0 mb-2 w-100">Explore More</button>
                         </div>

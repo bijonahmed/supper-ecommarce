@@ -37,16 +37,16 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="input-container">
-                                                <input placeholder="Password" class="input-field" id="password-field" type="password" v-model="login.password">
+                                                <input placeholder="Password" class="input-field" :type="showPassword ? 'text' : 'password'" id="password-field" type="password" v-model="login.password">
                                                 <label for="input-field" class="input-label">Password </label>
                                                 <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
                                                 <span class="input-highlight"></span>
-                                                <i toggle="#password-field" class="fa-solid fa-eye toggle-password"></i>
+                                                <i toggle="#password-field" class="fa-solid fa-eye toggle-password" @click="showhidePassword"></i>
                                             </div>
                                         </div>
                                         <div class="row pe-0">
                                             <div class="col-6">
-                                                <div class="input-container">
+                                                <div class="input-container d-none">
                                                     <a href="javascript:" class="f_link">Forget Password?</a>
                                                 </div>
                                             </div>
@@ -133,21 +133,21 @@
 
                                         <div class="col-md-12">
                                             <div class="input-container">
-                                                <input placeholder="Password" class="input-field" id="password-field2" type="password" v-model="insertdata.password">
+                                                <input placeholder="Password" class="input-field" :type="showRegPassword ? 'text' : 'password'" v-model="insertdata.password">
                                                 <label for="input-field" class="input-label">Password </label>
                                                 <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
                                                 <span class="input-highlight"></span>
-                                                <i toggle="#password-field2" class="fa-solid fa-eye toggle-password"></i>
+                                                <i toggle="#password-field2" class="fa-solid fa-eye toggle-password" @click="showhidePasswordreg"></i>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12">
                                             <div class="input-container">
-                                                <input placeholder="Confirm Password" class="input-field" id="password-field2" type="password" v-model="insertdata.password_confirmation">
+                                                <input placeholder="Confirm Password" class="input-field" id="password-field2" :type="showRegConPassword ? 'text' : 'password'" v-model="insertdata.password_confirmation">
                                                 <label for="input-field" class="input-label">Confirm Password </label>
                                                 <span class="text-danger" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</span>
                                                 <span class="input-highlight"></span>
-                                                <i toggle="#password-field2" class="fa-solid fa-eye toggle-password"></i>
+                                                <i toggle="#password-field2" class="fa-solid fa-eye toggle-password" @click="showhidePasswordregConfig"></i>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -178,6 +178,7 @@ export default {
             countries: [],
             invaliderror: '',
             insertdata: {
+                name:'',
                 fname: '',
                 lname: '',
                 email: '',
@@ -188,7 +189,9 @@ export default {
                 password: '',
                 password_confirmation: '',
             },
-
+            showPassword: false,
+            showRegPassword: false,
+            showRegConPassword: false,
             login: {
                 email: '',
                 password: '',
@@ -198,9 +201,22 @@ export default {
         }
     },
     mounted() {
-      //  this.countrys();
+        //  this.countrys();
     },
     methods: {
+
+        showhidePassword() {
+            this.showPassword = !this.showPassword;
+        },
+
+        showhidePasswordreg() {
+            this.showRegPassword = !this.showRegPassword;
+        },
+
+        showhidePasswordregConfig() {
+            this.showRegConPassword = !this.showRegConPassword;
+        },
+
         async countrys() {
             const response = await this.$axios.get('/unauthenticate/countrys');
             this.countries = response.data;
