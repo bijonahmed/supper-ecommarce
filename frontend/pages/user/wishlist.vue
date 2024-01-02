@@ -82,6 +82,7 @@
     <!--desktop view profile section end here  -->
 
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

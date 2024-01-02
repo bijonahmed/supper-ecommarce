@@ -222,6 +222,7 @@
     </section>
 
     <Footer />
+    <MobileMenu/>
 
 </div>
 </template>
@@ -368,7 +369,7 @@ export default {
         async setting() {
             try {
                 this.loading = true; // Show loader
-                const response = await this.$axios.get('/user/setting');
+                const response = await this.$axios.get('/unauthenticate/setting');
                 this.pre_setting = response.data;
                 this.wallet_balance = response.data.wallet_balance;
                 this.shippingFee = response.data.shipping_fee;

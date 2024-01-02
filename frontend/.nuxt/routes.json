@@ -77,11 +77,11 @@
     "_name": "_24d0e013"
   },
   {
-    "name": "ticket",
-    "path": "/ticket",
-    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\ticket.vue",
-    "chunkName": "pages/ticket",
-    "_name": "_e2861408"
+    "name": "verification",
+    "path": "/verification",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\verification.vue",
+    "chunkName": "pages/verification",
+    "_name": "_1f03c0ea"
   },
   {
     "name": "winners",

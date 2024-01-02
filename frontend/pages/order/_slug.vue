@@ -40,10 +40,6 @@
                                             <p>{{ placeOn }}</p>
                                         </li>
 
-
-
-                                        
-
                                     </ul>
                                     <div class="row d-none">
                                         <div class="col-md-8">
@@ -62,6 +58,7 @@
 
     </section>
     <Footer />
+    <MobileMenu />
 </div>
 </template>
 

@@ -54,6 +54,7 @@
     </div>
 
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

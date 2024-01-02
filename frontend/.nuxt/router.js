@@ -15,7 +15,7 @@ const _4bb80374 = () => interopDefault(import('..\\pages\\payment.vue' /* webpac
 const _15e31887 = () => interopDefault(import('..\\pages\\privacy-policy.vue' /* webpackChunkName: "pages/privacy-policy" */))
 const _6fc18b58 = () => interopDefault(import('..\\pages\\products.vue' /* webpackChunkName: "pages/products" */))
 const _24d0e013 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages/register" */))
-const _e2861408 = () => interopDefault(import('..\\pages\\ticket.vue' /* webpackChunkName: "pages/ticket" */))
+const _1f03c0ea = () => interopDefault(import('..\\pages\\verification.vue' /* webpackChunkName: "pages/verification" */))
 const _c333c558 = () => interopDefault(import('..\\pages\\winners.vue' /* webpackChunkName: "pages/winners" */))
 const _01d93f48 = () => interopDefault(import('..\\pages\\user\\message.vue' /* webpackChunkName: "pages/user/message" */))
 const _d439fa34 = () => interopDefault(import('..\\pages\\user\\notification.vue' /* webpackChunkName: "pages/user/notification" */))
@@ -91,9 +91,9 @@ export const routerOptions = {
     component: _24d0e013,
     name: "register"
   }, {
-    path: "/ticket",
-    component: _e2861408,
-    name: "ticket"
+    path: "/verification",
+    component: _1f03c0ea,
+    name: "verification"
   }, {
     path: "/winners",
     component: _c333c558,

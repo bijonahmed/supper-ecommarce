@@ -385,6 +385,7 @@
 
 
         <Footer/>
+        <MobileMenu/>
     </div>
 </template>
 

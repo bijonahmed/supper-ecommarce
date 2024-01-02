@@ -118,6 +118,7 @@
         </div>
     </div>
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

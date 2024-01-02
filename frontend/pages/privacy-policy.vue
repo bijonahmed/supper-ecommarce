@@ -343,6 +343,7 @@
         </div>
     </section>
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

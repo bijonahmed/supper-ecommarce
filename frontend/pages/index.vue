@@ -3,11 +3,13 @@
     <Navbar />
     <MainSlider />
     <SellingFastSlider />
+    
     <Banner />
     <ExploreCampain />
     <!-- <SoldOut />
     <Winner /> -->
     <Footer />
+
 
     <span v-if="loggedIn">
         <nuxt-link to="/user/message" class="bell_message ">

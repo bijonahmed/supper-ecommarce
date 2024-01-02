@@ -23,7 +23,7 @@
                         <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                             <div class="login_section">
 
-                                <center><span class="text-danger text-center">{{ invaliderror }}</span></center>
+                                <center><span class="text-danger text-center" id="dismessage">{{ dismessage }}</span></center>
                                 <form @submit.prevent="userLogin()" id="formrest_login" class="forms-sample" enctype="multipart/form-data">
                                     <h5>Login</h5>
                                     <div class="row">
@@ -92,7 +92,7 @@
                                         <div class="col-md-12">
                                             <div class="input_group input-container">
                                                 <label for="nationality" class="s_label">Phone</label>
-                                                <input placeholder="1700000000" id="mobile_code" class="input-field" type="text" v-model="insertdata.phone_number">
+                                                <input placeholder="01700000000" id="mobile_code" class="input-field" type="text" v-model="insertdata.phone_number">
                                                 <span class="text-danger" v-if="errors.phone_number">{{ errors.phone_number[0] }}</span>
                                                 <span class="input-highlight"></span>
                                             </div>
@@ -165,6 +165,7 @@
         </div>
     </div>
     <Footer />
+    <MobileMenu />
 </div>
 </template>
 
@@ -178,7 +179,7 @@ export default {
             countries: [],
             invaliderror: '',
             insertdata: {
-                name:'',
+                name: '',
                 fname: '',
                 lname: '',
                 email: '',
@@ -189,6 +190,7 @@ export default {
                 password: '',
                 password_confirmation: '',
             },
+            dismessage: '',
             showPassword: false,
             showRegPassword: false,
             showRegConPassword: false,
@@ -244,7 +246,7 @@ export default {
                 if (process.client) {
                     $("#register_msg").html("Congratulations! 🎉 You've successfully registered!");
                     this.$router.push({
-                        path: '/login'
+                        path: '/verification'
                     });
                     $("#pills-home-tab").click();
                 }
@@ -258,40 +260,44 @@ export default {
 
         async userLogin() {
             try {
-
                 const postData = {
                     email: this.login.email,
                     password: this.login.password,
                     // Add other parameters as needed
                 };
-                let {
+
+                this.dismessage = "";
+                const {
                     data
-                } = await this.$axios.post('/auth/login', postData); //await this.login.post('/auth/login');
+                } = await this.$axios.post('/auth/login', postData);
                 await this.$auth.setUserToken(data.access_token);
                 this.$router.push('/user/profile');
-
             } catch (err) {
-
-                if (err.response.status === 422) {
+                if (err.response && err.response.status === 422) {
                     this.errors = err.response.data.errors;
                     this.errorHandler(err);
-                }
+                } else if (err.response && err.response.status === 401) {
+                    console.error(err.response.data.errors.account[0]);
 
-                console.log(err)
+                    console.log("------" + err.response.data.errors.account[0]);
+                    this.dismessage = err.response.data.errors.account[0];
+                } else {
+                    console.error(err);
+                }
             }
+
         },
 
         errorHandler(error) {
             // Check for specific error messages
             if (error.response && error.response.data.errors && error.response.data.errors.account) {
                 // Display the specific error message to the user
-                console.log("error : " + error.response.data.errors.account[0]);
+                console.log("error : " + error.response.data.errors.account);
                 this.invaliderror = error.response.data.errors.account[0];
                 //this.$toast.error(error.response.data.errors.account[0]);
             } else {
                 console.log("An error occurred. Please try again later.");
-                // Display a generic error message for other types of errors
-                //  this.$toast.error('An error occurred. Please try again later.');
+
             }
         },
 

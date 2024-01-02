@@ -17,7 +17,7 @@
                                             <nuxt-link to="/user/profile">My Account</nuxt-link>
                                         </li>
                                         <li>
-                                            <nuxt-link to="/ticket">Active Ticket</nuxt-link>
+                                            <nuxt-link to="/user/ticket">Active Ticket</nuxt-link>
                                         </li>
                                     </ul>
                                 </div>
@@ -98,6 +98,6 @@
             </div>
         </div>
     </footer>
-    <MobileMenu/>
+ 
 </div>
 </template>

@@ -122,6 +122,7 @@
     <!--desktop view profile section end here  -->
     <LeftsidebarMobile />
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

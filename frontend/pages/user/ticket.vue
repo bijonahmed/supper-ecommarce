@@ -68,11 +68,13 @@
         </div>
     </div>
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 
 <script>
 export default {
+    middleware: "auth",
     head: {
         title: 'Active Ticket',
     },

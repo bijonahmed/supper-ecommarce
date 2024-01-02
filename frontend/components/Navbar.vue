@@ -1,6 +1,6 @@
 <template>
 <div>
-    <section class="top_nav">
+    <section class="top_nav app_hide">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -18,7 +18,8 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                                     <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="https://www.facebook.com/winup360" target="_blank">Need Help? Contact us
+                                        <a class="nav-link active" aria-current="page" href="https://www.facebook.com/winup360" target="_blank">Need Help? Contact
+                                            us
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -89,6 +90,13 @@
     <section class="mobile_header app_show">
         <div class="container">
             <div class="row">
+                <div class="col-3 m-auto ">
+                    <div class="header_button my-1" style="border-radius: 5px;" @click="redirectHomePages">
+                       <img src="/images/logo.png" style="width: 100%;" alt="" loading="lazy"> 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <div class="header_button">
                         <nuxt-link to="/" :class="{ 'active': $route.path === '/' }">
@@ -151,6 +159,9 @@ export default {
 
     },
     methods: {
+        redirectHomePages() {
+            this.$router.push('/');
+        },
         loadCart() {
             const savedCart = localStorage.getItem('cart');
 

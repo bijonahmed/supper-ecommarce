@@ -44,7 +44,7 @@
                                         <div class="col-md-12">
                                             <div class="input_group input-container">
                                                 <label for="nationality" class="s_label">Phone</label>
-                                                <input placeholder="1700000000" id="mobile_code" class="input-field" type="text" v-model="insertdata.phone_number">
+                                                <input placeholder="01700000000" id="mobile_code" class="input-field" type="text" v-model="insertdata.phone_number">
                                                 <span class="text-danger" v-if="errors.phone_number">{{ errors.phone_number[0] }}</span>
                                                 <span class="input-highlight"></span>
                                             </div>
@@ -117,6 +117,7 @@
         </div>
     </div>
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

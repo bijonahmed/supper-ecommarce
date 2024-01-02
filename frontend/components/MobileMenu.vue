@@ -1,7 +1,7 @@
 <template>
-<div>
+<div style="position: sticky; bottom: 0; width: 100%;z-index: 5;">
     <!-- mobile footer part start here  -->
-    <footer class="mobile_footer app_show">
+    <footer style="position: unset;" class="mobile_footer app_show">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -11,8 +11,8 @@
                                 <nuxt-link to="/"><i class="fa-solid fa-home"></i></nuxt-link>
                                 <p>Home</p>
                             </li>
-                            <li :class="{ active: $route.path === '/ticket' }">
-                                <nuxt-link to="/ticket"><i class="fa-solid fa-ticket"></i></nuxt-link>
+                            <li :class="{ active: $route.path === '/user/ticket' }">
+                                <nuxt-link to="/user/ticket"><i class="fa-solid fa-ticket"></i></nuxt-link>
                                 <p>Ticket</p>
                             </li>
                             <li :class="{ active: $route.path === '/offer' }">

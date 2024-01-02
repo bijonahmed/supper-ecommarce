@@ -113,6 +113,7 @@
     <!-- product details part end here  -->
 
     <Footer />
+    <MobileMenu/>
 
 </div>
 </template>

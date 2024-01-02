@@ -106,6 +106,7 @@
     <!-- explore our collection part end here  -->
 
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

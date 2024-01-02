@@ -206,11 +206,13 @@ Route::group([
     'prefix' => 'unauthenticate'
 ], function () {
     //Add to cart 
+    Route::post('verificationCode', [UnauthenticatedController::class, 'verificationCode']);
     Route::get('cart', [CartController::class, 'index']);
     Route::get('getCartData', [CartController::class, 'getCartData']);
     Route::post('addToCart', [CartController::class, 'addToCart']);
     Route::get('searchProductCategory/{category_id}', [UnauthenticatedController::class, 'productCategory']);
     Route::get('sellingFast', [UnauthenticatedController::class, 'sellingFast']);
+    Route::get('randomProducts', [UnauthenticatedController::class, 'randomProducts']);
     Route::get('getTickets', [UnauthenticatedController::class, 'getTickets']);
 
     Route::get('slidersImages', [UnauthenticatedController::class, 'slidersImages']);

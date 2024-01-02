@@ -277,6 +277,7 @@
 
     </section>
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 

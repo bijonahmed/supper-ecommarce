@@ -17,6 +17,7 @@ use App\Models\PromoCode;
 use App\Models\Categorys;
 use App\Models\TicketHistory;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Str;
 use App\Rules\MatchOldPassword;
 use App\Models\Attribute;
@@ -27,10 +28,56 @@ use File;
 use PhpParser\Node\Stmt\TryCatch;
 use function Ramsey\Uuid\v1;
 
+
 class UnauthenticatedController extends Controller
 {
     protected $frontend_url;
     protected $userid;
+
+    public function verificationCode(Request $request)
+    {
+        $validator =   Validator::make($request->all(), [
+            'step1' => 'required|numeric',
+            'step2' => 'required|numeric',
+            'step3' => 'required|numeric',
+            'step4' => 'required|numeric',
+        ], [
+            'step1.required' => 'Step 1 is required.',
+            'step1.numeric' => 'Step 1 must be a numeric value.',
+            'step2.required' => 'Step 2 is required.',
+            'step2.numeric' => 'Step 2 must be a numeric value.',
+            'step3.required' => 'Step 3 is required.',
+            'step3.numeric' => 'Step 3 must be a numeric value.',
+            'step4.required' => 'Step 4 is required.',
+            'step4.numeric' => 'Step 4 must be a numeric value.',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $verifyCode =  (int)$request->step1 . $request->step2 . $request->step3 . $request->step4;
+        $checkpost = User::where('verifyCode',$verifyCode)->first();
+        
+        if(!empty($checkpost)){
+
+            $data['status'] = 1;
+            User::where('verifyCode', $verifyCode)->update($data);
+            $response = [
+                'message' => 'Verification Successfull',
+                'otp_sts' => 1
+            ];
+
+        }else{
+            
+            $response = [
+                'message' => 'Verification failed',
+                'otp_sts' => 0
+            ];
+
+        }
+        return response()->json($response);
+        
+    }
 
     public function allCategory(Request $request)
     {
@@ -47,8 +94,19 @@ class UnauthenticatedController extends Controller
     public function preSetting()
     {
 
-        $response = Setting::find(1);
-        return response()->json($response);
+        $setting = Setting::find(1);
+        $id       =  $this->userid;
+        $response = User::find($id);
+        $walletAddress =  !empty($response->wallet_balance) ? $response->wallet_balance : 0;
+
+        $data['wallet_balance'] = $walletAddress;
+        $data['currency']       = $setting->currency;
+        $data['shipping_fee']   = $setting->shipping_fee;
+        $data['vat_percentage'] = $setting->vat_percentage;
+
+        return response()->json($data);
+        // $response = Setting::find(1);
+        // return response()->json($response);
     }
 
     public function limitedProducts()
@@ -91,7 +149,7 @@ class UnauthenticatedController extends Controller
         $data['prodAttr'] = Attribute::where('status', 1)->get();
 
         $pro_row  =  Product::where('product.slug', $slug)
-            ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.stock_status','product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
+            ->select('product.id', 'product.id as product_id', 'product.name', 'product.slug as pro_slug', 'product.stock_status', 'product.thumnail_img', 'description', 'product.price', 'product.discount', 'product.stock_qty', 'product.stock_mini_qty')
             ->first();
 
         $additionalProducts  = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
@@ -181,6 +239,39 @@ class UnauthenticatedController extends Controller
         return response()->json($data, 200);
     }
 
+    public function randomProducts()
+    {
+
+        $category_id = 27; //for tickets categoryies id 27. 
+        $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
+            ->where('produc_categories.category_id', '!=', $category_id)
+            ->inRandomOrder()
+            ->orderBy('product.id', 'desc')
+            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty')
+            ->limit(12)
+            ->groupby('product.id')
+            ->get();
+
+        foreach ($data as $v) {
+            $ref = AdditionalProducts::join('product', 'product.id', '=', 'additional_product.referrance_product_id')
+                ->select('product.name as addi_pname', 'product.thumnail_img as addi_thumnail_img', 'referrance_product_id', 'add_product_qty', 'add_product_price')
+                ->where('product_id', $v->id)->first();
+
+            $result[] = [
+                'id'   => $v->id,
+                'name' => substr($v->name, 0, 50) . '...',
+                'price' => $v->price,
+                'thumnail'  => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
+                'slug'      => $v->slug,
+                'addi_pname'          => !empty($ref->addi_pname) ? $ref->addi_pname : "",
+                'addi_thumnail'       => !empty($ref->addi_thumnail_img) ? url($ref->addi_thumnail_img) : "",
+                'addi_ref_id'         => !empty($ref->referrance_product_id) ? $ref->referrance_product_id : "",
+                'addi_product_price'  => !empty($ref->add_product_price) ? $ref->add_product_price : "",
+            ];
+        }
+        return response()->json($result, 200);
+    }
+
     public function sellingFast()
     {
         //$data = Product::orderBy('id', 'desc')->select('id', 'name', 'thumnail_img', 'slug')->limit(12)->get();
@@ -203,8 +294,9 @@ class UnauthenticatedController extends Controller
             $result[] = [
                 'id'   => $v->id,
                 'name' => substr($v->name, 0, 50) . '...',
+                'price' => $v->price,
                 'thumnail'  => !empty($v->thumnail_img) ? url($v->thumnail_img) : "",
-                'slug'     => $v->slug,
+                'slug'      => $v->slug,
                 'addi_pname'          => !empty($ref->addi_pname) ? $ref->addi_pname : "",
                 'addi_thumnail'       => !empty($ref->addi_thumnail_img) ? url($ref->addi_thumnail_img) : "",
                 'addi_ref_id'         => !empty($ref->referrance_product_id) ? $ref->referrance_product_id : "",
@@ -221,7 +313,7 @@ class UnauthenticatedController extends Controller
         $data = productCategory::join('product', 'product.id', '=', 'produc_categories.product_id')
             ->where('produc_categories.category_id', $category_id)
             ->orderBy('product.id', 'desc')
-            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty', 'product.stock_status','produc_categories.category_id')
+            ->select('product.id', 'product.name', 'product.thumnail_img', 'product.slug', 'product.price', 'product.stock_qty', 'product.stock_status', 'produc_categories.category_id')
             //->limit(12)
             ->get();
 
@@ -239,7 +331,7 @@ class UnauthenticatedController extends Controller
                 'price'       => $v->price,
                 'stock_qty'   => $v->stock_qty,
                 'category_id' => $v->category_id,
-                'stock_status'=> $v->stock_status,
+                'stock_status' => $v->stock_status,
                 'total_tickets' => $total_tickets,
                 'total_selling' => $total_selling,
             ];

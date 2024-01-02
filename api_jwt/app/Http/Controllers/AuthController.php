@@ -26,8 +26,7 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        // dd($request->all());
-
+        // Validate the request
         $this->validateLogin($request);
         $credentials = request(['email', 'password']);
         if (!$token = auth('api')->attempt($credentials)) {
@@ -39,8 +38,37 @@ class AuthController extends Controller
                 ]
             ], 422);
         }
-        return $this->respondWithToken($token);
+
+        $user = auth('api')->user();
+        if ($user && $user->status == 1) {
+            return $this->respondWithToken($token);
+        } elseif ($user && $user->status == 0) {
+            return response()->json([
+                'errors' => [
+                    'account' => [
+                        "Your Account is not verified"
+                    ]
+                ]
+            ], 401);
+        } else {
+            // User is not authenticated
+            return response()->json([
+                'errors' => [
+                    'account' => [
+                        "Authentication failed"
+                    ]
+                ]
+            ], 401);
+        }
     }
+    function generateUniqueNumber()
+    {
+
+        $randomNumber = rand(1000, 9999);
+        return $randomNumber;
+    }
+
+
     public function register(Request $request)
     {
         $setting = Setting::find(1);
@@ -50,25 +78,57 @@ class AuthController extends Controller
         } else {
             $presetting =  1;
         }
+        $uniqueNumber = $this->generateUniqueNumber();
 
         $this->validate($request, [
             'name' => 'required',
-            'phone_number' => 'required',
+            'phone_number' => 'required|numeric|unique:users,phone_number',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:6'
         ]);
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role_id' => 2,
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'role_id'  => 2,
+            'status'   => 0,
             'wallet_balance' => $presetting,
-            'phone_number' => $request->phone_number,
-            'password' => bcrypt($request->password),
-            'show_password' => $request->password,
+            'phone_number'   => $request->phone_number,
+            'password'       => bcrypt($request->password),
+            'show_password'  => $request->password,
+            'verifyCode'     => $uniqueNumber,
+
         ]);
-        // Get the token
+        $this->sms_send($request->phone_number, $uniqueNumber);
         $token = auth('api')->login($user);
         return $this->respondWithToken($token);
+    }
+
+    function sms_send($phone_number, $uniqueNumber)
+    {
+        $url = "http://139.99.39.237/api/smsapi";
+        $api_key  = "0YvO1UoW99Z4TprlGUr4";
+        $senderid = "8809604902507";
+        //$number = "88016xxxxxxxx,88019xxxxxxxx";
+        $number   = "88$phone_number";
+        $message  = "Your Winup360 verification code is $uniqueNumber. Please visit https://winup360.com/";
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $senderid,
+            "number" => $number,
+            "message" => $message
+        ];
+
+        //dd($data);
+        //exit; 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
     }
     public function me()
     {

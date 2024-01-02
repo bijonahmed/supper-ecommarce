@@ -57,6 +57,7 @@
     <!-- product grid part end here  -->
     <!-- product grid part end here  -->
     <Footer />
+    <MobileMenu/>
 </div>
 </template>
 
