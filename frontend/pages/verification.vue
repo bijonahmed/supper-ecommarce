@@ -34,7 +34,7 @@
                                         </div>
                                     </div>
                                     <div class="d-grid my-4" bis_skin_checked="1">
-                                        <button class="btn" style="background-color: #b5f927; font-size:10px ;" type="submit">Verify</button>
+                                        <button class="btn" style="background-color: #b5f927;" type="submit">Verify</button>
                                     </div>
                                 </form>
                                 <!-- <p class="text-center text-light mb-0">I didn't get your code? <a style="color: #b5f927;" href="#">Resend

@@ -35,6 +35,13 @@
     "_name": "_f7323954"
   },
   {
+    "name": "forget-password",
+    "path": "/forget-password",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\forget-password.vue",
+    "chunkName": "pages/forget-password",
+    "_name": "_6020cf8a"
+  },
+  {
     "name": "login",
     "path": "/login",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\login.vue",

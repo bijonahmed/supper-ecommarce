@@ -207,6 +207,7 @@ Route::group([
 ], function () {
     //Add to cart 
     Route::post('verificationCode', [UnauthenticatedController::class, 'verificationCode']);
+    Route::post('forgetPassword', [UnauthenticatedController::class, 'forgetPassword']);
     Route::get('cart', [CartController::class, 'index']);
     Route::get('getCartData', [CartController::class, 'getCartData']);
     Route::post('addToCart', [CartController::class, 'addToCart']);

@@ -46,8 +46,8 @@
                                         </div>
                                         <div class="row pe-0">
                                             <div class="col-6">
-                                                <div class="input-container d-none">
-                                                    <a href="javascript:" class="f_link">Forget Password?</a>
+                                                <div class="input-container">
+                                                    <nuxt-link to="/forget-password" class="f_link">Forget Password?</nuxt-link>
                                                 </div>
                                             </div>
                                             <div class="col-6 px-0">

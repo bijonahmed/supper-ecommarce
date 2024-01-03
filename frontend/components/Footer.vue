@@ -27,9 +27,9 @@
                                         <li>
                                             <nuxt-link to="/contact">Contact Us</nuxt-link>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <nuxt-link to="/faq">FAQ</nuxt-link>
-                                        </li>
+                                        </li> -->
                                         <li>
                                             <a href="#">How it is work</a>
                                         </li>

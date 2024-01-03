@@ -9,6 +9,7 @@
     <!-- <SoldOut />
     <Winner /> -->
     <Footer />
+    <MobileMenu/>
 
 
     <span v-if="loggedIn">

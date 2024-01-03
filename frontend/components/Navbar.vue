@@ -89,13 +89,7 @@
     <!-- mobile header part start here  -->
     <section class="mobile_header app_show">
         <div class="container">
-            <div class="row">
-                <div class="col-3 m-auto ">
-                    <div class="header_button my-1" style="border-radius: 5px;" @click="redirectHomePages">
-                       <img src="/images/logo.png" style="width: 100%;" alt="" loading="lazy"> 
-                    </div>
-                </div>
-            </div>
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="header_button">

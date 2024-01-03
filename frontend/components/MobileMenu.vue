@@ -139,13 +139,14 @@
                         </li>
 
                         <li v-if="loggedIn">
-                            <a href="#" @ckick="logout"><span><strong class="fa-solid fa-right-from-bracket"></strong>Logout</span></a>
+                            <a href="#" @click="logout"><span><strong class="fa-solid fa-right-from-bracket"></strong>Logout</span></a>
                         </li>
                         <li v-else>
                             <nuxt-link to="/login">
-                                <span><strong class="fa-solid fa-right-from-bracket"></strong>Login</span>
+                                <span><strong class="fa-solid fa-right-from-bracket"></strong>Login/Register</span>
                             </nuxt-link>
                         </li>
+                        
                     </ul>
                 </div>
 

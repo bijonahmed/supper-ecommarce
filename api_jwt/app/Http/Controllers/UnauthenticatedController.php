@@ -34,6 +34,42 @@ class UnauthenticatedController extends Controller
     protected $frontend_url;
     protected $userid;
 
+
+    public function forgetPassword(Request $request)
+    {
+        $validator =   Validator::make($request->all(), [
+            'number' => 'required|numeric',
+        ], [
+            'number.required' => 'Mobile number is required.',
+            'number.numeric' => 'Mobile number must be a numeric value.',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $number =  (int)$request->number;
+        $checkpost = User::where('phone_number', $number)->first();
+        $convertNumber = substr($number, -4);
+
+        if (!empty($checkpost)) {
+
+            $data['status'] = 1;
+           // User::where('verifyCode', $verifyCode)->update($data);
+            $response = [
+                'message' => "Success! We've sent you a reset link to your number. ***$convertNumber",
+                'otp_sts' => 1
+            ];
+        } else {
+            $response = [
+                'message' => 'Invalid Number.',
+                'otp_sts' => 0
+            ];
+        }
+        return response()->json($response);
+    }
+
+
     public function verificationCode(Request $request)
     {
         $validator =   Validator::make($request->all(), [
@@ -56,9 +92,9 @@ class UnauthenticatedController extends Controller
         }
 
         $verifyCode =  (int)$request->step1 . $request->step2 . $request->step3 . $request->step4;
-        $checkpost = User::where('verifyCode',$verifyCode)->first();
-        
-        if(!empty($checkpost)){
+        $checkpost = User::where('verifyCode', $verifyCode)->first();
+
+        if (!empty($checkpost)) {
 
             $data['status'] = 1;
             User::where('verifyCode', $verifyCode)->update($data);
@@ -66,17 +102,14 @@ class UnauthenticatedController extends Controller
                 'message' => 'Verification Successfull',
                 'otp_sts' => 1
             ];
+        } else {
 
-        }else{
-            
             $response = [
                 'message' => 'Verification failed',
                 'otp_sts' => 0
             ];
-
         }
         return response()->json($response);
-        
     }
 
     public function allCategory(Request $request)
@@ -317,6 +350,7 @@ class UnauthenticatedController extends Controller
             //->limit(12)
             ->get();
 
+        $result = [];
         foreach ($data as $v) {
 
             $total_tickets  = TicketHistory::where('product_id', $v->id)->count();

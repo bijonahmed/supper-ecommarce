@@ -45,6 +45,8 @@
                         <li>
                             <a href="#" @click="logout"><span><strong class="fa-solid fa-right-from-bracket"></strong>Logout</span></a>
                         </li>
+                       
+                         
                     </ul>
                 </div>
             </div>

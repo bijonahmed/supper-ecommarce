@@ -10,7 +10,11 @@
                             <span v-if="loading">
                                 <Loader />
                             </span>
-
+                            <div v-if="imgloading" class="loader text-center fade show">
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
                             <li v-for="(item, index) in prouducts" :key="index">
                                 <div class="campain_box ">
                                     <!-- total ticket  -->
@@ -36,9 +40,7 @@
                                                     <div class="swiper campain_s">
                                                         <div class="swiper-wrapper">
                                                             <div class="swiper-slide"><img :src="item.thumnail" class="img-fulid" loading="lazy" alt=""></div>
-                                                            <!-- <div class="swiper-slide"><img src="/images/cash.png" class="img-fulid" loading="lazy" alt=""></div>
-                                                            <div class="swiper-slide"><img src="/images/cash1.png" class="img-fulid" loading="lazy" alt=""></div>
-                                                            <div class="swiper-slide"><img src="/images/cash2.png" class="img-fulid" loading="lazy" alt=""></div> -->
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,7 +69,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <p> Draw Date: 21 November, 2023 or earlier based on the time passed. </p>
+                                                            {{ item.description }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,7 +214,7 @@ export default {
             prouducts: [],
             itemCount: 0,
             updatedQuantity: 0,
-
+            imgloading: true,
             login: {
                 email: '',
                 password: '',
@@ -225,7 +227,11 @@ export default {
 
     },
     mounted() {
-        this.onlyloadingTicket();
+        setTimeout(() => {
+            this.onlyloadingTicket();
+            this.imgloading = false;
+        }, 1000); //
+
     },
     computed: {
         loggedIn() {

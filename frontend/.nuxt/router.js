@@ -9,6 +9,7 @@ const _4ca8f24a = () => interopDefault(import('..\\pages\\agreement.vue' /* webp
 const _537edbe0 = () => interopDefault(import('..\\pages\\cart.vue' /* webpackChunkName: "pages/cart" */))
 const _38645360 = () => interopDefault(import('..\\pages\\contact.vue' /* webpackChunkName: "pages/contact" */))
 const _f7323954 = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChunkName: "pages/faq" */))
+const _6020cf8a = () => interopDefault(import('..\\pages\\forget-password.vue' /* webpackChunkName: "pages/forget-password" */))
 const _fd7547ae = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
 const _5ba6d59c = () => interopDefault(import('..\\pages\\offer.vue' /* webpackChunkName: "pages/offer" */))
 const _4bb80374 = () => interopDefault(import('..\\pages\\payment.vue' /* webpackChunkName: "pages/payment" */))
@@ -66,6 +67,10 @@ export const routerOptions = {
     path: "/faq",
     component: _f7323954,
     name: "faq"
+  }, {
+    path: "/forget-password",
+    component: _6020cf8a,
+    name: "forget-password"
   }, {
     path: "/login",
     component: _fd7547ae,

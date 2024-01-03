@@ -25,6 +25,7 @@ body {
     z-index: 0;
     background: #1e1e1e;
     font-family: 'Rubik', sans-serif;
+    overflow: auto !important;
 }
 
 body::-webkit-scrollbar {
