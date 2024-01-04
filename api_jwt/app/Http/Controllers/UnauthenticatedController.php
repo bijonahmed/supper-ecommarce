@@ -35,39 +35,126 @@ class UnauthenticatedController extends Controller
     protected $userid;
 
 
-    public function forgetPassword(Request $request)
+
+    public function resetPassword(Request $request)
     {
-        $validator =   Validator::make($request->all(), [
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
             'number' => 'required|numeric',
         ], [
             'number.required' => 'Mobile number is required.',
             'number.numeric' => 'Mobile number must be a numeric value.',
-
         ]);
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
-        $number =  (int)$request->number;
-        $checkpost = User::where('phone_number', $number)->first();
-        $convertNumber = substr($number, -4);
-
-        if (!empty($checkpost)) {
-
-            $data['status'] = 1;
-           // User::where('verifyCode', $verifyCode)->update($data);
+        $number = $request->number;
+        $user = User::where('phone_number', $number)->first();
+        if (!empty($user)) {
+           
+          $reset_url = url('/reset-password', $user->id);
+          $reset_url_without_tags = html_entity_decode(strip_tags($reset_url));
+          $url = "http://139.99.39.237/api/smsapi";
+          // $message = "Your reset link: $reset_url";
+          $message = "We received a request to reset your password. Visit $reset_url to reset your password. Thanks, WINUP360.COM";
+      
+          $smsData = [
+                "api_key" => "0YvO1UoW99Z4TprlGUr4",
+                "senderid" => "8809604902507",
+                "number" => "88$number",
+                "message" => $message,
+          ];
+          // echo '<pre>';
+          //  print_r($smsData);exit; 
+          $this->sendSms($url, $smsData);
             $response = [
-                'message' => "Success! We've sent you a reset link to your number. ***$convertNumber",
-                'otp_sts' => 1
+                'message' => "Success! We've sent you a reset link to your number. ***" . substr($number, -4),
+                'otp_sts' => 1,
             ];
         } else {
             $response = [
                 'message' => 'Invalid Number.',
-                'otp_sts' => 0
+                'otp_sts' => 0,
             ];
         }
+
         return response()->json($response);
     }
+
+    // Method to send SMS using cURL or any other SMS service
+    private function sendSms($url, $data)
+    {
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+
+
+    // public function forgetPassword(Request $request)
+    // {
+    //     $validator =   Validator::make($request->all(), [
+    //         'number' => 'required|numeric',
+    //     ], [
+    //         'number.required' => 'Mobile number is required.',
+    //         'number.numeric' => 'Mobile number must be a numeric value.',
+
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     $number =  (int)$request->number;
+    //     $checkpost = User::where('phone_number', $number)->first();
+    //     $convertNumber = substr($number, -4);
+
+    //     if (!empty($checkpost)) {
+
+    //         $url = "http://139.99.39.237/api/smsapi";
+    //         $api_key  = "0YvO1UoW99Z4TprlGUr4";
+    //         $senderid = "8809604902507";
+    //         //$number = "88016xxxxxxxx,88019xxxxxxxx";
+    //         $number   = "88$number";
+    //         $url      = url('/reset-passowrd', $checkpost->id);
+    //         $message  = "Your reset link $url";
+    //         $data = [
+    //             "api_key" => $api_key,
+    //             "senderid" => $senderid,
+    //             "number" => $number,
+    //             "message" => $message
+    //         ];
+    //         $data['status'] = 1;
+    //         //dd($data);
+    //         //exit; 
+    //         $ch = curl_init();
+    //         curl_setopt($ch, CURLOPT_URL, $url);
+    //         curl_setopt($ch, CURLOPT_POST, 1);
+    //         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    //         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    //         $response = curl_exec($ch);
+    //         curl_close($ch);
+    //         return $response;
+    //         // User::where('verifyCode', $verifyCode)->update($data);
+    //         $response = [
+    //             'message' => "Success! We've sent you a reset link to your number. ***$convertNumber",
+    //             'otp_sts' => 1
+    //         ];
+    //     } else {
+    //         $response = [
+    //             'message' => 'Invalid Number.',
+    //             'otp_sts' => 0
+    //         ];
+    //     }
+    //     return response()->json($response);
+    // }
 
 
     public function verificationCode(Request $request)

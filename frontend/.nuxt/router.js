@@ -8,6 +8,7 @@ const _d0344366 = () => interopDefault(import('..\\pages\\about.vue' /* webpackC
 const _4ca8f24a = () => interopDefault(import('..\\pages\\agreement.vue' /* webpackChunkName: "pages/agreement" */))
 const _537edbe0 = () => interopDefault(import('..\\pages\\cart.vue' /* webpackChunkName: "pages/cart" */))
 const _38645360 = () => interopDefault(import('..\\pages\\contact.vue' /* webpackChunkName: "pages/contact" */))
+const _98c21768 = () => interopDefault(import('..\\pages\\download-app.vue' /* webpackChunkName: "pages/download-app" */))
 const _f7323954 = () => interopDefault(import('..\\pages\\faq.vue' /* webpackChunkName: "pages/faq" */))
 const _6020cf8a = () => interopDefault(import('..\\pages\\forget-password.vue' /* webpackChunkName: "pages/forget-password" */))
 const _fd7547ae = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
@@ -63,6 +64,10 @@ export const routerOptions = {
     path: "/contact",
     component: _38645360,
     name: "contact"
+  }, {
+    path: "/download-app",
+    component: _98c21768,
+    name: "download-app"
   }, {
     path: "/faq",
     component: _f7323954,

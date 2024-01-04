@@ -189,9 +189,10 @@
                                         <div class="row pe-0">
                                             <div class="col-6">
                                                 <div class="input-container">
-                                                    <a href="javascript:" class="f_link d-none"><small>
-                                                            <p style="color:white;">Forget Password?</p>
-                                                        </small></a>
+                                                    <nuxt-link to="/forget-password" class="f_link"><small>
+                                                <p style="color:white;">Forget Password?</p>
+                                            </small>
+                                    </nuxt-link>
                                                 </div>
                                             </div>
                                             <div class="col-6">

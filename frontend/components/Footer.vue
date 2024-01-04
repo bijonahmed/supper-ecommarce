@@ -43,27 +43,15 @@
                             <a href="https://www.facebook.com/winup360" target="_blank">
                                 <i class="fa-brands fa-facebook-f"></i>
                             </a>
-                            <!-- <a href="#" target="_blank">
-                                <i class="fa-brands fa-x-twitter"></i>
-                            </a>
-                            <a href="#" target="_blank">
-                                <i class="fa-brands fa-linkedin-in"></i>
-                            </a>
-                            <a href="#" target="_blank">
-                                <i class="fa-brands fa-instagram"></i>
-                            </a>
-                            <a href="#" target="_blank">
-                                <i class="fa-brands fa-whatsapp"></i>
-                            </a>
-                            <a href="#" target="_blank">
-                                <i class="fa-brands fa-tiktok"></i>
-                            </a> -->
+                        
                         </div>
                         <div class="app_link">
-                            <p>Download the LOTTERY app for the ultimate shopping experience!</p>
+                            <p>Download the WINUP360 app for the ultimate shopping experience!</p>
                             <div class="d-flex justify-content-center">
-                                <a href="https://paly.google.com"><img src="/images/Play.png" class="img-fulid" loading="lazy" alt=""></a>
-                                <a href="https://app.store.com"><img src="/images/Apple.png" class="img-fulid" loading="lazy" alt=""></a>
+                                <nuxt-link to="/download-app"><img src="/images/Play.png" class="img-fulid" loading="lazy" alt=""></nuxt-link>
+                                <nuxt-link to="/download-app"><img src="/images/Apple.png" class="img-fulid" loading="lazy" alt=""></nuxt-link>
+                                <!-- <a href="https://paly.google.com"><img src="/images/Play.png" class="img-fulid" loading="lazy" alt=""></a> -->
+                                <!-- <a href="https://app.store.com"><img src="/images/Apple.png" class="img-fulid" loading="lazy" alt=""></a> -->
                             </div>
                         </div>
                     </div>

@@ -28,6 +28,13 @@
     "_name": "_38645360"
   },
   {
+    "name": "download-app",
+    "path": "/download-app",
+    "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\download-app.vue",
+    "chunkName": "pages/download-app",
+    "_name": "_98c21768"
+  },
+  {
     "name": "faq",
     "path": "/faq",
     "component": "F:\\\\Server\\\\htdocs\\\\supper-ecommarce\\\\frontend\\\\pages\\\\faq.vue",
