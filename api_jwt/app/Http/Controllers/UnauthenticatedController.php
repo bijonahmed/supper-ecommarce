@@ -97,66 +97,6 @@ class UnauthenticatedController extends Controller
         return $response;
     }
 
-
-    // public function forgetPassword(Request $request)
-    // {
-    //     $validator =   Validator::make($request->all(), [
-    //         'number' => 'required|numeric',
-    //     ], [
-    //         'number.required' => 'Mobile number is required.',
-    //         'number.numeric' => 'Mobile number must be a numeric value.',
-
-    //     ]);
-    //     if ($validator->fails()) {
-    //         return response()->json(['errors' => $validator->errors()], 422);
-    //     }
-
-    //     $number =  (int)$request->number;
-    //     $checkpost = User::where('phone_number', $number)->first();
-    //     $convertNumber = substr($number, -4);
-
-    //     if (!empty($checkpost)) {
-
-    //         $url = "http://139.99.39.237/api/smsapi";
-    //         $api_key  = "0YvO1UoW99Z4TprlGUr4";
-    //         $senderid = "8809604902507";
-    //         //$number = "88016xxxxxxxx,88019xxxxxxxx";
-    //         $number   = "88$number";
-    //         $url      = url('/reset-passowrd', $checkpost->id);
-    //         $message  = "Your reset link $url";
-    //         $data = [
-    //             "api_key" => $api_key,
-    //             "senderid" => $senderid,
-    //             "number" => $number,
-    //             "message" => $message
-    //         ];
-    //         $data['status'] = 1;
-    //         //dd($data);
-    //         //exit; 
-    //         $ch = curl_init();
-    //         curl_setopt($ch, CURLOPT_URL, $url);
-    //         curl_setopt($ch, CURLOPT_POST, 1);
-    //         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    //         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    //         $response = curl_exec($ch);
-    //         curl_close($ch);
-    //         return $response;
-    //         // User::where('verifyCode', $verifyCode)->update($data);
-    //         $response = [
-    //             'message' => "Success! We've sent you a reset link to your number. ***$convertNumber",
-    //             'otp_sts' => 1
-    //         ];
-    //     } else {
-    //         $response = [
-    //             'message' => 'Invalid Number.',
-    //             'otp_sts' => 0
-    //         ];
-    //     }
-    //     return response()->json($response);
-    // }
-
-
     public function verificationCode(Request $request)
     {
         $validator =   Validator::make($request->all(), [
@@ -219,11 +159,31 @@ class UnauthenticatedController extends Controller
         $response = User::find($id);
         $walletAddress =  !empty($response->wallet_balance) ? $response->wallet_balance : 0;
 
-        $data['wallet_balance'] = $walletAddress;
-        $data['currency']       = $setting->currency;
-        $data['shipping_fee']   = $setting->shipping_fee;
-        $data['vat_percentage'] = $setting->vat_percentage;
+       
+        $data = [
+            'wallet_balance'=> $walletAddress,
+            'currency'      => $setting->currency,
+            'shipping_fee'  => $setting->shipping_fee,
+            'vat_percentage'=> $setting->vat_percentage,
+            'name'          => $setting->name,
+            'email'         => $setting->email,
+            'address'       => $setting->address,
+            'whatsApp'      => $setting->whatsApp,
+            'description'   => $setting->description,
+            'website'       => $setting->website,
+            'copyright'     => $setting->copyright,
+            'fblink'        => $setting->fblink,
+            'bkash_number'  => $setting->bkash_number,
+            'bkash_fee'     => $setting->bkash_fee,
+            'nagad_number'  => $setting->nagad_number,
+            'nagad_fee'     => $setting->nagad_fee,
+            'rocket_number' => $setting->rocket_number,
+            'rocket_fee'    => $setting->rocket_fee,
+            'upay_number'   => $setting->upay_number,
+            'upay_fee'      => $setting->upay_fee,
+        ];
 
+//dd($data);
         return response()->json($data);
         // $response = Setting::find(1);
         // return response()->json($response);

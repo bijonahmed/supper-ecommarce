@@ -37,49 +37,49 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control percentage_of_deduction" v-model="insertdata.email" placeholder="Email">
+                                            <input type="text" class="form-control email" v-model="insertdata.email" placeholder="Email">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Address</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.address" placeholder="Address">
+                                            <input type="text" class="form-control address" v-model="insertdata.address" placeholder="Address">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">WhatsApp</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.whatsApp" placeholder="WhatsApp">
+                                            <input type="text" class="form-control whatsApp" v-model="insertdata.whatsApp" placeholder="WhatsApp">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Business Description</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control tax_reference" v-model="insertdata.description" placeholder="Business Description"></textarea>
+                                            <textarea class="form-control description" v-model="insertdata.description" placeholder="Business Description"></textarea>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Currency</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.currency" placeholder="Currency">
+                                            <input type="text" class="form-control currency" v-model="insertdata.currency" placeholder="Currency">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">FB Link</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.fblink" placeholder="FBlink">
+                                            <input type="text" class="form-control fblink" v-model="insertdata.fblink" placeholder="FBlink">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Website</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.website" placeholder="Website">
+                                            <input type="text" class="form-control website" v-model="insertdata.website" placeholder="Website">
                                         </div>
                                     </div>
 
@@ -88,14 +88,14 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Bkash Number</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.bkash_number" placeholder="Bkash Number">
+                                            <input type="text" class="form-control bkash_number" v-model="insertdata.bkash_number" placeholder="Bkash Number">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Bkash Fee</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.bkash_fee" placeholder="Bkash Fee">
+                                            <input type="text" class="form-control bkash_fee" v-model="insertdata.bkash_fee" placeholder="Bkash Fee">
                                         </div>
                                     </div>
 
@@ -104,14 +104,14 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Nagad Number</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.nagad_number" placeholder="Nagad Number">
+                                            <input type="text" class="form-control nagad_number" v-model="insertdata.nagad_number" placeholder="Nagad Number">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Nagad Fee</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.nagad_fee" placeholder="Nagad Fee">
+                                            <input type="text" class="form-control nagad_fee" v-model="insertdata.nagad_fee" placeholder="Nagad Fee">
                                         </div>
                                     </div>
 
@@ -119,14 +119,14 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Rocket Number</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.rocket_number" placeholder="Rocket Number">
+                                            <input type="text" class="form-control rocket_number" v-model="insertdata.rocket_number" placeholder="Rocket Number">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Rocket Fee</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.rocket_fee" placeholder="Rocket Fee">
+                                            <input type="text" class="form-control rocket_fee" v-model="insertdata.rocket_fee" placeholder="Rocket Fee">
                                         </div>
                                     </div>
 
@@ -135,21 +135,21 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Upay Number</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.upay_number" placeholder="Upay Number">
+                                            <input type="text" class="form-control upay_number" v-model="insertdata.upay_number" placeholder="Upay Number">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Upay Fee</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.upay_fee" placeholder="Upay Fee">
+                                            <input type="text" class="form-control upay_fee" v-model="insertdata.upay_fee" placeholder="Upay Fee">
                                         </div>
                                     </div>
                                     <hr />
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Wallet Blance</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control tax_reference" @keypress="hanyaAngka" v-model="insertdata.wallet_balance" placeholder="Wallet Blance">
+                                            <input type="number" class="form-control wallet_balance" @keypress="hanyaAngka" v-model="insertdata.wallet_balance" placeholder="Wallet Blance">
                                             <span class="text-danger" v-if="errors.wallet_balance">{{ errors.wallet_balance[0] }}</span>
                                         </div>
                                     </div>
@@ -157,7 +157,7 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Shipping Fee</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control tax_reference" @keypress="hanyaAngka" v-model="insertdata.shipping_fee" placeholder="Shipping Fee">
+                                            <input type="number" class="form-control hanyaAngka" @keypress="hanyaAngka" v-model="insertdata.shipping_fee" placeholder="Shipping Fee">
                                             <span class="text-danger" v-if="errors.shipping_fee">{{ errors.shipping_fee[0] }}</span>
                                         </div>
                                     </div>
@@ -165,7 +165,7 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Vat Percentage (%)</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control tax_reference" @keypress="hanyaAngka" v-model="insertdata.vat_percentage" placeholder="Vat Percentage">
+                                            <input type="number" class="form-control hanyaAngka" @keypress="hanyaAngka" v-model="insertdata.vat_percentage" placeholder="Vat Percentage">
                                             <span class="text-danger" v-if="errors.vat_percentage">{{ errors.vat_percentage[0] }}</span>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                                     <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Copyright</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control tax_reference" v-model="insertdata.copyright" placeholder="Copyright">
+                                            <input type="text" class="form-control copyright" v-model="insertdata.copyright" placeholder="Copyright">
                                         </div>
                                     </div>
 
