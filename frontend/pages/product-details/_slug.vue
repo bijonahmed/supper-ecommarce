@@ -30,7 +30,7 @@
                             <h2 class="mb-2" v-if="category_id !== 27">You will get a Lottery Ticket for free </h2>
 
                             <div class="d-flex justify-content-between align-items-center" v-if="category_id !== 27">
-                            
+
                                 <div class="custom-select">
                                     <select name="choose_size" v-model="choose_size">
                                         <option value="">Size</option>
@@ -81,7 +81,7 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="ticket_details" v-if="addi_pname !== '' && addi_thumnail !== ''">
                             <h2>Free Ticket Description</h2>
                             <hr>
@@ -113,7 +113,7 @@
     <!-- product details part end here  -->
 
     <Footer />
-    <MobileMenu/>
+    <MobileMenu />
 
 </div>
 </template>
@@ -135,13 +135,13 @@ export default {
             pro_row: [],
             prodAttr: [],
             ticket_qty: '',
-            stock_qty:'',
+            stock_qty: '',
             pro_row: {
                 price: 0, // Initial price
             },
             ticketprice: '',
             loading: false,
-            description:'',
+            description: '',
             addi_pname: '',
             addi_thumnail: '',
             addi_product_price: '',
@@ -174,7 +174,7 @@ export default {
 
         },
         addtoCart(product) {
-            this.loading = true;
+            //   this.loading = true;
 
             if (this.category_id === 27) {
                 // Category is 27 (ticket category)
@@ -215,16 +215,7 @@ export default {
             if (existingProduct) {
                 existingProduct.quantity += 1;
             } else {
-                /*
-                this.cart.push({
-                    ...product,
-                    size: this.choose_size,
-                    category_id: this.category_id,
-                    ticketprice: this.ticketprice,
-                    ticket_qty: this.ticket_qty,
-                    quantity: 1,
-                });
-                */
+
                 if (this.category_id === 27) {
                     this.cart.push({
                         ...product,
@@ -258,9 +249,21 @@ export default {
             // Emit an event to notify other components
             bus.$emit("updateCart", newData);
 
-            setTimeout(() => {
-                this.loading = false;
-            }, 1000);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Add To Cart"
+            });
         },
 
         saveCart() {
@@ -277,7 +280,7 @@ export default {
         async fetchData() {
             const prosulg = this.$route.params.slug;
             const response = await this.$axios.get(`/unauthenticate/productSlug/${prosulg}`);
-            console.log("----" +  response.data.pro_row.stock_qty);
+            console.log("----" + response.data.pro_row.stock_qty);
             this.slider_img = response.data.slider_img;
             this.prodAttr = response.data.prodAttr;
             this.pro_row = response.data.pro_row;
@@ -288,7 +291,7 @@ export default {
             this.addi_product_price = response.data.additional.addi_product_price;
             this.add_product_qty = response.data.additional.add_product_qty;
             this.addi_description = response.data.additional.addi_description;
-            this.description     = response.data.pro_row.description;
+            this.description = response.data.pro_row.description;
             $(".productdetails").html(response.data.pro_row.description);
         },
 

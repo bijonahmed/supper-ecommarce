@@ -151,7 +151,7 @@
                                         <nuxt-link to="/forget-password" class="f_link"><small>
                                                 <p style="color:white;">Forget Password?</p>
                                             </small>
-                                    </nuxt-link>
+                                        </nuxt-link>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -285,17 +285,12 @@ export default {
         },
 
         addtoCart(product) {
-
-            this.loading = true;
             // const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const existingProduct = this.cart.find(item => item.id === product.id);
             if (existingProduct) {
                 existingProduct.quantity += 1;
             } else {
-                // this.cart.push({
-                //     ...product,
-                //     quantity: 1
-                // });
+
                 if (this.category_id === 27) {
                     this.cart.push({
                         ...product,
@@ -316,17 +311,29 @@ export default {
                     });
                 }
             }
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Add To Cart"
+            });
+
             // Merge with existing data if any
             const existingData = JSON.parse(localStorage.getItem('cart')) || [];
             const newData = [...existingData, ...this.cart];
-
             localStorage.setItem('cart', JSON.stringify(newData));
-
             bus.$emit("updateCart", newData);
 
-            setTimeout(() => {
-                this.loading = false;
-            }, 1000);
         },
         saveCart() {
             if (process.client) {
