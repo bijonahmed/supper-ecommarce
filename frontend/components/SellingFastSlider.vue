@@ -1,8 +1,7 @@
 <template>
 <div>
-
-    <section class="selling_fast ">
-        <div class="container app_hide">
+    <section class="product my-3">
+        <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1>Selling Fast</h1>
@@ -34,50 +33,9 @@
 
                         </div>
                     </div>
-
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="product my-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div v-if="imgloading">
-                        <center> <img src="/images/loading_animated.gif" class="rounded" style="height: 50px;width:50px;" /></center>
-                    </div>
-                    <div class="product_grid">
 
-                        <div class="product_gview" v-for="(item, index) in rproducts" :key="index">
-
-                            <span v-if="loggedIn">
-                                <button type="button" class="active" @click="wishlist(item.slug)"><i class="fa-solid fa-heart"></i></button>
-                            </span>
-                            <span v-else>
-                                <button type="button" class="active" @click="loginPopup"><i class="fa-solid fa-heart"></i></button>
-                            </span>
-
-                            <nuxt-link :to="`/product-details/${item.slug}`">
-                                <div class="product_image">
-                                    <img :src="item.thumnail" class="img-fluid" loading="lazy" alt="">
-                                    <div class="p_tag" v-if="item.addi_pname !== '' && item.addi_thumnail !== ''">
-                                        <img :src="item.addi_thumnail" class="img-fluid" loading="lazy" alt="">
-                                        <h6>{{ item.addi_pname }}</h6>
-                                    </div>
-                                </div>
-                                <h5>{{ item.name }}</h5>
-                                <p>TK.{{ item.price }}</p>
-                            </nuxt-link>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-12 m-auto">
-                    <nuxt-link to="/products" style="display: block; text-decoration: none;" class="btn_submit text-center m-0 mb-2 w-100 fw-600">Explore More</nuxt-link>
-                </div>
-            </div>
         </div>
         <!-- Login  -->
         <div class="login_modal">
@@ -164,7 +122,7 @@ export default {
     },
     mounted() {
         setTimeout(() => {
-            this.randomProducts();
+            // this.randomProducts();
             this.imgloading = false;
         }, 2000); //
         this.sellingFast();
@@ -256,7 +214,7 @@ export default {
         },
         async sellingFast() {
             try {
-                this.loading = true; // Show loader
+                //  this.loading = true; // Show loader
                 const response = await this.$axios.get('/unauthenticate/sellingFast');
                 this.products = response.data;
                 // Handle other logic related to products if needed
@@ -264,7 +222,7 @@ export default {
                 console.error('Error fetching sellingFast:', error);
                 // Handle error if needed
             } finally {
-                this.loading = false; // Hide loader after response or error
+                //   this.loading = false; // Hide loader after response or error
             }
         },
         async randomProducts() {

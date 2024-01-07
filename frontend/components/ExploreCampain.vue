@@ -61,10 +61,10 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="d-flex">
-                                                                <nuxt-link :to="`/product-details/${item.slug}`">View Details</nuxt-link>
+                                                                <nuxt-link :to="`/product-details/${item.slug}`" class="w-100" style="width: 100%;">View Details</nuxt-link>
                                                                 <!-- <a href="javascript:" class="btn_details show_details" @click="viewDetails(item.slug)">View Details</a> -->
-                                                                <button type="button" @click="addtoCart(item)" v-if="item.stock_status==1">Add to cart</button>
-                                                                <button type="button" v-else>Stock Out</button>
+                                                                <!-- <button type="button" @click="addtoCart(item)" v-if="item.stock_status==1">Add to cart</button>
+                                                                <button type="button" v-else>Stock Out</button> -->
 
                                                             </div>
                                                         </div>

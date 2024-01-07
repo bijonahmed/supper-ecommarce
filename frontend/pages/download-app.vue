@@ -8,12 +8,12 @@
                 <div class="row">
                     <div class="app_link">
 
-                        <center><a href="#"> <img src="/images/Play.png" class="img-fulid" loading="lazy" alt=""></a>
+                        <center><a href="/download/winup360com.apk"> <img src="/images/Play.png" class="img-fulid" loading="lazy" alt=""></a>
                         </center>
                     </div>
 
                     <p>We have already submitted 'WinUp 360' to the Google Play Store. Once it goes live, we will share an
-                        alternative way for you to download it manually. Download link: [Link]</p>
+                        alternative way for you to download it manually.</p>
                 </div>
                 <div class="row">
                     <div class="app_link">

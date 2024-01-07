@@ -43,7 +43,7 @@
     <!-- mobile menu offcanvas  -->
     <div class="offcanvas offcanvas-start app_show" tabindex="-1" id="mobile_menu" aria-labelledby="mobile_menuLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Lottery</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">WINUP360</h5>
             <button type="button" class="btn_close bg-transparent text-white" data-bs-dismiss="offcanvas" aria-label="Close">
                 <i class="fa-solid fa-x color-white" style="color: #fff;"></i></button>
         </div>
@@ -60,6 +60,18 @@
                         <li v-else>
                             <nuxt-link to="/login"><span><strong class="fa-solid fa-user"></strong>Personal
                                     Details</span> <i class="fa-solid fa-chevron-right"></i></nuxt-link>
+                        </li>
+
+
+                        <li v-if="loggedIn">
+                            <nuxt-link to="/user/orderlist">
+                                <span><strong class="fa-brands fa-product-hunt"></strong>Order</span> <i class="fa-solid fa-chevron-right"></i>
+                            </nuxt-link>
+                        </li>
+                        <li v-else>
+                            <nuxt-link to="/login">
+                                <span><strong class="fa-brands fa-product-hunt"></strong>Order</span> <i class="fa-solid fa-chevron-right"></i>
+                            </nuxt-link>
                         </li>
 
                         <li v-if="loggedIn">

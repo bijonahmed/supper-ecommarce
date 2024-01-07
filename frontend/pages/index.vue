@@ -3,14 +3,12 @@
     <Navbar />
     <MainSlider />
     <SellingFastSlider />
-    
-    <Banner />
+    <!-- <Banner /> -->
     <ExploreCampain />
     <!-- <SoldOut />
     <Winner /> -->
     <Footer />
-    <MobileMenu/>
-
+    <MobileMenu />
 
     <span v-if="loggedIn">
         <nuxt-link to="/user/message" class="bell_message ">
@@ -81,7 +79,7 @@ export default {
 
     },
     methods: {
-        closepopup(){
+        closepopup() {
             $(".modal_share").fadeOut();
         },
         loadCart() {

@@ -2,36 +2,23 @@
 <div>
     <Navbar />
     <div class="container">
-      
+
         <div class="row">
             <div class="col-xl-12">
                 <div class="profile_right">
-                    <h1 class="desktop_view">Offers</h1>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="bonus_section">
-                                <div class="">
-                                    <h5>Get 10% Extra <br>on Binance top-up</h5>
-                                    <a href="#">Topup</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="bonus_section">
-                                <div class="">
-                                    <h5>Get 10% Extra <br>on Binance top-up</h5>
-                                    <a href="#">Topup</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                       <center> <h1>Welcome to WINUP360</h1></center> 
+                        <p>Where there's an experience of winning in online shopping! Our offer is unprecedented. For any product you purchase, you have the chance to win an extraordinary prize! Shop at WINUP360 and you could be blessed with invaluable blessings without waiting. Take a glimpse at our past winners and experience the joy of victory.</p>
+                        <p>All our draws are regulated by BANGLADESH economy and tourism. We take careful control of all draws for your confidence.</p>
+                        <p><strong>WINUP360 - where shopping and winning come together!</strong></p>
+                     
                 </div>
             </div>
         </div>
     </div>
 
     <Footer />
-    <MobileMenu/>
+    <MobileMenu />
 </div>
 </template>
 

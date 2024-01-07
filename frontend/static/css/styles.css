@@ -3114,8 +3114,7 @@ header .close:hover {
     }
 
     .slide_box img {
-        min-height: 135px;
-        object-fit: fill;
+        min-height: 170px;
     }
 
     .share_link {
@@ -4154,7 +4153,7 @@ border-r {
     top: 0;
     left: 0;
     position: absolute;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .mobile_header a img {

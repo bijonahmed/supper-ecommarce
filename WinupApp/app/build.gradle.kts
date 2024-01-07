@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.winup360"
+    namespace = "com.buy.winup360"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.winup360"
+        applicationId = "com.buy.winup360"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

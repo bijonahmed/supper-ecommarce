@@ -89,30 +89,20 @@
     <!-- mobile header part start here  -->
     <section class="mobile_header app_show">
         <div class="container">
-            
             <div class="row">
                 <div class="col-md-12">
-                    <div class="header_button">
+                    <div class="header_button ">
                         <nuxt-link to="/" :class="{ 'active': $route.path === '/' }">
-                            <div class="creadit_ticket">
-                                <p>Win Exclusive Price</p>
-                                <h1>Lottery</h1>
-                            </div>
+                            <img src="/images/logoudpate.png" class="img-fluid" loading="lazy" alt="" style="padding: 2px;">
                         </nuxt-link>
                         <nuxt-link to="/products" :class="{ 'active': $route.path === '/products' }">
-                            <div class="creadit_ticket">
-                                <p>Win Exclusive Price</p>
-                                <h1>PRODUCT</h1>
-                            </div>
+
+                            <img src="/images/product_icon.png" class="img-fluid" loading="lazy" alt="">
                         </nuxt-link>
                         <nuxt-link to="/winners" :class="{ 'active': $route.path === '/winners' }">
-                            <div class="creadit_ticket">
-                                <p>Winner from last Draw</p>
-                                <h1>WINNERS</h1>
-                            </div>
+                            <img src="/images/winners_icon.png" class="img-fluid" loading="lazy" alt="">
                         </nuxt-link>
                     </div>
-
                 </div>
             </div>
         </div>
